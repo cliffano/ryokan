@@ -1,0 +1,49 @@
+{
+  "name": "ryokan",
+  "description": "TODO",
+  "keywords": [
+  ],
+  "version": "0.0.1",
+  "homepage": "http://github.com/cliffano/ryokan",
+  "author": "Cliffano Subagio <blah@cliffano.com> (http://blog.cliffano.com)",
+  "contributors": [
+    "All contributors (https://github.com/cliffano/ryokan/graphs/contributors)"
+  ],
+  "main": "./lib/jenkins",
+  "bin": {
+    "ryokan": "./bin/ryokan"
+  },
+  "preferGlobal": true,
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/cliffano/ryokan.git"
+  },
+  "bugs": {
+    "url": "http://github.com/cliffano/ryokan/issues"
+  },
+  "directories": {
+    "bin": "./bin",
+    "lib": "./lib",
+    "test": "./test"
+  },
+  "dependencies": {
+    "async": "~0.2.9",
+    "bagofcli": "~0.0.5",
+    "colors": "~0.6.2",
+    "eggtart": "~0.0.2",
+    "webshot": "~0.5.1"
+  },
+  "devDependencies": {
+    "buster": "~0.6.12"
+  },
+  "scripts": {},
+  "engines": {
+    "node": ">= 0.4.0"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/cliffano/ryokan/raw/master/LICENSE"
+    }
+  ]
+}
