@@ -1,6 +1,5 @@
 ---
 - hosts: workstation
-  remote_user: cliffano
 
   vars:
     home: /Users/cliffano
