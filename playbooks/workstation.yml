@@ -1,0 +1,38 @@
+---
+- hosts: workstation
+  remote_user: cliffano
+
+  vars:
+    home: /Users/cliffano
+    workspace: /Users/cliffano/dev/workspace
+
+  tasks:
+
+  - name: Ensure SSH directory exists
+    file: path={{ home }}/.ssh state=directory
+
+  - name: Ensure workspace directory exists
+    file: path={{ workspace }} state=directory
+
+  - name: Set SSH configuration
+    file: src={{ workspace }}/dotfiles/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link
+    with_items:
+      - config
+      - id_rsa
+      - id_rsa.pub
+
+  - name: Set Sendman configuration for GD hosts
+    file: src={{ workspace }}/dotfiles/ftp/{{ item }}.json dest={{ home }}/.ssh/{{ item }}.json state=link
+    with_items:
+      - deidara
+      - kakuzu
+      - kisame
+
+  - name: Set PyPI configuration
+    file: src={{ workspace }}/dotfiles/python/.pypirc dest={{ home }}/.pypirc state=link
+
+  - name: Set npm configuration
+    file: src={{ workspace }}/dotfiles/node/.npmrc dest={{ home }}/.npmrc state=link
+
+  - name: Set Repoman configuration for project repositories
+    file: src={{ workspace }}/dotfiles/studio/.repoman.json dest={{ home }}/.repoman.json state=link
