@@ -1,4 +1,5 @@
 workstation:
 	ansible-playbook \
-	--inventory hosts \
+	--inventory-file hosts \
+	--extra-vars @../dotfiles/studio/ryokan/workstation.yml \
 	playbooks/workstation.yml
