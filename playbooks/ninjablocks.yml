@@ -3,6 +3,10 @@
 
   tasks:
 
+  - name: Set nestor-buildlight upstart configuration
+    template: src=../resources/jenkins/nestor_buildlight.conf dest=/etc/init/nestor_buildlight.conf 
+    sudo: yes
+
   - name: Set nestor-ninjablocks upstart configuration
     template: src=../resources/jenkins/nestor_ninjablocks.conf dest=/etc/init/nestor_ninjablocks.conf 
     sudo: yes
