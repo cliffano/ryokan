@@ -1,0 +1,5 @@
+- src: geerlingguy.homebrew
+  path: roles/
+
+- src: leonidas.nvm
+  path: roles/
