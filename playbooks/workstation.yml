@@ -31,3 +31,11 @@
 
   - name: Set Repoman configuration for project repositories
     file: src={{ workspace }}/dotfiles/studio/.repoman.json dest={{ home }}/.repoman.json state=link
+
+  - name: Set .profile
+    lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=yes
+    with_items:
+      - export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH
+      - source ~/.nvm/nvm.sh && nvm use default
+      - export JAVA_HOME=`/usr/libexec/java_home -v 1.6`
+      - alias resize-images='find . -iname \"*.*\" -exec mogrify -resize 1024x1024 {} \;'
