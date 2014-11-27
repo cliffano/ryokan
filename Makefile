@@ -1,8 +1,13 @@
+clean:
+	rm -f ryokan.log
+	rm -rf roles
+
 init:
+	mkdir -p roles
 	ansible-galaxy install -r requirements.yml --force
 
 home:
-	ansible-playbook \
+	ansible-playbook -vvv \
 	--inventory-file hosts \
 	--extra-vars @../dotfiles/studio/ryokan/home.yml \
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
