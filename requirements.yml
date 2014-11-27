@@ -1,4 +1,7 @@
-- src: geerlingguy.homebrew
+# - src: geerlingguy.homebrew
+#   path: roles/
+
+- src: http://github.com/cliffano/ansible-role-homebrew
   path: roles/
 
 - src: leonidas.nvm

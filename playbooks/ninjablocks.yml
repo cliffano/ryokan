@@ -1,7 +1,21 @@
 ---
 - hosts: ninjablocks
 
+  roles:
+    - role: leonidas.nvm
+      nvm:
+        user: root
+        version: v0.19.0
+        node_version: '0.10'
+
   tasks:
+
+  - name: Ensure npm packages are installed
+    npm: name={{ item }} global=yes state=latest
+    with_items:
+      - nestor-buildlight
+      - nestor-ninjablocks
+    sudo: yes
 
   - name: Set nestor-buildlight upstart configuration
     template: src=../resources/jenkins/nestor_buildlight.conf dest=/etc/init/nestor_buildlight.conf 
