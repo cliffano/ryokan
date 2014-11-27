@@ -1,0 +1,27 @@
+---
+- hosts: home
+
+  vars:
+    homebrew_installed_packages:
+      - wget
+      - brew-cask
+      - jenkins
+    homebrew_taps:
+      - caskroom/cask
+
+  roles:
+    # - { role: geerlingguy.homebrew }
+    - { role: ansible-role-homebrew }
+
+  tasks:
+
+  - name: Ensure root Homebrew Cask packages are installed
+    homebrew_cask: name={{ item }} state=installed
+    with_items:
+      - java
+    sudo: yes
+
+  - name: Set .profile
+    with_items:
+      - alias start-jenkins='launchctl load ~/Library/LaunchAgents/homebrew.mxcl.jenkins.plist'
+      - alias stop-jenkins='launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.jenkins.plist'

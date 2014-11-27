@@ -7,7 +7,7 @@ init:
 	ansible-galaxy install -r requirements.yml --force
 
 home:
-	ansible-playbook -vvv \
+	ansible-playbook \
 	--inventory-file hosts \
 	--extra-vars @../dotfiles/studio/ryokan/home.yml \
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
