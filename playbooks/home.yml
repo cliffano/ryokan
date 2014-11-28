@@ -8,6 +8,7 @@
       - jenkins
     homebrew_taps:
       - caskroom/cask
+    jenkins_version: '1.590'
 
   roles:
     # - { role: geerlingguy.homebrew }
@@ -22,6 +23,10 @@
     sudo: yes
 
   - name: Set .profile
+    lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=yes
     with_items:
-      - alias start-jenkins='launchctl load ~/Library/LaunchAgents/homebrew.mxcl.jenkins.plist'
-      - alias stop-jenkins='launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.jenkins.plist'
+      - alias start-jenkins='launchctl load /usr/local/Cellar/jenkins/{{ jenkins_version }}/homebrew.mxcl.jenkins.plist'
+      - alias stop-jenkins='launchctl unload /usr/local/Cellar/jenkins/{{ jenkins_version }}/homebrew.mxcl.jenkins.plist'
+
+  - name: Ensure Jenkins is exposed on all interfaces
+    replace: dest=/usr/local/Cellar/jenkins/{{ jenkins_version }}/homebrew.mxcl.jenkins.plist regexp='127.0.0.1' replace='0.0.0.0'
