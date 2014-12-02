@@ -1,6 +1,17 @@
 ---
 - hosts: workstation
 
+  vars:
+    homebrew_install_path: /usr/local/homebrew
+    homebrew_installed_packages:
+      - xz
+      - wget
+      - imagemagick
+
+  roles:
+    # - { role: geerlingguy.homebrew }
+    - { role: ansible-role-homebrew }
+
   tasks:
 
   - name: Ensure SSH directory exists

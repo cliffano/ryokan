@@ -22,6 +22,7 @@ ninjablocks:
 
 workstation:
 	ansible-playbook \
+	--connection=local \
 	--inventory-file hosts \
 	--extra-vars @../dotfiles/studio/ryokan/workstation.yml \
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
