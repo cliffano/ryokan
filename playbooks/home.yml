@@ -3,6 +3,7 @@
 
   vars:
     homebrew_installed_packages:
+      - xz
       - wget
       - brew-cask
       - jenkins
@@ -21,6 +22,9 @@
     with_items:
       - java
     sudo: yes
+
+  - name: Set .bashrc
+    lineinfile: dest={{ home }}/.bashrc line="PATH=/usr/local/bin:$PATH" state=present backup=yes
 
   - name: Set .profile
     lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=yes
