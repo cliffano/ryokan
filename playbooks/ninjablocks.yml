@@ -1,12 +1,12 @@
 ---
 - hosts: ninjablocks
 
-  roles:
-    - role: leonidas.nvm
-      nvm:
-        user: root
-        version: v0.19.0
-        node_version: '0.10'
+  # roles:
+  #   - role: leonidas.nvm
+  #     nvm:
+  #       user: root
+  #       version: v0.19.0
+  #       node_version: '0.10'
 
   tasks:
 
