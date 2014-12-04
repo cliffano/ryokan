@@ -1,5 +1,5 @@
 ---
-- hosts: ninjablocks
+- hosts: iot
 
   # roles:
   #   - role: leonidas.nvm

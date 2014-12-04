@@ -13,12 +13,12 @@ home:
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
 	playbooks/home.yml
 
-ninjablocks:
+iot:
 	ansible-playbook \
 	--inventory-file hosts \
-	--extra-vars @../dotfiles/studio/ryokan/ninjablocks.yml \
+	--extra-vars @../dotfiles/studio/ryokan/iot.yml \
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
-	playbooks/ninjablocks.yml
+	playbooks/iot.yml
 
 workstation:
 	ansible-playbook \
