@@ -1,0 +1,9 @@
+server {
+    listen 80;
+    server_name {{ item.host_name }};
+    access_log /var/log/nginx/{{ item.host_name }}.log;
+
+    location / {
+        proxy_pass http://{{ item.ip_address }}:{{ item.port }};
+    }
+}

@@ -1,3 +1,9 @@
+# - src: cliffano.droplet-docker
+#   path: roles/
+
+- src: http://github.com/cliffano/ansible-role-droplet-docker
+  path: roles/
+
 # - src: geerlingguy.homebrew
 #   path: roles/
 

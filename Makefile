@@ -20,6 +20,13 @@ iot:
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
 	playbooks/iot.yml
 
+web:
+	ansible-playbook \
+	--inventory-file hosts \
+	--extra-vars @../dotfiles/studio/ryokan/web.yml \
+	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
+	playbooks/web.yml
+
 workstation:
 	ansible-playbook \
 	--connection=local \

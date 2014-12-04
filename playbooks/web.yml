@@ -1,0 +1,21 @@
+---
+- hosts: web
+
+  roles:
+    # - role: cliffano.droplet-docker
+    - role: ansible-role-droplet-docker
+
+  tasks:
+
+  - name: Ensure nginx is installed
+    apt: name=nginx state=present
+
+  - name: Ensure applications base directory exists
+    file: name=/app
+
+  - name: Download applications
+    git: repo=git://github.com/cliffano/feedpaper.git dest=/app/feedpaper accept_hostkey=yes
+
+  - name: Set nginx configuration
+    template: src=../resources/nginx/site dest=/etc/nginx/sites-enabled/{{ item.host_name }}
+    with_items: sites
