@@ -28,7 +28,7 @@
       - id_rsa.pub
 
   - name: Set Sendman configuration for GD hosts
-    template: src={{ workspace }}/dotfiles/ftp/{{ item }}.json dest={{ home }}/.ssh/{{ item }}.json
+    template: src={{ workspace }}/dotfiles/studio/sendman/{{ item }}.json dest={{ home }}/.ssh/{{ item }}.json
     with_items:
       - deidara
       - kakuzu
