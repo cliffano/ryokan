@@ -13,6 +13,13 @@
   - name: Ensure applications base directory exists
     file: name=/app state=directory
 
+  - name: Ensure data base directory exists
+    file: name=/app/data state=directory
+
+  - name: Ensure app data directory exists
+    file: name=/app/data/{{ item.name }} state=directory
+    with_items: sites
+
   - name: Ensure logs base directory exists
     file: name=/app/logs state=directory
 
@@ -33,5 +40,5 @@
     with_items: sites
 
   - name: Set docker run aliases
-    lineinfile: dest={{ home }}/.profile line="alias docker-run-{{ item.name }}='docker run --name {{ item.name }} -p 127.0.0.1:{{ item.port }}:{{ item.port }}  -e "UTE_ENV=uat" -v /app/logs/{{ item.name }}/:/var/log/ -i -d -t {{ item.name }}'" state=present backup=yes
+    lineinfile: dest={{ home }}/.profile line="alias docker-run-{{ item.name }}='docker run --name {{ item.name }} -p 127.0.0.1:{{ item.port }}:{{ item.port }}  -e "UTE_ENV=uat" -v /app/logs/{{ item.name }}/:/var/log/ -v /app/data/{{ item.name }}/:/app/data/ -i -d -t {{ item.name }}'" state=present backup=yes
     with_items: sites
