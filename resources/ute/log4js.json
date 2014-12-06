@@ -1,0 +1,14 @@
+{
+  "appenders": [
+    {
+      "type": "console"
+    },
+    {
+      "type": "file",
+      "filename": "/var/log/{{ item.name }}.log",
+      "maxLogSize": 10240000,
+      "backups": 10
+    }
+  ],
+  "replaceConsole": true
+}

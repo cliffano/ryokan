@@ -11,24 +11,39 @@
     apt: name=nginx state=present
 
   - name: Ensure applications base directory exists
-    file: name=/app state=directory
-
-  - name: Ensure data base directory exists
-    file: name=/app/data state=directory
-
-  - name: Ensure app data directory exists
-    file: name=/app/data/{{ item.name }} state=directory
+    file: name=/app/{{ item.name }} state=directory
     with_items: sites
 
-  - name: Ensure logs base directory exists
-    file: name=/app/logs state=directory
+  - name: Ensure application stage directory exists
+    file: name=/app/{{ item.name }}/stage state=directory
+    with_items: sites
 
-  - name: Ensure app log directory exists
-    file: name=/app/logs/{{ item.name }} state=directory
+  - name: Ensure application configuration directory exists
+    file: name=/app/{{ item.name }}/conf state=directory
+    with_items: sites
+
+  - name: Ensure application data directory exists
+    file: name=/app/{{ item.name }}/data state=directory
+    with_items: sites
+
+  - name: Ensure application logs directory exists
+    file: name=/app/{{ item.name }}/logs state=directory
     with_items: sites
 
   - name: Download applications
-    git: repo=git://github.com/cliffano/{{ item.name }}.git dest=/app/{{ item.name }} accept_hostkey=yes
+    git: repo=git://github.com/cliffano/{{ item.name }}.git dest=/app/{{ item.name }}/stage accept_hostkey=yes
+    with_items: sites
+
+  - name: Set application configuration
+    template: src=../resources/ute/ute.json dest=/app/{{ item.name }}/conf/ute.json
+    with_items: sites
+
+  - name: Set application logging configuration
+    template: src=../resources/ute/log4js.json dest=/app/{{ item.name }}/conf/log4js.json
+    with_items: sites
+
+  - name: Set feedpaper feeds file
+    template: src=../resources/feedpaper/feeds.json dest=/app/{{ item.name }}/data/feeds.json
     with_items: sites
 
   - name: Set nginx configuration
@@ -40,5 +55,5 @@
     with_items: sites
 
   - name: Set docker run aliases
-    lineinfile: dest={{ home }}/.profile line="alias docker-run-{{ item.name }}='docker run --name {{ item.name }} -p 127.0.0.1:{{ item.port }}:{{ item.port }}  -e "UTE_ENV=uat" -v /app/logs/{{ item.name }}/:/var/log/ -v /app/data/{{ item.name }}/:/app/data/ -i -d -t {{ item.name }}'" state=present backup=yes
+    lineinfile: dest={{ home }}/.profile line="alias docker-run-{{ item.name }}='docker run --name {{ item.name }} -p 127.0.0.1:{{ item.port }}:{{ item.port }}  -v /app/{{ item.name }}/conf/:/app/conf/ -v /app/{{ item.name }}/data/:/app/data/ -v /app/{{ item.name }}/logs/:/app/logs/ -i -d -t {{ item.name }}'" state=present backup=yes
     with_items: sites

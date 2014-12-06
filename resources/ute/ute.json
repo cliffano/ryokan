@@ -1,0 +1,6 @@
+{
+  "app": {
+    "name": "{{ item.title }}",
+    "port": {{ item.port }}
+  }
+}
