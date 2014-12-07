@@ -51,9 +51,9 @@
     with_items: sites
 
   - name: Set docker build aliases
-    lineinfile: dest={{ home }}/.profile line="alias docker-build-{{ item.name }}='docker build -t {{ item.name }} .'" state=present backup=yes
+    replace: dest={{ home }}/.profile regexp='^alias docker-build.*' replace="alias docker-build-{{ item.name }}='docker build -t {{ item.name }} .'" backup=yes
     with_items: sites
 
   - name: Set docker run aliases
-    lineinfile: dest={{ home }}/.profile line="alias docker-run-{{ item.name }}='docker run --name {{ item.name }} -p 127.0.0.1:{{ item.port }}:{{ item.port }}  -v /app/{{ item.name }}/conf/:/app/conf/ -v /app/{{ item.name }}/data/:/app/data/ -v /app/{{ item.name }}/logs/:/app/logs/ -i -d -t {{ item.name }}'" state=present backup=yes
+    replace: dest={{ home }}/.profile regexp='^alias docker-run.*' replace="alias docker-run-{{ item.name }}='docker run --name {{ item.name }} -p 127.0.0.1:{{ item.port }}:{{ item.port }}  -v /app/{{ item.name }}/conf/ute.json:/app/conf/ute.json -v /app/{{ item.name }}/conf/log4js.json:/app/conf/log4js.json -v /app/{{ item.name }}/data/feeds.json:/app/data/feeds.json -v /app/{{ item.name }}/logs/:/app/logs/ -i -d -t {{ item.name }}'" backup=yes
     with_items: sites
