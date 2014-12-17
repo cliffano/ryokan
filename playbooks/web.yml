@@ -7,8 +7,11 @@
 
   tasks:
 
-  - name: Ensure nginx is installed
-    apt: name=nginx state=present
+  - name: Ensure os packages are installed
+    apt: name={{ item }} state=present
+    with_items:
+      - nginx
+      - sysdig
 
   - name: Ensure applications base directory exists
     file: name=/app/{{ item.name }} state=directory

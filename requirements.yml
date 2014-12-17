@@ -12,3 +12,6 @@
 
 - src: leonidas.nvm
   path: roles/
+
+- src: valentinogagliardi.sysdig
+  path: roles/
