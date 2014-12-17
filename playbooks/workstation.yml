@@ -27,6 +27,8 @@
       - config
       - id_rsa
       - id_rsa.pub
+      - konoha_id_rsa
+      - konoha_id_rsa.pub
 
   - name: Set Sendman configuration for GD hosts
     template: src={{ workspace }}/dotfiles/studio/sendman/{{ item }}.json dest={{ home }}/.ssh/{{ item }}.json
