@@ -10,6 +10,9 @@
 - src: http://github.com/cliffano/ansible-role-homebrew
   path: roles/
 
+- src: Rackspace_Automation.newrelic
+  path: roles/
+
 - src: leonidas.nvm
   path: roles/
 
