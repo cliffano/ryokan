@@ -32,6 +32,8 @@
     with_items:
       - alias start-jenkins='launchctl load /usr/local/Cellar/jenkins/{{ jenkins_version }}/homebrew.mxcl.jenkins.plist'
       - alias stop-jenkins='launchctl unload /usr/local/Cellar/jenkins/{{ jenkins_version }}/homebrew.mxcl.jenkins.plist'
+      - alias transfer-data='rsync -zvr /Volumes/TOSHIBAEXT/data /Volumes/Seagate\ Expansion\ Drive'
+      - alias backup-data='rsync -zvr /Volumes/Seagate\ Expansion\ Drive/data ~/Desktop'
 
   - name: Ensure Jenkins is exposed on all interfaces
     replace: dest=/usr/local/Cellar/jenkins/{{ jenkins_version }}/homebrew.mxcl.jenkins.plist regexp='127.0.0.1' replace='0.0.0.0'
