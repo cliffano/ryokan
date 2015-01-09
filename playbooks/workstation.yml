@@ -52,4 +52,5 @@
       - export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH
       - source ~/.nvm/nvm.sh && nvm use default
       - export JAVA_HOME=`/usr/libexec/java_home -v 1.6`
+      - export JENKINS_URL=http://gennou:8080
       - alias resize-images='find . -iname \"*.*\" -exec mogrify -resize 1024x1024 {} \;'
