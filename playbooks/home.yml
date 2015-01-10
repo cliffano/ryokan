@@ -18,6 +18,9 @@
 
   tasks:
 
+  - name: Ensure data directory exists, used as nightly backup, on Desktop for easy access via GUI
+    file: path={{ workspace }}/Desktop/data state=directory
+
   - name: Ensure root Homebrew Cask packages are installed
     homebrew_cask: name={{ item }} state=installed
     with_items:
