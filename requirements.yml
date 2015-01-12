@@ -1,13 +1,13 @@
 # - src: cliffano.droplet-docker
 #   path: roles/
 
-- src: http://github.com/cliffano/ansible-role-droplet-docker
-  path: roles/
-
-# - src: geerlingguy.homebrew
+# - src: http://github.com/cliffano/ansible-role-droplet-docker
 #   path: roles/
 
-- src: http://github.com/cliffano/ansible-role-homebrew
+- src: cliffano.droplet-docker
+  path: roles/
+
+- src: geerlingguy.homebrew
   path: roles/
 
 - src: Rackspace_Automation.newrelic

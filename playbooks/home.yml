@@ -13,8 +13,7 @@
     jenkins_version: '1.590'
 
   roles:
-    # - { role: geerlingguy.homebrew }
-    - { role: ansible-role-homebrew }
+    - { role: geerlingguy.homebrew }
 
   tasks:
 

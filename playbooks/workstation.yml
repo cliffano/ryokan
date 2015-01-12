@@ -8,10 +8,12 @@
       - wget
       - imagemagick
       - sysdig
+      - brew-cask
+    homebrew_taps:
+      - caskroom/cask
 
   roles:
-    # - { role: geerlingguy.homebrew }
-    - { role: ansible-role-homebrew }
+    - { role: geerlingguy.homebrew }
 
   tasks:
 
