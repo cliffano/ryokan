@@ -48,6 +48,9 @@
   - name: Set Repoman configuration for project repositories
     file: src={{ workspace }}/dotfiles/studio/.repoman.json dest={{ home }}/.repoman.json state=link
 
+  - name: Ensure .profile file exists
+    file: path={{ home }}/.profile state=touch mode=0644
+
   - name: Set .profile
     lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=yes
     with_items:
