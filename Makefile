@@ -33,4 +33,5 @@ workstation:
 	--inventory-file hosts \
 	--extra-vars @../dotfiles/studio/ryokan/workstation.yml \
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
+        --ask-sudo-pass \
 	playbooks/workstation.yml
