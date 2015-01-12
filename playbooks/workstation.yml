@@ -11,6 +11,9 @@
       - brew-cask
     homebrew_taps:
       - caskroom/cask
+      - caskroom/versions
+    homebrew_cask_apps:
+      - sublime-text
 
   roles:
     - { role: geerlingguy.homebrew }
