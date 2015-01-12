@@ -8,15 +8,18 @@
       - wget
       - imagemagick
       - sysdig
+      - gpg
       - brew-cask
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions
     homebrew_cask_apps:
       - sublime-text
+    rvm1_install_flags: '--user-install'
 
   roles:
     - { role: geerlingguy.homebrew }
+    - { role: rvm_io.rvm1-ruby }
 
   tasks:
 

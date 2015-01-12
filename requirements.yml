@@ -1,6 +1,3 @@
-# - src: cliffano.droplet-docker
-#   path: roles/
-
 # - src: http://github.com/cliffano/ansible-role-droplet-docker
 #   path: roles/
 
@@ -14,6 +11,9 @@
   path: roles/
 
 - src: leonidas.nvm
+  path: roles/
+
+- src: rvm_io.rvm1-ruby
   path: roles/
 
 - src: valentinogagliardi.sysdig
