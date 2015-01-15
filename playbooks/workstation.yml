@@ -10,6 +10,7 @@
       - sysdig
       - gpg
       - brew-cask
+      - maven
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions
