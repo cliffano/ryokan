@@ -34,6 +34,8 @@
     file: src={{ workspace }}/dotfiles/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link
     with_items:
       - config
+      - konoha_id_rsa
+      - konoha_id_rsa.pub
 
   - name: Set Sendman configuration for GD hosts
     template: src={{ workspace }}/dotfiles/studio/sendman/{{ item }}.json dest={{ home }}/.ssh/{{ item }}.json
