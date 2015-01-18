@@ -11,9 +11,11 @@
       - gpg
       - brew-cask
       - maven
+      - packer
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions
+      - homebrew/binary
     homebrew_cask_apps:
       - sublime-text
     rvm1_install_flags: '--user-install'
