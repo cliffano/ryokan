@@ -18,6 +18,9 @@
       - homebrew/binary
     homebrew_cask_apps:
       - sublime-text
+      - facter
+      - hiera
+      - puppet
     rvm1_install_flags: '--user-install'
 
   roles:
