@@ -12,6 +12,8 @@
       - brew-cask
       - maven
       - packer
+      - awscli
+      - hg
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions
