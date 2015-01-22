@@ -2,8 +2,8 @@
 - hosts: web
 
   roles:
-    # - role: cliffano.droplet-docker
-    - role: ansible-role-droplet-docker
+    # - role: ansible-role-droplet-docker
+    - role: cliffano.droplet-docker
     - { role: Rackspace_Automation.newrelic, newrelic_license_key: '{{ newrelic_license_key }}' }
 
   tasks:
