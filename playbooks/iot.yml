@@ -10,11 +10,11 @@
 
   tasks:
 
-  - name: Ensure npm packages are installed
-    npm: name={{ item }} global=yes state=latest
-    with_items:
-      - nestor-buildlight
-      - nestor-ninjablocks
+  # - name: Ensure npm packages are installed
+  #   npm: name={{ item }} global=yes state=latest
+  #   with_items:
+  #     - nestor-buildlight
+  #     - nestor-ninjablocks
 
   - name: Set nestor-buildlight upstart configuration
     template: src=../resources/jenkins/nestor_buildlight.conf dest=/etc/init/nestor_buildlight.conf 
