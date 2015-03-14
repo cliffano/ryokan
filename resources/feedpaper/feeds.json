@@ -42,7 +42,7 @@
     ]
   },
   {
-    "title": "News / World",
+    "title": "News/World",
     "feeds": [
       {
         "title": "BBC",
@@ -63,7 +63,7 @@
     ]
   },
   {
-    "title": "News / Asia",
+    "title": "News/Asia",
     "feeds": [
       {
         "title": "Detik",
@@ -88,7 +88,7 @@
     ]
   },
   {
-    "title": "Sports / Basketball",
+    "title": "Sports/Basketball",
     "feeds": [
       {
         "title": "Ball Don't Lie",
@@ -124,7 +124,7 @@
         "url": "https://news.ycombinator.com/rss"
       },
       {
-        "title": "re/code",
+        "title": "Re/code",
         "url": "http://recode.net/feed/"
       },
       {
