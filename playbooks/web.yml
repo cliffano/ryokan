@@ -50,6 +50,10 @@
     template: src=../resources/feedpaper/feeds.json dest=/app/{{ item.name }}/data/feeds.json
     with_items: sites
 
+  - name: Set application newrelic configuration
+    template: src=../resources/feedpaper/newrelic.js dest=/app/{{ item.name }}/stage/newrelic.js
+    with_items: sites
+
   - name: Set nginx configuration
     template: src=../resources/nginx/site dest=/etc/nginx/sites-enabled/{{ item.host_name }}
     with_items: sites
