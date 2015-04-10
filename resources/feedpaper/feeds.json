@@ -1,93 +1,6 @@
 [
   {
-    "title": "Business",
-    "feeds": [
-      {
-        "title": "Bloomberg",
-        "url": "http://www.bloombergview.com/rss"
-      },
-      {
-        "title": "Fast Company",
-        "url": "http://www.fastcompany.com/rss.xml"
-      },
-      {
-        "title": "Forbes",
-        "url": "http://www.forbes.com/business/feed/"
-      },
-      {
-        "title": "Fortune",
-        "url": "http://fortune.com/feed/"
-      },
-      {
-        "title": "Inc.",
-        "url": "http://feeds.inc.com/home/updates"
-      },
-      {
-        "title": "The Economist",
-        "url": "http://www.economist.com/feeds/print-sections/77/business.xml"
-      },
-      {
-        "title": "TIME",
-        "url": "http://feeds2.feedburner.com/time/business"
-      }
-    ]
-  },
-  {
-    "title": "Cooking and Gardening",
-    "feeds": [
-      {
-        "title": "IndoChine Kitchen",
-        "url": "http://www.indochinekitchen.com/feed/"
-      },
-      {
-        "title": "Needles + Leaves",
-        "url": "http://needlesandleaves.net/blog?format=RSS"
-      },
-      {
-        "title": "Rasa Malaysia",
-        "url": "http://feeds2.feedburner.com/rasamalaysia"
-      },
-      {
-        "title": "Succulents and Sunshine",
-        "url": "http://www.succulentsandsunshine.com/feed/"
-      },
-      {
-        "title": "The Links Site",
-        "url": "http://feeds.feedburner.com/TheLinksSite-PostFeed"
-      }
-    ]
-  },
-  {
-    "title": "News/World",
-    "feeds": [
-      {
-        "title": "BBC",
-        "url": "http://feeds.bbci.co.uk/news/world/rss.xml"
-      },
-      {
-        "title": "News On Japan",
-        "url": "http://newsonjapan.com/rss/top.xml"
-      },
-      {
-        "title": "The Guardian",
-        "url": "http://feeds.theguardian.com/theguardian/world/rss"
-      },
-      {
-        "title": "The New York Times",
-        "url": "http://rss.nytimes.com/services/xml/rss/nyt/World.xml"
-      },
-      {
-        "title": "The Atlantic",
-        "url": "http://feeds.feedburner.com/AtlanticInternational"
-      },
-      {
-        "title": "Wall Street Journal",
-        "url": "http://online.wsj.com/xml/rss/3_7085.xml"
-      }
-    ]
-  },
-  {
-    "title": "News/Australia",
+    "title": "Australia",
     "feeds": [
       {
         "title": "News.com.au",
@@ -108,36 +21,7 @@
     ]
   },
   {
-    "title": "News/Indonesia",
-    "feeds": [
-      {
-        "title": "Antara News",
-        "url": "http://www.antaranews.com/rss/terkini"
-      },
-      {
-        "title": "Detik",
-        "url": "http://rss.detik.com/index.php/detikcom_nasional"
-      },
-      {
-        "title": "Tempo",
-        "url": "http://www.tempo.co/rss/terkini"
-      },
-      {
-        "title": "The Jakarta Globe",
-        "url": "http://www.thejakartaglobe.com/feed/"
-      },
-      {
-        "title": "The Jakarta Post",
-        "url": "http://www.thejakartapost.com/breaking/feed"
-      },
-      {
-        "title": "Viva.co.id",
-        "url": "http://rss.viva.co.id/get/all"
-      }
-    ]
-  },
-  {
-    "title": "Sports/Basketball",
+    "title": "Basketball",
     "feeds": [
       {
         "title": "Bleacher Report",
@@ -174,6 +58,181 @@
     ]
   },
   {
+    "title": "Business",
+    "feeds": [
+      {
+        "title": "Bloomberg",
+        "url": "http://www.bloombergview.com/rss"
+      },
+      {
+        "title": "Fast Company",
+        "url": "http://www.fastcompany.com/rss.xml"
+      },
+      {
+        "title": "Forbes",
+        "url": "http://www.forbes.com/business/feed/"
+      },
+      {
+        "title": "Fortune",
+        "url": "http://fortune.com/feed/"
+      },
+      {
+        "title": "Inc.",
+        "url": "http://feeds.inc.com/home/updates"
+      },
+      {
+        "title": "The Economist",
+        "url": "http://www.economist.com/feeds/print-sections/77/business.xml"
+      },
+      {
+        "title": "TIME",
+        "url": "http://feeds2.feedburner.com/time/business"
+      }
+    ]
+  },
+  {
+    "title": "Cooking",
+    "feeds": [
+      {
+        "title": "Cooking Light",
+        "url": "http://feeds.feedburner.com/CookingLight/blog/tks/"
+      },
+      {
+        "title": "IndoChine Kitchen",
+        "url": "http://www.indochinekitchen.com/feed/"
+      },
+      {
+        "title": "Rasa Malaysia",
+        "url": "http://feeds2.feedburner.com/rasamalaysia"
+      }
+    ]
+  },
+  {
+    "title": "Entertainment",
+    "feeds": [
+      {
+        "title": "Empire Online",
+        "url": "http://www.empireonline.com/rss/rss.asp"
+      },
+      {
+        "title": "Film Ink",
+        "url": "http://filmink.com.au/feed/news/"
+      },
+      {
+        "title": "Gamespot",
+        "url": "http://www.gamespot.com/feeds/news/"
+      },
+      {
+        "title": "IGN",
+        "url": "http://feeds.ign.com/ign/news"
+      },
+      {
+        "title": "Joystiq",
+        "url": "http://www.joystiq.com/rss.xml"
+      },
+      {
+        "title": "Kotaku",
+        "url": "http://feeds.kotaku.com.au/kotakuaustralia"
+      }
+    ]
+  },
+  {
+    "title": "Gardening",
+    "feeds": [
+      {
+        "title": "Ground To Ground",
+        "url": "http://groundtoground.org/feed/"
+      },
+      {
+        "title": "Needles + Leaves",
+        "url": "http://needlesandleaves.net/blog?format=RSS"
+      },
+      {
+        "title": "Succulents and Sunshine",
+        "url": "http://www.succulentsandsunshine.com/feed/"
+      },
+      {
+        "title": "The Links Site",
+        "url": "http://feeds.feedburner.com/TheLinksSite-PostFeed"
+      }
+    ]
+  },
+  {
+    "title": "Indonesia",
+    "feeds": [
+      {
+        "title": "Antara News",
+        "url": "http://www.antaranews.com/rss/terkini"
+      },
+      {
+        "title": "BBC Indonesia",
+        "url": "http://www.bbc.co.uk/indonesia/index.xml"
+      },
+      {
+        "title": "Detik",
+        "url": "http://rss.detik.com/index.php/detikcom_nasional"
+      },
+      {
+        "title": "Tempo",
+        "url": "http://www.tempo.co/rss/terkini"
+      },
+      {
+        "title": "The Jakarta Globe",
+        "url": "http://www.thejakartaglobe.com/feed/"
+      },
+      {
+        "title": "The Jakarta Post",
+        "url": "http://www.thejakartapost.com/breaking/feed"
+      },
+      {
+        "title": "Viva.co.id",
+        "url": "http://rss.viva.co.id/get/all"
+      }
+    ]
+  },
+  {
+    "title": "Japan",
+    "feeds": [
+      {
+        "title": "Hajime Ihara",
+        "url": "http://blogs.yahoo.co.jp/win11ihara/rss.xml"
+      },
+      {
+        "title": "Japan Today",
+        "url": "http://www.japantoday.com/feed"
+      },
+      {
+        "title": "News On Japan",
+        "url": "http://newsonjapan.com/rss/top.xml"
+      }
+    ]
+  },
+  {
+    "title": "News",
+    "feeds": [
+      {
+        "title": "BBC",
+        "url": "http://feeds.bbci.co.uk/news/world/rss.xml"
+      },
+      {
+        "title": "The Guardian",
+        "url": "http://feeds.theguardian.com/theguardian/world/rss"
+      },
+      {
+        "title": "The New York Times",
+        "url": "http://rss.nytimes.com/services/xml/rss/nyt/World.xml"
+      },
+      {
+        "title": "The Atlantic",
+        "url": "http://feeds.feedburner.com/AtlanticInternational"
+      },
+      {
+        "title": "Wall Street Journal",
+        "url": "http://online.wsj.com/xml/rss/3_7085.xml"
+      }
+    ]
+  },
+  {
     "title": "Technology",
     "feeds": [
       {
@@ -203,27 +262,6 @@
       {
         "title": "ZDNet",
         "url": "http://www.zdnet.com/news/rss.xml"
-      }
-    ]
-  },
-  {
-    "title": "Video Games",
-    "feeds": [
-      {
-        "title": "Gamespot",
-        "url": "http://www.gamespot.com/feeds/news/"
-      },
-      {
-        "title": "IGN",
-        "url": "http://feeds.ign.com/ign/news"
-      },
-      {
-        "title": "Joystiq",
-        "url": "http://www.joystiq.com/rss.xml"
-      },
-      {
-        "title": "Kotaku",
-        "url": "http://feeds.kotaku.com.au/kotakuaustralia"
       }
     ]
   }
