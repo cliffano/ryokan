@@ -15,6 +15,7 @@
       - awscli
       - hg
       - lnav
+      - htop
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions
