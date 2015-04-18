@@ -47,7 +47,7 @@
     with_items: sites
 
   - name: Set feedpaper feeds file
-    template: src=../resources/feedpaper/feeds.json dest=/app/{{ item.name }}/data/feeds.json
+    template: src=../resources/feedpaper/feeds.json dest=/app/{{ item.name }}/conf/feeds.json
     with_items: sites
 
   - name: Set application newrelic configuration
@@ -58,10 +58,29 @@
     template: src=../resources/nginx/site dest=/etc/nginx/sites-enabled/{{ item.host_name }}
     with_items: sites
 
+  - name: Set docker data create aliases
+    lineinfile: \
+      dest={{ home }}/.profile \
+      regexp='^alias docker-createdata-{{ item.name }}.*' \
+      line="alias docker-create-data-{{ item.name }}='docker create -v /app/data --name {{ item.name }}-data tianon/true'" \
+      state=present \
+      backup=yes
+    with_items: sites
+
   - name: Set docker build aliases
-    lineinfile: dest={{ home }}/.profile regexp='^alias docker-build-{{ item.name }}.*' line="alias docker-build-{{ item.name }}='docker build -t {{ item.name }} .'" state=present backup=yes
+    lineinfile: \
+      dest={{ home }}/.profile \
+      regexp='^alias docker-build-{{ item.name }}.*' \
+      line="alias docker-build-{{ item.name }}='docker build -t {{ item.name }} .'" \
+      state=present \
+      backup=yes
     with_items: sites
 
   - name: Set docker run aliases
-    lineinfile: dest={{ home }}/.profile regexp='^alias docker-run-{{ item.name }}.*' line="alias docker-run-{{ item.name }}='docker run --name {{ item.name }} -p 127.0.0.1:{{ item.port }}:{{ item.port }}  -v /app/{{ item.name }}/conf/ute.json:/app/conf/ute.json -v /app/{{ item.name }}/conf/log4js.json:/app/conf/log4js.json -v /app/{{ item.name }}/data/feeds.json:/app/data/feeds.json -v /app/{{ item.name }}/logs/:/app/logs/ -i -d -t {{ item.name }}'" state=present backup=yes
+    lineinfile: \
+      dest={{ home }}/.profile \
+      regexp='^alias docker-run-{{ item.name }}.*' \
+      line="alias docker-run-{{ item.name }}='docker run --name {{ item.name }} -p 127.0.0.1:{{ item.port }}:{{ item.port }}  -v /app/{{ item.name }}/conf/ute.json:/app/conf/ute.json -v /app/{{ item.name }}/conf/log4js.json:/app/conf/log4js.json -v /app/{{ item.name }}/conf/feeds.json:/app/conf/feeds.json -v /app/{{ item.name }}/logs/:/app/logs/ --volumes-from {{item.name}}-data -i -d -t {{ item.name }}'" \
+      state=present \
+      backup=yes
     with_items: sites
