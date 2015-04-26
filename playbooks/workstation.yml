@@ -16,6 +16,7 @@
       - hg
       - lnav
       - htop
+      - nmap
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions

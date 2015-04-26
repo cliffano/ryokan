@@ -8,6 +8,8 @@
       - brew-cask
       - jenkins
       - sysdig
+      - htop
+      - nmap
     homebrew_taps:
       - caskroom/cask
     jenkins_version: '1.590'
