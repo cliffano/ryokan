@@ -17,6 +17,8 @@
       - lnav
       - htop
       - nmap
+      - httpie
+      - jq
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions
