@@ -5,7 +5,7 @@
     },
     {
       "type": "file",
-      "filename": "/var/log/{{ item.name }}.log",
+      "filename": "/app/logs/{{ item.name }}.log",
       "maxLogSize": 10240000,
       "backups": 10
     }
