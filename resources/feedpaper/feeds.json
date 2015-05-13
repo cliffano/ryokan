@@ -399,6 +399,10 @@
         "url": "https://news.ycombinator.com/rss"
       },
       {
+        "title": "IEEE Spectrum Automaton",
+        "url": "http://spectrum.ieee.org/static/rss"
+      },
+      {
         "title": "Re/code",
         "url": "http://recode.net/feed/"
       },
