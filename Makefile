@@ -8,6 +8,7 @@ init:
 
 home:
 	ansible-playbook \
+	--verbose \
 	--inventory-file hosts \
 	--extra-vars @../dotfiles/studio/ryokan/home.yml \
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
@@ -15,6 +16,7 @@ home:
 
 iot:
 	ansible-playbook \
+	--verbose \
 	--inventory-file hosts \
 	--extra-vars @../dotfiles/studio/ryokan/iot.yml \
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
@@ -22,6 +24,7 @@ iot:
 
 web:
 	ansible-playbook \
+	--verbose \
 	--inventory-file hosts \
 	--extra-vars @../dotfiles/studio/ryokan/web.yml \
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
@@ -29,9 +32,10 @@ web:
 
 workstation:
 	ansible-playbook \
+	--verbose \
 	--connection=local \
 	--inventory-file hosts \
 	--extra-vars @../dotfiles/studio/ryokan/workstation.yml \
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
-        --ask-sudo-pass \
+    --ask-sudo-pass \
 	playbooks/workstation.yml
