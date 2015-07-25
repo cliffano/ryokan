@@ -40,6 +40,10 @@
         "url": "http://bleacherreport.com/articles/feed?tag_id=19"
       },
       {
+        "title": "Downtown Ball",
+        "url": "http://downtownball.net/feed/atom/"
+      },
+      {
         "title": "ESPN",
         "url": "http://sports.espn.go.com/espn/rss/nba/news"
       },
@@ -58,6 +62,10 @@
       {
         "title": "SB Nation",
         "url": "http://www.sbnation.com/rss/current"
+      },
+      {
+        "title": "Shot Suey!",
+        "url": "https://shotsuey.wordpress.com/feed/"
       },
       {
         "title": "SLAM Online",
@@ -167,13 +175,29 @@
     "title": "Cooking",
     "feeds": [
       {
+        "title": "Bon Appétit",
+        "url": "http://www.bonappetit.com/rss2"
+      },
+      {
         "title": "Cooking Light",
         "url": "http://feeds.feedburner.com/CookingLight/blog/tks/"
+      },
+      {
+        "title": "Culinary Ginger",
+        "url": "http://culinaryginger.com/feed/"
       },
       {
         "title": "IndoChine Kitchen",
         "url": "http://www.indochinekitchen.com/feed/"
       },
+      {
+        "title": "Little Spice Jar",
+        "url": "http://feeds.feedburner.com/littlespicejar/RQzi"
+      },
+      {
+        "title": "Maangchi",
+        "url": "http://www.maangchi.com/feed"
+      }
       {
         "title": "Rasa Malaysia",
         "url": "http://feeds2.feedburner.com/rasamalaysia"
