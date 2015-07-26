@@ -60,10 +60,6 @@
         "url": "http://www.nba.com/rss/nba_rss.xml"
       },
       {
-        "title": "SB Nation",
-        "url": "http://www.sbnation.com/rss/current"
-      },
-      {
         "title": "Shot Suey!",
         "url": "https://shotsuey.wordpress.com/feed/"
       },
@@ -85,10 +81,6 @@
     "title": "Business",
     "feeds": [
       {
-        "title": "Bloomberg",
-        "url": "http://www.bloombergview.com/rss"
-      },
-      {
         "title": "CNN Money",
         "url": "http://rss.cnn.com/rss/money_latest.rss"
       },
@@ -109,18 +101,6 @@
         "url": "http://feeds.inc.com/home/updates"
       },
       {
-        "title": "International Business Times",
-        "url": "http://www.ibtimes.com/rss/markets-finance"
-      },
-      {
-        "title": "The Economist",
-        "url": "http://www.economist.com/feeds/print-sections/77/business.xml"
-      },
-      {
-        "title": "The Financial Times",
-        "url": "http://www.ft.com/rss/world/americas/business"
-      },
-      {
         "title": "TIME",
         "url": "http://feeds2.feedburner.com/time/business"
       }
@@ -134,10 +114,6 @@
         "url": "https://aws.amazon.com/blogs/aws/feed/"
       },
       {
-        "title": "DailyJS",
-        "url": "http://dailyjs.com/rss/"
-      },
-      {
         "title": "Docker",
         "url": "http://blog.docker.com/feed/"
       },
@@ -146,16 +122,8 @@
         "url": "http://blog.golang.org/feed.atom"
       },
       {
-        "title": "Golang Weekly",
-        "url": "http://golangweekly.com/rss/10e4jabd"
-      },
-      {
         "title": "Hashi Corp",
         "url": "https://hashicorp.com/feed.xml"
-      },
-      {
-        "title": "JavaScript Weekly",
-        "url": "http://javascriptweekly.com/rss/19474nhj"
       },
       {
         "title": "node.js",
@@ -164,10 +132,6 @@
       {
         "title": "npm",
         "url": "http://blog.npmjs.org/rss"
-      },
-      {
-        "title": "Puppetlabs",
-        "url": "https://puppetlabs.com/blog"
       }
     ]
   },
@@ -224,10 +188,6 @@
         "url": "http://www.gamesradar.com/all-platforms/news/rss/"
       },
       {
-        "title": "IGN",
-        "url": "http://feeds.ign.com/ign/news"
-      },
-      {
         "title": "Kotaku",
         "url": "http://feeds.kotaku.com.au/kotakuaustralia"
       },
@@ -238,6 +198,10 @@
       {
         "title": "Roger Ebert",
         "url": "http://www.rogerebert.com/feed"
+      },
+      {
+        "title": "Soompi",
+        "url": "http://www.soompi.com/feed/"
       }
     ]
   },
@@ -266,20 +230,12 @@
     "title": "Indonesia",
     "feeds": [
       {
-        "title": "Antara News",
-        "url": "http://www.antaranews.com/rss/terkini"
-      },
-      {
         "title": "BBC Indonesia",
         "url": "http://www.bbc.co.uk/indonesia/index.xml"
       },
       {
         "title": "Detik",
         "url": "http://rss.detik.com/index.php/detikcom_nasional"
-      },
-      {
-        "title": "Merdeka.com",
-        "url": "http://www.merdeka.com/feed/"
       },
       {
         "title": "Metro TV News",
@@ -298,10 +254,6 @@
         "url": "http://www.thejakartapost.com/breaking/feed"
       },
       {
-        "title": "Tribun News",
-        "url": "http://www.tribunnews.com/rss"
-      },
-      {
         "title": "Viva.co.id",
         "url": "http://rss.viva.co.id/get/all"
       }
@@ -315,20 +267,16 @@
         "url": "http://blogs.yahoo.co.jp/win11ihara/rss.xml"
       },
       {
-        "title": "Japan Today",
-        "url": "http://www.japantoday.com/feed"
+        "title": "GaijinPot",
+        "url": "http://blog.gaijinpot.com/feed/"
       },
       {
-        "title": "Kyodo News",
-        "url": "http://english.kyodonews.jp/rss/news.xml"
+        "title": "Life in Rural Japan",
+        "url": "http://joruraljapan.blogspot.com/feeds/posts/default"
       },
       {
         "title": "News On Japan",
         "url": "http://newsonjapan.com/rss/top.xml"
-      },
-      {
-        "title": "Presentation Zen",
-        "url": "http://feeds.feedburner.com/PresentationZen"
       },
       {
         "title": "The Japan Times",
@@ -350,10 +298,6 @@
       {
         "title": "MMA Junkie",
         "url": "http://mmajunkie.com/feed/"
-      },
-      {
-        "title": "MMA Weekly",
-        "url": "http://www.mmaweekly.com/feed"
       },
       {
         "title": "OneFC",
@@ -412,6 +356,10 @@
       {
         "title": "Joi Ito",
         "url": "http://feeds.feedburner.com/joi-ito/weblog"
+      },
+      {
+        "title": "Presentation Zen",
+        "url": "http://feeds.feedburner.com/PresentationZen"
       }
     ]
   },
@@ -421,10 +369,6 @@
       {
         "title": "Hacker News",
         "url": "https://news.ycombinator.com/rss"
-      },
-      {
-        "title": "IEEE Spectrum Automaton",
-        "url": "http://spectrum.ieee.org/static/rss"
       },
       {
         "title": "Re/code",
