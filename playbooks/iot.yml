@@ -1,25 +1,27 @@
 ---
 - hosts: iot
 
+  # NOTE: commented out because v0.10.33 installation requires compilation that takes ages on Ninja Blocks
   # roles:
   #   - role: leonidas.nvm
   #     nvm:
   #       user: root
-  #       version: v0.19.0
-  #       node_version: '0.10'
+  #       version: v0.28.0
+  #       node_version: '0.10.33' # NOTE: lock this down to v0.10.33 due to Ninja Blocks compatibility issue
+  #     sudo: yes
 
   tasks:
 
-  # - name: Ensure npm packages are installed
-  #   npm: name={{ item }} global=yes state=latest
-  #   with_items:
-  #     - nestor-buildlight
-  #     - nestor-ninjablocks
+  - name: Ensure npm packages are installed
+    npm: name={{ item }} global=yes state=latest
+    with_items:
+      - nestor-buildlight
+      - nestor-ninjablocks
 
   - name: Set nestor-buildlight upstart configuration
-    template: src=../resources/jenkins/nestor_buildlight.conf dest=/etc/init/nestor_buildlight.conf 
+    template: src=../resources/jenkins/nestor_buildlight.conf dest=/etc/init/nestor_buildlight.conf
     sudo: yes
 
   - name: Set nestor-ninjablocks upstart configuration
-    template: src=../resources/jenkins/nestor_ninjablocks.conf dest=/etc/init/nestor_ninjablocks.conf 
+    template: src=../resources/jenkins/nestor_ninjablocks.conf dest=/etc/init/nestor_ninjablocks.conf
     sudo: yes
