@@ -6,6 +6,14 @@ init:
 	mkdir -p roles
 	ansible-galaxy install -r requirements.yml --force
 
+ci:
+	ansible-playbook \
+	--verbose \
+	--inventory-file hosts \
+	--extra-vars @../dotfiles/studio/ryokan/ci.yml \
+	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
+	playbooks/ci.yml
+
 home:
 	ansible-playbook \
 	--verbose \
@@ -37,5 +45,5 @@ workstation:
 	--inventory-file hosts \
 	--extra-vars @../dotfiles/studio/ryokan/workstation.yml \
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
-    --ask-sudo-pass \
+  --ask-sudo-pass \
 	playbooks/workstation.yml
