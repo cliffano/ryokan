@@ -14,13 +14,13 @@ ci:
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
 	playbooks/ci.yml
 
-home:
+media:
 	ansible-playbook \
 	--verbose \
 	--inventory-file hosts \
-	--extra-vars @../dotfiles/studio/ryokan/home.yml \
+	--extra-vars @../dotfiles/studio/ryokan/media.yml \
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
-	playbooks/home.yml
+	playbooks/media.yml
 
 iot:
 	ansible-playbook \
