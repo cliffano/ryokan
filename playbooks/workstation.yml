@@ -71,8 +71,11 @@
   - name: Set .profile
     lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=yes
     with_items:
-      - export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH
+      - export PATH=~/dev/go/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/rvm/bin:$PATH
+      - source ~/.virtualenv/local/bin/activate
       - source ~/.nvm/nvm.sh && nvm use default
-      - export JAVA_HOME=`/usr/libexec/java_home -v 1.6`
-      - export JENKINS_URL=http://gennou:8080
+      - export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+      - export JENKINS_URL=http://pakkun.local:8080
+      - export M2_HOME=/usr/local/homebrew/Cellar/maven/3.2.5/libexec
       - alias resize-images='find . -iname \"*.*\" -exec mogrify -resize 1024x1024 {} \;'
+      - alias gpp='git pull --rebase && git push'
