@@ -19,6 +19,7 @@
       - nmap
       - httpie
       - jq
+      - hugo
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions
@@ -28,11 +29,12 @@
       - facter
       - hiera
       - puppet
+      - atom
     rvm1_install_flags: '--user-install'
 
   roles:
     - { role: geerlingguy.homebrew }
-    - { role: rvm_io.rvm1-ruby }
+    #- { role: rvm_io.rvm1-ruby }
 
   tasks:
 
