@@ -20,6 +20,7 @@
       - httpie
       - jq
       - hugo
+      - terraform
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions
