@@ -9,8 +9,6 @@
       - imagemagick
       - sysdig
       - gpg
-      - brew-cask
-      - maven
       - packer
       - awscli
       - hg
@@ -38,6 +36,11 @@
     #- { role: rvm_io.rvm1-ruby }
 
   tasks:
+
+  - pip: name={{ item }}
+    with_items:
+      - pygments
+      - pygments-zenburn
 
   - name: Ensure SSH directory exists
     file: path={{ home }}/.ssh state=directory
