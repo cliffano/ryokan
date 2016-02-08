@@ -56,13 +56,6 @@
       - konoha_id_rsa
       - konoha_id_rsa.pub
 
-  - name: Set Sendman configuration for GD hosts
-    template: src={{ workspace }}/dotfiles/studio/sendman/{{ item }}.json dest={{ home }}/.ssh/{{ item }}.json
-    with_items:
-      - deidara
-      - kakuzu
-      - kisame
-
   - name: Set PyPI configuration
     template: src={{ workspace }}/dotfiles/python/.pypirc dest={{ home }}/.pypirc
 
