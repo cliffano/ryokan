@@ -19,6 +19,7 @@
       - jq
       - hugo
       - terraform
+      - maven
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions
