@@ -74,8 +74,8 @@
       - export PATH=~/dev/go/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/rvm/bin:$PATH
       - source ~/.virtualenv/local/bin/activate
       - source ~/.nvm/nvm.sh && nvm use default
-      - export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+      - export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
       - export JENKINS_URL=http://pakkun.local:8080
-      - export M2_HOME=/usr/local/homebrew/Cellar/maven/3.2.5/libexec
+      - export M2_HOME=/usr/local/homebrew/Cellar/maven/3.3.9/libexec
       - alias resize-images='find . -iname \"*.*\" -exec mogrify -resize 1024x1024 {} \;'
       - alias gpp='git pull --rebase && git push'
