@@ -20,6 +20,7 @@
       - hugo
       - terraform
       - maven
+      - go
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions
@@ -71,7 +72,8 @@
   - name: Set .profile
     lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=yes
     with_items:
-      - export PATH=~/dev/go/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/rvm/bin:$PATH
+      - export GOPATH=~/dev/gopath
+      - export PATH=$GOPATH/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/rvm/bin:$PATH
       - source ~/.virtualenv/local/bin/activate
       - source ~/.nvm/nvm.sh && nvm use default
       - export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
