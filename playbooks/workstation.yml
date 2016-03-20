@@ -82,4 +82,4 @@
       - export PACKER_HOME=/usr/local/homebrew/Cellar/packer/0.8.6
       - alias resize-images='find . -iname \"*.*\" -exec mogrify -resize 1024x1024 {} \;'
       - alias gpp='git pull --rebase && git push'
-      - alias pppju='rm $PACKER_HOME/bin/packer-post-processor-json-updater && cp packer-post-processor-json-updater_darwin_amd64 $PACKER_HOME/bin/packer-post-processor-json-updater'
+      - alias pppju='rm -f $PACKER_HOME/bin/packer-post-processor-json-updater && make clean && gox -osarch="darwin/amd64" && cp packer-post-processor-json-updater_darwin_amd64 $PACKER_HOME/bin/packer-post-processor-json-updater'
