@@ -1,3 +1,4 @@
 roles
 ryokan.log
 *.pyc
+*.retry
