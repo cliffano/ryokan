@@ -31,11 +31,13 @@
       - hiera
       - puppet
       - atom
+      - java
     rvm1_install_flags: '--user-install'
 
   roles:
-    - { role: geerlingguy.homebrew }
+    #- { role: geerlingguy.homebrew }
     #- { role: rvm_io.rvm1-ruby }
+    - { role: cliffano.newrelic-unix }
 
   tasks:
 
