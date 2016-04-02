@@ -9,7 +9,8 @@
       - caskroom/cask
 
   roles:
-    - { role: geerlingguy.homebrew }
+    # - { role: geerlingguy.homebrew }
+    - { role: cliffano.newrelic-unix }
 
   tasks:
 
