@@ -2,12 +2,13 @@
 - hosts: ci
 
   roles:
-    - role: leonidas.nvm
-      nvm:
-        user: jenkins
-        version: v0.28.0
-        node_version: '4'
-      sudo: yes
+    # - role: leonidas.nvm
+    #   nvm:
+    #     user: jenkins
+    #     version: v0.28.0
+    #     node_version: '4'
+    #   sudo: yes
+    - { role: cliffano.newrelic-unix }
 
   tasks:
 
@@ -17,8 +18,8 @@
       - jenkins
       - dh-autoreconf
 
-  - name: Set Sendman configuration for GD hosts
-    template: src={{ workspace }}/dotfiles/studio/sendman/{{ item }}.json dest={{ home }}/.ssh/{{ item }}.json
+  - name: Ensure old Sendman configuration for GD hosts are removed
+    file: path={{ workspace }}/dotfiles/studio/sendman/{{ item }}.json state=absent
     with_items:
       - deidara
       - kakuzu
