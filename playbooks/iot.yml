@@ -1,14 +1,15 @@
 ---
 - hosts: iot
 
+  roles:
   # NOTE: commented out because v0.10.33 installation requires compilation that takes ages on Ninja Blocks
-  # roles:
   #   - role: leonidas.nvm
   #     nvm:
   #       user: root
   #       version: v0.28.0
   #       node_version: '0.10.33' # NOTE: lock this down to v0.10.33 due to Ninja Blocks compatibility issue
   #     sudo: yes
+    - { role: cliffano.newrelic-unix }
 
   tasks:
 
