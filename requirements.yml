@@ -7,8 +7,8 @@
 # - src: http://github.com/cliffano/ansible-role-newrelic-unix
 #   path: roles/
 
-# - src: cliffano.newrelic-unix
-#   path: roles/
+- src: cliffano.newrelic-unix
+  path: roles/
 
 - src: geerlingguy.homebrew
   path: roles/
