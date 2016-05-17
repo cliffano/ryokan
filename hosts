@@ -1,6 +1,9 @@
 [ci]
 pakkun
 
+[cloud-a]
+localhost
+
 [iot]
 konohamaru
 

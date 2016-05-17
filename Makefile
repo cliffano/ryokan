@@ -4,6 +4,7 @@ clean:
 
 init:
 	mkdir -p roles
+	pip install -r requirements.txt
 	ansible-galaxy install -r requirements.yml --force
 
 ci:
@@ -13,6 +14,15 @@ ci:
 	--extra-vars @../dotfiles/studio/ryokan/ci.yml \
 	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
 	playbooks/ci.yml
+
+cloud-a:
+	ansible-playbook \
+	--verbose \
+	--connection local \
+	--inventory-file hosts \
+	--extra-vars @../dotfiles/studio/ryokan/cloud-a.yml \
+	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
+	playbooks/cloud-a.yml
 
 media:
 	ansible-playbook \

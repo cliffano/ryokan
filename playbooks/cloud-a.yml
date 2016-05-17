@@ -1,0 +1,11 @@
+---
+- hosts: cloud-a
+
+  tasks:
+
+  - name: Ensure Terraform states bucket exists
+    s3_bucket:
+      name: ryokan-tf-states
+      region: ap-southeast-2
+      tags:
+        project: ryokan
