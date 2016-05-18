@@ -21,6 +21,7 @@
       - terraform
       - maven
       - go
+      - virtualenv
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions
@@ -37,7 +38,7 @@
   roles:
     #- { role: geerlingguy.homebrew }
     #- { role: rvm_io.rvm1-ruby }
-    - { role: cliffano.newrelic-unix }
+    #- { role: cliffano.newrelic-unix }
 
   tasks:
 
@@ -86,3 +87,4 @@
       - alias gpp='git pull --rebase && git push'
       - alias pppju='rm -f $PACKER_HOME/bin/packer-post-processor-json-updater && make clean && gox -osarch="darwin/amd64" && cp packer-post-processor-json-updater_darwin_amd64 $PACKER_HOME/bin/packer-post-processor-json-updater'
       - export GOOGLE_DEVELOPER_API_KEY={{ google_developer_api_key }}
+      - export FEEDPAPER_ENV=stg
