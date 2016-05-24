@@ -88,3 +88,5 @@
       - alias pppju='rm -f $PACKER_HOME/bin/packer-post-processor-json-updater && make clean && gox -osarch="darwin/amd64" && cp packer-post-processor-json-updater_darwin_amd64 $PACKER_HOME/bin/packer-post-processor-json-updater'
       - export GOOGLE_DEVELOPER_API_KEY={{ google_developer_api_key }}
       - export FEEDPAPER_ENV=stg
+      - export FEEDPAPER_CFG=../../dotfiles/studio/feedpaper
+      - export KONTIKI_CFG=../../dotfiles/studio/kon-tiki
