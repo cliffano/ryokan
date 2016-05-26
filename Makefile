@@ -11,8 +11,8 @@ ci:
 	ansible-playbook \
 	--verbose \
 	--inventory-file hosts \
-	--extra-vars @../dotfiles/studio/ryokan/ci.yml \
-	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
+	--extra-vars @../config/studio/ryokan/ci.yml \
+	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/ci.yml
 
 cloud-a:
@@ -20,32 +20,32 @@ cloud-a:
 	--verbose \
 	--connection local \
 	--inventory-file hosts \
-	--extra-vars @../dotfiles/studio/ryokan/cloud-a.yml \
-	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
+	--extra-vars @../config/studio/ryokan/cloud-a.yml \
+	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/cloud-a.yml
 
 media:
 	ansible-playbook \
 	--verbose \
 	--inventory-file hosts \
-	--extra-vars @../dotfiles/studio/ryokan/media.yml \
-	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
+	--extra-vars @../config/studio/ryokan/media.yml \
+	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/media.yml
 
 iot:
 	ansible-playbook \
 	--verbose \
 	--inventory-file hosts \
-	--extra-vars @../dotfiles/studio/ryokan/iot.yml \
-	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
+	--extra-vars @../config/studio/ryokan/iot.yml \
+	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/iot.yml
 
 web:
 	ansible-playbook \
 	--verbose \
 	--inventory-file hosts \
-	--extra-vars @../dotfiles/studio/ryokan/web.yml \
-	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
+	--extra-vars @../config/studio/ryokan/web.yml \
+	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/web.yml
 
 workstation:
@@ -53,7 +53,7 @@ workstation:
 	--verbose \
 	--connection=local \
 	--inventory-file hosts \
-	--extra-vars @../dotfiles/studio/ryokan/workstation.yml \
-	--vault-password-file ../dotfiles/studio/ryokan/vault.txt \
+	--extra-vars @../config/studio/ryokan/workstation.yml \
+	--vault-password-file ../config/studio/ryokan/vault.txt \
   --ask-sudo-pass \
 	playbooks/workstation.yml

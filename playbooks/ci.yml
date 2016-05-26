@@ -19,7 +19,7 @@
       - dh-autoreconf
 
   - name: Ensure old Sendman configuration for GD hosts are removed
-    file: path={{ workspace }}/dotfiles/studio/sendman/{{ item }}.json state=absent
+    file: path={{ workspace }}/config/studio/sendman/{{ item }}.json state=absent
     with_items:
       - deidara
       - kakuzu
