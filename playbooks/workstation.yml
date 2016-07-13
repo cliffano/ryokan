@@ -22,6 +22,7 @@
       - maven
       - go
       - virtualenv
+      - tmux
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions
@@ -83,6 +84,7 @@
       - export PATH=$GOPATH/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/rvm/bin:$PATH
       - source ~/.virtualenv/local/bin/activate
       - source ~/.nvm/nvm.sh && nvm use default
+      - source ~/.bin/tmuxinator.bash
       - export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
       - export JENKINS_URL=http://pakkun.local:8080
       - export M2_HOME=/usr/local/homebrew/Cellar/maven/3.3.9/libexec
