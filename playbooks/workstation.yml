@@ -47,6 +47,10 @@
       - pygments
       - pygments-zenburn
 
+  - gem: name={{ item }}
+    with_items:
+      - tmuxinator
+
   - name: Ensure SSH directory exists
     file: path={{ home }}/.ssh state=directory
 
@@ -90,3 +94,4 @@
       - export FEEDPAPER_ENV=stg
       - export FEEDPAPER_CFG=../../config/studio/feedpaper
       - export KONTIKI_CFG=../../config/studio/kon-tiki
+      - export PATH="/usr/local/sbin:$PATH"
