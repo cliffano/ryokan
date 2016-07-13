@@ -95,3 +95,4 @@
       - export FEEDPAPER_CFG=../../config/studio/feedpaper
       - export KONTIKI_CFG=../../config/studio/kon-tiki
       - export PATH="/usr/local/sbin:$PATH"
+      - export EDITOR="vim"
