@@ -99,6 +99,9 @@
       - export PATH="/usr/local/sbin:$PATH"
       - export EDITOR="vim"
 
-  - name: Set kon-tiki tmuxinator project config
-    file: src={{ workspace }}/kon-tiki/tmuxinator.yml dest={{ home }}/.tmuxinator/kon-tiki.yml state=link
+  - name: Set tmuxinator project configs
+    file: src={{ workspace }}/{{ item }}/tmuxinator.yml dest={{ home }}/.tmuxinator/{{ item }}.yml state=link
+    items:
+      - feedpaper
+      - kon-tiki
 
