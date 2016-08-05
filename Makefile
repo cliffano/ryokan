@@ -1,5 +1,6 @@
 clean:
 	rm -f ryokan.log
+	rm -f tmux*.log
 	rm -rf roles
 
 init:
