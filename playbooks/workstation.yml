@@ -90,6 +90,7 @@
       - export M2_HOME=/usr/local/homebrew/Cellar/maven/3.3.9/libexec
       - export PACKER_HOME=/usr/local/homebrew/Cellar/packer/0.8.6
       - alias resize-images='find . -iname \"*.*\" -exec mogrify -resize 1024x1024 {} \;'
+      - alias gpr='git pull --rebase'
       - alias gpp='git pull --rebase && git push'
       - alias pppju='rm -f $PACKER_HOME/bin/packer-post-processor-json-updater && make clean && gox -osarch="darwin/amd64" && cp packer-post-processor-json-updater_darwin_amd64 $PACKER_HOME/bin/packer-post-processor-json-updater'
       - export GOOGLE_DEVELOPER_API_KEY={{ google_developer_api_key }}
