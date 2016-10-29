@@ -13,7 +13,7 @@
 - src: geerlingguy.homebrew
   path: roles/
 
-- src: Rackspace_Automation.newrelic
+- src: rack-roles.newrelic
   path: roles/
 
 - src: leonidas.nvm
