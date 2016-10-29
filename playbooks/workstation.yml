@@ -98,7 +98,7 @@
       - export FEEDPAPER_ENV=stg
       - export FEEDPAPER_CFG=../../config/studio/feedpaper
       - export KONTIKI_CFG=../../config/studio/kon-tiki
-      - export PATH="~/dev/terraform_0.7.0_darwin_amd64:/usr/local/sbin:$PATH"
+      - export PATH="~/dev/terraform_0.7.1_darwin_amd64:/usr/local/sbin:$PATH"
       - export EDITOR="vim"
 
   - name: Set tmuxinator project configs
