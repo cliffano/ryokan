@@ -4,6 +4,7 @@
   vars:
     homebrew_install_path: /usr/local/homebrew
     homebrew_installed_packages:
+      - shellcheck
       - xz
       - wget
       - imagemagick
@@ -37,7 +38,7 @@
     rvm1_install_flags: '--user-install'
 
   roles:
-    #- { role: geerlingguy.homebrew }
+    - { role: geerlingguy.homebrew }
     #- { role: rvm_io.rvm1-ruby }
     #- { role: cliffano.newrelic-unix }
 
@@ -89,6 +90,7 @@
       - export JENKINS_URL=http://pakkun.local:8080
       - export M2_HOME=/usr/local/homebrew/Cellar/maven/3.3.9/libexec
       - export PACKER_HOME=/usr/local/homebrew/Cellar/packer/0.8.6
+      - alias clean-sdcard='rm -rf .Trashes/ ._.TemporaryItems .TemporaryItems/'
       - alias resize-images='find . -iname \"*.*\" -exec mogrify -resize 1024x1024 {} \;'
       - alias gs='git status'
       - alias gpr='git pull --rebase'
@@ -106,4 +108,3 @@
     items:
       - feedpaper
       - kon-tiki
-
