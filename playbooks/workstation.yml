@@ -38,9 +38,9 @@
     rvm1_install_flags: '--user-install'
 
   roles:
-    - { role: geerlingguy.homebrew }
-    #- { role: rvm_io.rvm1-ruby }
-    #- { role: cliffano.newrelic-unix }
+    # - { role: geerlingguy.homebrew }
+    # - { role: rvm_io.rvm1-ruby }
+    # - { role: cliffano.newrelic-unix }
 
   tasks:
 
@@ -109,3 +109,8 @@
     items:
       - feedpaper
       - kon-tiki
+
+  - name: Ensure global npm packages are installed
+    npm: name="{{item}}" global=yes state=present
+    items:
+      - repoman
