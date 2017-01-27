@@ -97,6 +97,7 @@
       - alias gprp='git pull --rebase && git push'
       - alias grh='git reset HEAD~'
       - alias pppju='rm -f $PACKER_HOME/bin/packer-post-processor-json-updater && make clean && gox -osarch="darwin/amd64" && cp packer-post-processor-json-updater_darwin_amd64 $PACKER_HOME/bin/packer-post-processor-json-updater'
+      - alias makelist='make -qp | awk -F'\'':'\'' '\''/^[a-zA-Z0-9][^$#\/\t=]*:([^=]|$)/ {split($1,A,/ /);for(i in A)print A[i]}'\'''
       - alias shine-aem-tmux-init='ln -s ~/dev/workspace/config/work-shine/tmuxinator-aem.yml ~/.tmuxinator/shine-aem-workspace.yml'
       - alias shine-aem-tmux-start='tmuxinator start shine-aem-workspace'
       - export GOOGLE_DEVELOPER_API_KEY={{ google_developer_api_key }}
