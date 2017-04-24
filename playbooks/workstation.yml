@@ -54,7 +54,10 @@
       - tmuxinator
 
   - name: Ensure SSH directory exists
-    file: path={{ home }}/.ssh state=directory
+    file: path={{ home }}/.ssh/ state=directory
+
+  - name: Ensure SSH config directory exists
+    file: path={{ home }}/.ssh/config.d/ state=directory
 
   - name: Ensure workspace directory exists
     file: path={{ workspace }} state=directory
@@ -65,6 +68,16 @@
       - config
       - konoha_id_rsa
       - konoha_id_rsa.pub
+
+  - name: Set SSH configuration Studio include
+    file: src={{ workspace }}/config/studio/{{ item }} dest={{ home }}/.ssh/config.d/config-studio state=link
+    with_items:
+      - .ssh_config
+
+  - name: Set SSH configuration Shine includes
+    file: src={{ workspace }}/config/work-shine/{{ item }} dest={{ home }}/.ssh/config.d/config-shine state=link
+    with_items:
+      - .ssh_config
 
   - name: Set PyPI configuration
     template: src={{ workspace }}/config/python/.pypirc dest={{ home }}/.pypirc
