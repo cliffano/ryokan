@@ -92,8 +92,10 @@
       - export PACKER_HOME=/usr/local/homebrew/Cellar/packer/0.8.6
       - alias clean-sdcard='rm -rf .Trashes/ ._.TemporaryItems .TemporaryItems/'
       - alias resize-images='find . -iname \"*.*\" -exec mogrify -resize 1024x1024 {} \;'
+      - alias gd='git diff'
       - alias gs='git status'
       - alias gpr='git pull --rebase'
+      - alias gpt='git push --tags'
       - alias gprp='git pull --rebase && git push'
       - alias grh='git reset HEAD~'
       - alias pppju='rm -f $PACKER_HOME/bin/packer-post-processor-json-updater && make clean && gox -osarch="darwin/amd64" && cp packer-post-processor-json-updater_darwin_amd64 $PACKER_HOME/bin/packer-post-processor-json-updater'
