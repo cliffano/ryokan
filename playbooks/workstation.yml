@@ -105,6 +105,7 @@
       - export PACKER_HOME=/usr/local/homebrew/Cellar/packer/0.8.6
       - alias clean-sdcard='rm -rf .Trashes/ ._.TemporaryItems .TemporaryItems/'
       - alias resize-images='find . -iname \"*.*\" -exec mogrify -resize 1024x1024 {} \;'
+      - alias gaa='git add -A'
       - alias gd='git diff'
       - alias gs='git status'
       - alias gpr='git pull --rebase'
