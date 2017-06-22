@@ -1,0 +1,23 @@
+---
+- hosts: util
+
+  vars:
+    foo: bar
+
+  roles:
+    # - { role: cliffano.newrelic-unix, become: yes }
+
+  tasks:
+
+  - name: Set .bashrc
+    lineinfile: dest={{ home }}/.bashrc line="{{ item }}" state=present backup=yes
+    with_items:
+      - alias gaa='git add -A'
+      - alias gd='git diff'
+      - alias gs='git status'
+      - alias gpr='git pull --rebase'
+      - alias gpt='git push --tags'
+      - alias gprp='git pull --rebase && git push'
+      - alias grh='git reset HEAD~'
+      - alias dsa='docker stop $(docker ps -a -q)'
+      - alias dra='docker rm $(docker ps -a -q)'

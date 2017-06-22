@@ -41,6 +41,14 @@ iot:
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/iot.yml
 
+util:
+	ansible-playbook \
+	--verbose \
+	--inventory-file hosts \
+	--extra-vars @../config/studio/ryokan/util.yml \
+	--vault-password-file ../config/studio/ryokan/vault.txt \
+	playbooks/util.yml
+
 web:
 	ansible-playbook \
 	--verbose \
