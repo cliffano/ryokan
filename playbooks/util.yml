@@ -9,7 +9,7 @@
 
   tasks:
 
-  - name: Set .bashrc
+  - name: Set ec2-user .bashrc
     lineinfile: dest={{ home }}/.bashrc line="{{ item }}" state=present backup=yes
     with_items:
       - alias gaa='git add -A'
@@ -21,3 +21,32 @@
       - alias grh='git reset HEAD~'
       - alias dsa='docker stop $(docker ps -a -q)'
       - alias dra='docker rm $(docker ps -a -q)'
+
+  - name: Set root .bashrc
+    become: yes
+    lineinfile: dest=/root/.bashrc line="{{ item }}" state=present backup=yes
+    with_items:
+      - alias dsa='docker stop $(docker ps -a -q)'
+      - alias dra='docker rm $(docker ps -a -q)'
+
+  - name: Ensure required gems are installed
+    gem:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - r10k
+
+  - name: Ensure dev directory exists
+    file: path={{ home }}/dev/ state=directory
+
+  - name: Ensure workspace directory exists
+    file: path={{ home }}/dev/workspace/ state=directory
+
+  - name: Ensure repos are cloned
+    git:
+      repo: "https://github.com/cliffano/{{ item }}.git"
+      dest: "{{ home }}/dev/workspace/{{ item }}"
+      update: no
+    with_items:
+      - packer-swaggy-c
+      - swaggy-jenkins
