@@ -116,6 +116,9 @@
       - alias makelist='make -qp | awk -F'\'':'\'' '\''/^[a-zA-Z0-9][^$#\/\t=]*:([^=]|$)/ {split($1,A,/ /);for(i in A)print A[i]}'\'''
       - alias shine-aem-tmux-init='ln -s ~/dev/workspace/config/work-shine/tmuxinator-aem.yml ~/.tmuxinator/shine-aem-workspace.yml'
       - alias shine-aem-tmux-start='tmuxinator start shine-aem-workspace'
+      - alias haku-start='AWS_PROFILE=studio AWS_DEFAULT_REGION=us-west-2 aws ec2 start-instances --instance-ids $HAKU_ID'
+      - alias haku-stop='AWS_PROFILE=studio AWS_DEFAULT_REGION=us-west-2 aws ec2 stop-instances --instance-ids $HAKU_ID'
+      - alias haku-info='AWS_PROFILE=studio AWS_DEFAULT_REGION=us-west-2 aws ec2 describe-instances --instance-ids $HAKU_ID'
       - export GOOGLE_DEVELOPER_API_KEY={{ google_developer_api_key }}
       - export FEEDPAPER_ENV=stg
       - export FEEDPAPER_CFG=../../config/studio/feedpaper
