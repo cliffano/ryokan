@@ -18,11 +18,9 @@
       - nmap
       - httpie
       - jq
-      - hugo
       - terraform
       - maven
       - go
-      - virtualenv
       - tmux
     homebrew_taps:
       - caskroom/cask
@@ -38,7 +36,7 @@
     rvm1_install_flags: '--user-install'
 
   roles:
-    # - { role: geerlingguy.homebrew }
+    - { role: geerlingguy.homebrew }
     # - { role: rvm_io.rvm1-ruby }
     # - { role: cliffano.newrelic-unix }
 
@@ -96,9 +94,8 @@
     with_items:
       - export GOPATH=~/dev/gopath
       - export PATH=$GOPATH/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/rvm/bin:$PATH
-      - source ~/.virtualenv/local/bin/activate
       - source ~/.nvm/nvm.sh && nvm use default
-      - source ~/.bin/tmuxinator.bash
+      - source ~/.gem/ruby/2.0.0/gems/tmuxinator-0.8.1/completion/tmuxinator.bash
       - export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
       - export JENKINS_URL=http://pakkun.local:8080
       - export M2_HOME=/usr/local/homebrew/Cellar/maven/3.3.9/libexec

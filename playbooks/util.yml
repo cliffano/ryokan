@@ -5,9 +5,18 @@
     foo: bar
 
   roles:
-    # - { role: cliffano.newrelic-unix, become: yes }
+    - { role: andrewrothstein.packer, become: yes, packer_ver: 1.0.0, packer_checksum: "md5:7b4adb98454fbfff7ef673245d345293" }
+    - { role: cliffano.newrelic-unix, become: yes }
 
   tasks:
+
+  - package:
+      name: "{{ item }}"
+      state: latest
+    become: yes
+    with_items:
+      - git
+      - docker
 
   - name: Set ec2-user .bashrc
     lineinfile: dest={{ home }}/.bashrc line="{{ item }}" state=present backup=yes
@@ -19,22 +28,26 @@
       - alias gpt='git push --tags'
       - alias gprp='git pull --rebase && git push'
       - alias grh='git reset HEAD~'
-      - alias dsa='docker stop $(docker ps -a -q)'
-      - alias dra='docker rm $(docker ps -a -q)'
+      - alias dsa='sudo docker stop $(sudo docker ps -a -q)'
+      - alias dra='sudo docker rm $(sudo docker ps -a -q)'
+      - alias dia='sudo docker rmi $(sudo docker images -q --filter "dangling=true")'
+      - alias drn='sudo docker run --workdir /opt/workspace -v `pwd`:/opt/workspace -t cliffano/swaggy-c'
 
   - name: Set root .bashrc
     become: yes
     lineinfile: dest=/root/.bashrc line="{{ item }}" state=present backup=yes
     with_items:
-      - alias dsa='docker stop $(docker ps -a -q)'
-      - alias dra='docker rm $(docker ps -a -q)'
+      - alias dsa='sudo docker stop $(sudo docker ps -a -q)'
+      - alias dra='sudo docker rm $(sudo docker ps -a -q)'
 
   - name: Ensure required gems are installed
     gem:
-      name: "{{ item }}"
+      name: "{{ item.name }}"
+      version: "{{ item.version }}"
       state: present
     with_items:
-      - r10k
+      - { name: puppet_forge, version: 2.2.4 }
+      - { name: r10k, version: 2.5.5 }
 
   - name: Ensure dev directory exists
     file: path={{ home }}/dev/ state=directory

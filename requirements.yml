@@ -1,3 +1,9 @@
+- src: andrewrothstein.packer
+  path: roles/
+
+- src: andrewrothstein.unarchive-deps
+  path: roles/
+
 # - src: http://github.com/cliffano/ansible-role-droplet-docker
 #   path: roles/
 
@@ -13,8 +19,8 @@
 - src: geerlingguy.homebrew
   path: roles/
 
-- src: rack-roles.newrelic
-  path: roles/
+#- src: rack-roles.newrelic
+#  path: roles/
 
 - src: leonidas.nvm
   path: roles/
