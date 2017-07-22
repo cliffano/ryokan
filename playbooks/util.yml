@@ -5,7 +5,7 @@
     foo: bar
 
   roles:
-    - { role: andrewrothstein.packer, become: yes, packer_ver: 1.0.0, packer_checksum: "md5:7b4adb98454fbfff7ef673245d345293" }
+    - { role: andrewrothstein.packer, become: yes, packer_ver: 1.0.2, packer_checksum: "md5:9f190daf0e42b52c1f2a186b73f90060" }
     - { role: cliffano.newrelic-unix, become: yes }
 
   tasks:
@@ -37,8 +37,17 @@
     become: yes
     lineinfile: dest=/root/.bashrc line="{{ item }}" state=present backup=yes
     with_items:
-      - alias dsa='sudo docker stop $(sudo docker ps -a -q)'
-      - alias dra='sudo docker rm $(sudo docker ps -a -q)'
+      - alias gaa='git add -A'
+      - alias gd='git diff'
+      - alias gs='git status'
+      - alias gpr='git pull --rebase'
+      - alias gpt='git push --tags'
+      - alias gprp='git pull --rebase && git push'
+      - alias grh='git reset HEAD~'
+      - alias dsa='docker stop $(docker ps -a -q)'
+      - alias dra='docker rm $(docker ps -a -q)'
+      - alias dia='docker rmi $(docker images -q --filter "dangling=true")'
+      - alias drn='docker run --workdir /opt/workspace -v `pwd`:/opt/workspace -t cliffano/swaggy-c'
 
   - name: Ensure required gems are installed
     gem:
