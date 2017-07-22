@@ -5,6 +5,8 @@ clean:
 
 init:
 	mkdir -p roles
+
+deps: init
 	pip install -r requirements.txt
 	ansible-galaxy install -r requirements.yml --force
 
