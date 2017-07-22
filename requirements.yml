@@ -16,6 +16,9 @@
 - src: cliffano.newrelic-unix
   path: roles/
 
+- src: Comcast.sdkman
+  path: roles/
+
 - src: geerlingguy.homebrew
   path: roles/
 

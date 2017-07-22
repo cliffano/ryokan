@@ -19,7 +19,6 @@
       - httpie
       - jq
       - terraform
-      - maven
       - go
       - tmux
     homebrew_taps:
@@ -34,11 +33,29 @@
       - atom
       - java
     rvm1_install_flags: '--user-install'
+    sdkman_dir: /usr/local/sdkman
+    sdkman_auto_answer: true
+    sdkman_update: true
+    sdkman_uninstall_packages:
+      - { candidate: groovy, version: 1.8.9 }
+    sdkman_install_packages:
+      - { candidate: maven, version: 3.5.0 }
+      - { candidate: maven, version: 3.3.9 }
+    sdkman_defaults:
+      maven: 3.5.0
+    sdkman_flush_caches_before:
+      - temp
+    sdkman_flush_caches_after:
+      - archives
+      - broadcast
+      - candidates
+      - temp
 
   roles:
-    - { role: geerlingguy.homebrew }
+    # - { role: geerlingguy.homebrew }
     # - { role: rvm_io.rvm1-ruby }
     # - { role: cliffano.newrelic-unix }
+    - { role: Comcast.sdkman }
 
   tasks:
 
