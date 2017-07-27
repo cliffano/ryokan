@@ -55,7 +55,7 @@
     # - { role: geerlingguy.homebrew }
     # - { role: rvm_io.rvm1-ruby }
     # - { role: cliffano.newrelic-unix }
-    - { role: Comcast.sdkman }
+    # - { role: Comcast.sdkman }
 
   tasks:
 
@@ -133,6 +133,7 @@
       - alias haku-start='AWS_PROFILE=studio AWS_DEFAULT_REGION=us-west-2 aws ec2 start-instances --instance-ids $HAKU_ID'
       - alias haku-stop='AWS_PROFILE=studio AWS_DEFAULT_REGION=us-west-2 aws ec2 stop-instances --instance-ids $HAKU_ID'
       - alias haku-info='AWS_PROFILE=studio AWS_DEFAULT_REGION=us-west-2 aws ec2 describe-instances --instance-ids $HAKU_ID'
+      - alias haku-ip='haku-info | jq -r -M ".Reservations | .[0] | .Instances | .[0] | .PublicIpAddress"'
       - export GOOGLE_DEVELOPER_API_KEY={{ google_developer_api_key }}
       - export FEEDPAPER_ENV=stg
       - export FEEDPAPER_CFG=../../config/studio/feedpaper
