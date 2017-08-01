@@ -1,9 +1,6 @@
 ---
 - hosts: util
 
-  vars:
-    foo: bar
-
   roles:
     - { role: andrewrothstein.packer, become: yes, packer_ver: 1.0.2, packer_checksum: "md5:9f190daf0e42b52c1f2a186b73f90060" }
     - { role: cliffano.newrelic-unix, become: yes }
