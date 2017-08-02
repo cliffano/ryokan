@@ -2,8 +2,8 @@
 - hosts: util
 
   roles:
-    - { role: andrewrothstein.packer, become: yes, packer_ver: 1.0.2, packer_checksum: "md5:9f190daf0e42b52c1f2a186b73f90060" }
-    - { role: cliffano.newrelic-unix, become: yes }
+    # - { role: andrewrothstein.packer, become: yes, packer_ver: 1.0.2, packer_checksum: "md5:9f190daf0e42b52c1f2a186b73f90060" }
+    # - { role: cliffano.newrelic-unix, become: yes }
 
   tasks:
 
@@ -49,7 +49,7 @@
       - alias dsa='sudo docker stop $(sudo docker ps -a -q)'
       - alias dra='sudo docker rm $(sudo docker ps -a -q)'
       - alias dia='sudo docker rmi $(sudo docker images -q --filter "dangling=true")'
-      - alias drn='sudo docker run --workdir /opt/workspace -v `pwd`:/opt/workspace -t cliffano/swaggy-c'
+      - alias drn='sudo docker run --rm --workdir /opt/workspace -v `pwd`:/opt/workspace -t cliffano/swaggy-c'
 
   - name: Set root .bashrc
     become: yes
@@ -65,7 +65,7 @@
       - alias dsa='docker stop $(docker ps -a -q)'
       - alias dra='docker rm $(docker ps -a -q)'
       - alias dia='docker rmi $(docker images -q --filter "dangling=true")'
-      - alias drn='docker run --workdir /opt/workspace -v `pwd`:/opt/workspace -t cliffano/swaggy-c'
+      - alias drn='docker run --rm --workdir /opt/workspace -v `pwd`:/opt/workspace -t cliffano/swaggy-c'
 
   - name: Ensure required gems are installed
     gem:
