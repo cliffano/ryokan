@@ -15,6 +15,8 @@
       - git
       - docker
       - java-1.8.0-openjdk
+      - gcc-c++
+      - make
 
   - package:
       name: "{{ item }}"
@@ -23,6 +25,18 @@
     with_items:
       - java-1.6.0-openjdk
       - java-1.7.0-openjdk
+      
+  - shell: curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
+
+  - package:
+      name: nodejs
+      state: installed
+    become: yes
+
+  - npm:
+      name: swagger-cli
+      global: yes
+    become: yes
 
   - rpm_key:
       state: present
