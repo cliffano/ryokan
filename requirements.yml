@@ -28,6 +28,9 @@
 - src: leonidas.nvm
   path: roles/
 
+- src: pablocrivella.nvm
+  path: roles/
+
 - src: rvm_io.rvm1-ruby
   path: roles/
 
