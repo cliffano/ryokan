@@ -21,6 +21,7 @@
       - terraform
       - go
       - tmux
+      - ruby-build
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions
@@ -32,6 +33,7 @@
       - puppet
       - atom
       - java
+      - google-cloud-sdk
     rvm1_install_flags: '--user-install'
     sdkman_dir: /usr/local/sdkman
     sdkman_auto_answer: true
