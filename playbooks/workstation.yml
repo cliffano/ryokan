@@ -65,6 +65,7 @@
     with_items:
       - pygments
       - pygments-zenburn
+      - aws-google-auth
 
   - gem: name={{ item }}
     with_items:
@@ -141,6 +142,8 @@
       - alias haku-info='AWS_PROFILE=studio AWS_DEFAULT_REGION=us-west-2 aws ec2 describe-instances --instance-ids $HAKU_ID'
       - alias haku-ip='haku-info | jq -r -M ".Reservations | .[0] | .Instances | .[0] | .PublicIpAddress"'
       - export GOOGLE_DEVELOPER_API_KEY={{ google_developer_api_key }}
+      - export GOOGLE_IDP_ID={{ google_idp_id }}
+      - export GOOGLE_SP_ID={{ google_sp_id }}
       - export FEEDPAPER_ENV=stg
       - export FEEDPAPER_CFG=../../config/studio/feedpaper
       - export KONTIKI_CFG=../../config/studio/kon-tiki
