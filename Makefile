@@ -35,6 +35,15 @@ media:
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/media.yml
 
+office:
+	ansible-playbook \
+	--verbose \
+	--connection=local \
+	--inventory-file hosts \
+	--extra-vars @../config/studio/ryokan/office.yml \
+	--vault-password-file ../config/studio/ryokan/vault.txt \
+	playbooks/office.yml
+
 iot:
 	ansible-playbook \
 	--verbose \
