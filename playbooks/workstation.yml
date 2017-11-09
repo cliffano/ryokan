@@ -160,3 +160,4 @@
     npm: name="{{item}}" global=yes state=present
     items:
       - repoman
+      - nba-go
