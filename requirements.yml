@@ -25,14 +25,11 @@
 #- src: rack-roles.newrelic
 #  path: roles/
 
-- src: leonidas.nvm
+- src: gvillalta99.nvm
   path: roles/
 
-- src: pablocrivella.nvm
+- src: altermn.rvm
   path: roles/
 
-- src: rvm_io.rvm1-ruby
-  path: roles/
-
-- src: valentinogagliardi.sysdig
+- src: jebovic.sysdig
   path: roles/

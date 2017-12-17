@@ -1,18 +1,36 @@
 ---
-- hosts: workstation
+- hosts: office-blue
 
   vars:
     homebrew_install_path: /usr/local/homebrew
     homebrew_installed_packages:
       - packer
       - awscli
+      - gpg
     homebrew_taps:
       - caskroom/cask
       - caskroom/versions
       - homebrew/binary
     homebrew_cask_apps:
       - atom
-    rvm1_install_flags: '--user-install'
+    nvm:
+      version: "v0.33.6"
+      path: "~/.nvm"
+      profile_file: "~/.profile"
+      default_node_version: "8"
+      node_versions:
+        - "8"
+        - "6"
+        - "4"
+        - "0.12"
+      packages:
+        - "bob"
+        - "nestor"
+        - "repoman"
+      dependencies:
+        homebrew:
+          - git
+          - curl
     sdkman_dir: /usr/local/sdkman
     sdkman_auto_answer: true
     sdkman_update: true
@@ -30,12 +48,16 @@
       - temp
 
   roles:
-    - { role: rvm_io.rvm1-ruby }
-    - { role: Comcast.sdkman }
+    # - { role: geerlingguy.homebrew }
+    # - { role: altermn.rvm }
+    # - { role: Comcast.sdkman }
+    # - { role: gvillalta99.nvm }
 
   tasks:
 
   - name: Ensure global npm packages are installed
     npm: name="{{item}}" global=yes state=present
     items:
+      - bob
+      - nestor
       - repoman
