@@ -136,7 +136,7 @@
       - alias lessr='less -R'
       - alias pppju='rm -f $PACKER_HOME/bin/packer-post-processor-json-updater && make clean && gox -osarch="darwin/amd64" && cp packer-post-processor-json-updater_darwin_amd64 $PACKER_HOME/bin/packer-post-processor-json-updater'
       - alias makelist='make -qp | awk -F'\'':'\'' '\''/^[a-zA-Z0-9][^$#\/\t=]*:([^=]|$)/ {split($1,A,/ /);for(i in A)print A[i]}'\'''
-      - alias shine-aem-tmux-init='ln -s ~/dev/workspace/config/work-shine/tmuxinator-aem.yml ~/.tmuxinator/shine-aem-workspace.yml'
+      - alias shine-aem-tmux-init='ln -s ~/dev/workspace-studio/config/work-shine/tmuxinator-aem.yml ~/.tmuxinator/shine-aem-workspace.yml'
       - alias shine-aem-tmux-start='tmuxinator start shine-aem-workspace'
       - alias haku-start='AWS_PROFILE=studio AWS_DEFAULT_REGION=us-west-2 aws ec2 start-instances --instance-ids $HAKU_ID'
       - alias haku-stop='AWS_PROFILE=studio AWS_DEFAULT_REGION=us-west-2 aws ec2 stop-instances --instance-ids $HAKU_ID'
@@ -150,6 +150,7 @@
       - export KONTIKI_CFG=../../config/studio/kon-tiki
       - export PATH="~/dev/terraform_0.9.5_darwin_amd64:/usr/local/sbin:$PATH"
       - export EDITOR="vim"
+      - export GPG_TTY=$(tty)
 
   - name: Set tmuxinator project configs
     file: src={{ workspace }}/{{ item }}/tmuxinator.yml dest={{ home }}/.tmuxinator/{{ item }}.yml state=link
