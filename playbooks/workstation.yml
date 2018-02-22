@@ -93,7 +93,7 @@
       - .ssh_config
 
   - name: Set SSH configuration Shine includes
-    file: src={{ workspace }}/config/work-shine/{{ item }} dest={{ home }}/.ssh/config.d/config-shine state=link
+    file: src={{ workspace }}/config/shine/{{ item }} dest={{ home }}/.ssh/config.d/config-shine state=link
     with_items:
       - .ssh_config
 
@@ -125,9 +125,11 @@
       - alias gaa='git add -A'
       - alias gd='git diff'
       - alias gs='git status'
+      - alias gp='git push'
       - alias gpr='git pull --rebase'
       - alias gpt='git push --tags'
       - alias gprp='git pull --rebase && git push'
+      - alias gprpt='git pull --rebase && git push && git push --tags'
       - alias grh='git reset HEAD~'
       - alias dsa='docker stop $(docker ps -a -q)'
       - alias dra='docker rm $(docker ps -a -q)'
@@ -138,6 +140,7 @@
       - alias makelist='make -qp | awk -F'\'':'\'' '\''/^[a-zA-Z0-9][^$#\/\t=]*:([^=]|$)/ {split($1,A,/ /);for(i in A)print A[i]}'\'''
       - alias shine-aem-tmux-init='ln -s ~/dev/workspace-studio/config/work-shine/tmuxinator-aem.yml ~/.tmuxinator/shine-aem-workspace.yml'
       - alias shine-aem-tmux-start='tmuxinator start shine-aem-workspace'
+      - alias shine-open-sesame='open-sesame aws --region ap-southeast-2 --secgroup-id {{shine_aem_bastion_secgroup}} --name cliffs'
       - alias haku-start='AWS_PROFILE=studio AWS_DEFAULT_REGION=us-west-2 aws ec2 start-instances --instance-ids $HAKU_ID'
       - alias haku-stop='AWS_PROFILE=studio AWS_DEFAULT_REGION=us-west-2 aws ec2 stop-instances --instance-ids $HAKU_ID'
       - alias haku-info='AWS_PROFILE=studio AWS_DEFAULT_REGION=us-west-2 aws ec2 describe-instances --instance-ids $HAKU_ID'
@@ -163,3 +166,4 @@
     items:
       - repoman
       - nba-go
+      - open-sesame
