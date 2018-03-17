@@ -52,6 +52,16 @@ iot:
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/iot.yml
 
+studio:
+	ansible-playbook \
+	--verbose \
+	--connection=local \
+	--inventory-file hosts \
+	--extra-vars @../config/studio/ryokan/studio.yml \
+	--vault-password-file ../config/studio/ryokan/vault.txt \
+  --ask-sudo-pass \
+	playbooks/studio.yml
+
 util:
 	ansible-playbook \
 	--verbose \
@@ -68,7 +78,7 @@ web:
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/web.yml
 
-workstation:
+x-workstation:
 	ansible-playbook \
 	--verbose \
 	--connection=local \

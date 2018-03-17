@@ -1,0 +1,71 @@
+---
+- hosts: studio
+
+  vars:
+    orgs:
+      - studio
+      - shine
+    homebrew_installed_packages:
+      - mas
+      - node
+    mas_email: { macappstore.user }
+    mas_password: { macappstore.pass }
+    mas_apps:
+      - { name: DMesh, id: 480992638 }
+      - { name: Pixelmator, id: 407963104 }
+      - { name: Slack, id: 803453959 }
+      - { name: WhatsApp Desktop, id: 1147396723 }
+
+  roles:
+    # - role: geerlingguy.homebrew
+    # - role: rkhmelichek.mas
+
+  tasks:
+
+  - name: Ensure .profile file exists
+    file: path={{ home }}/.profile state=touch mode=0644
+
+  - name: Set basic aliases
+    lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=yes
+    with_items:
+      - alias lessr='less -R'
+
+  - name: Set GitHub aliases
+    lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=yes
+    with_items:
+      - alias gaa='git add -A'
+      - alias gd='git diff'
+      - alias gs='git status'
+      - alias gp='git push'
+      - alias gpr='git pull --rebase'
+      - alias gpt='git push --tags'
+      - alias gprp='git pull --rebase && git push'
+      - alias gprpt='git pull --rebase && git push && git push --tags'
+      - alias grh='git reset HEAD~'
+
+  - name: Set Docker aliases
+    lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=yes
+    with_items:
+      - alias dsa='docker stop $(docker ps -a -q)'
+      - alias dra='docker rm $(docker ps -a -q)'
+      - alias dia='docker rmi $(docker images -q --filter "dangling=true")'
+      - alias drn='docker run --rm --workdir /opt/workspace -v `pwd`:/opt/workspace -t cliffano/swaggy-c'
+
+  - name: Set Studio workspace aliases
+    lineinfile: dest={{ home }}/.profile line="alias workspace-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=yes
+    with_items: "{{ orgs }}"
+
+  - name: Ensure global node.js packages are installed
+    npm: name="{{item}}" global=yes state=present
+    items:
+      - repoman
+      - open-sesame
+      - nba-go
+
+  - name: Ensure workspace directories exist
+    file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
+    with_items: "{{ orgs }}"
+
+  - name: Set Repoman configuration for workspace repositories
+    file: src={{ workspace }}/config/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
+    with_items: "{{ orgs }}"
