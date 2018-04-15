@@ -8,10 +8,12 @@
     homebrew_installed_packages:
       - mas
       - node
+      - packer
     mas_email: { macappstore.user }
     mas_password: { macappstore.pass }
     mas_apps:
       - { name: DMesh, id: 480992638 }
+      - { name: Owly, id: 882812218 }
       - { name: Pixelmator, id: 407963104 }
       - { name: Slack, id: 803453959 }
       - { name: WhatsApp Desktop, id: 1147396723 }
@@ -36,6 +38,7 @@
       - alias gaa='git add -A'
       - alias gd='git diff'
       - alias gs='git status'
+      - alias gca='git commit -am'
       - alias gp='git push'
       - alias gpr='git pull --rebase'
       - alias gpt='git push --tags'
@@ -49,10 +52,26 @@
       - alias dsa='docker stop $(docker ps -a -q)'
       - alias dra='docker rm $(docker ps -a -q)'
       - alias dia='docker rmi $(docker images -q --filter "dangling=true")'
-      - alias drn='docker run --rm --workdir /opt/workspace -v `pwd`:/opt/workspace -t cliffano/swaggy-c'
+      - alias dxt='docker exec -it'
+
+  - name: Set Docker run aliases
+    lineinfile: dest={{ home }}/.profile line="alias drn-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=yes
+    with_items:
+      - { id: kontiki, image: 'cliffano/kon-tiki-cred' }
+      - { id: swaggyc, image: 'cliffano/swaggy-c' }
+      - { id: ubuntu, image: 'ubuntu' }
+      - { id: aembuildenv, image: 'shinesolutions/aem-platform-buildenv-publisher' }
+
+  - name: Set Docker attach aliases
+    lineinfile: dest={{ home }}/.profile line="alias dxt-{{ item.id }}='docker exec -it {{ item.image }}'" state=present backup=yes
+    with_items:
+      - { id: kontiki, image: 'cliffano/kon-tiki-cred' }
+      - { id: swaggyc, image: 'cliffano/swaggy-c' }
+      - { id: ubuntu, image: 'ubuntu' }
+      - { id: aembuildenv, image: 'shinesolutions/aem-platform-buildenv-publisher' }
 
   - name: Set Studio workspace aliases
-    lineinfile: dest={{ home }}/.profile line="alias workspace-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=yes
+    lineinfile: dest={{ home }}/.profile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=yes
     with_items: "{{ orgs }}"
 
   - name: Ensure global node.js packages are installed
@@ -69,3 +88,11 @@
   - name: Set Repoman configuration for workspace repositories
     file: src={{ workspace }}/config/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
     with_items: "{{ orgs }}"
+
+  - name: Pull Docker images
+    docker_image:
+      name: "{{ item }}"
+    with_items:
+      - cliffano/kon-tiki
+      - cliffano/swaggy-c
+      - ubuntu
