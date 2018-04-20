@@ -24,6 +24,23 @@
 
   tasks:
 
+  - name: Ensure SSH directory exists
+    file: path={{ home }}/.ssh/ state=directory
+
+  - name: Ensure SSH config directory exists
+    file: path={{ home }}/.ssh/config.d/ state=directory
+
+  - name: Set SSH configuration
+    file: src={{ workspace }}/config/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link
+    with_items:
+      - config
+      - konoha_id_rsa
+      - konoha_id_rsa.pub
+
+  - name: Set SSH configuration include
+    file: src={{ home }}/dev/workspace-studio/config/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
+    with_items: "{{ orgs }}"
+
   - name: Ensure .profile file exists
     file: path={{ home }}/.profile state=touch mode=0644
 
@@ -53,6 +70,10 @@
       - alias dra='docker rm $(docker ps -a -q)'
       - alias dia='docker rmi $(docker images -q --filter "dangling=true")'
       - alias dxt='docker exec -it'
+
+  - name: Set OpenSesame aliases
+    lineinfile: dest={{ home }}/.profile line="open-sesame aws --region ap-southeast-2 --secgroup-id {{ item }} --port 22 --name cliffs" state=present backup=yes
+    with_items: "{{ opensesame_secgroups }}"
 
   - name: Set Docker run aliases
     lineinfile: dest={{ home }}/.profile line="alias drn-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }} --name {{ item.id }}'" state=present backup=yes
