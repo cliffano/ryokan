@@ -55,7 +55,7 @@
       - alias dxt='docker exec -it'
 
   - name: Set Docker run aliases
-    lineinfile: dest={{ home }}/.profile line="alias drn-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=yes
+    lineinfile: dest={{ home }}/.profile line="alias drn-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }} --name {{ item.id }}'" state=present backup=yes
     with_items:
       - { id: kontiki, image: 'cliffano/kon-tiki-cred' }
       - { id: swaggyc, image: 'cliffano/swaggy-c' }
