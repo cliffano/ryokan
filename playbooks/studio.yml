@@ -17,6 +17,12 @@
       - { name: Pixelmator, id: 407963104 }
       - { name: Slack, id: 803453959 }
       - { name: WhatsApp Desktop, id: 1147396723 }
+    docker_images:
+      - { id: kontiki, image: 'cliffano/kon-tiki-cred' }
+      - { id: swaggyc, image: 'cliffano/swaggy-c' }
+      - { id: centos7, image: 'centos:centos7' }
+      - { id: ubuntu, image: 'ubuntu' }
+      - { id: aembuildenv, image: 'shinesolutions/aem-platform-buildenv-publisher' }
 
   roles:
     # - role: geerlingguy.homebrew
@@ -31,7 +37,7 @@
     file: path={{ home }}/.ssh/config.d/ state=directory
 
   - name: Set SSH configuration
-    file: src={{ workspace }}/config/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link
+    file: src={{ home }}/dev/workspace-studio/config/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link
     with_items:
       - config
       - konoha_id_rsa
@@ -72,24 +78,20 @@
       - alias dxt='docker exec -it'
 
   - name: Set OpenSesame aliases
-    lineinfile: dest={{ home }}/.profile line="open-sesame aws --region ap-southeast-2 --secgroup-id {{ item }} --port 22 --name cliffs" state=present backup=yes
+    lineinfile: dest={{ home }}/.profile line="alias osa='open-sesame aws --region ap-southeast-2 --secgroup-id {{ item }} --port 22 --name cliffs'" state=present backup=yes
     with_items: "{{ opensesame_secgroups }}"
 
   - name: Set Docker run aliases
-    lineinfile: dest={{ home }}/.profile line="alias drn-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }} --name {{ item.id }}'" state=present backup=yes
-    with_items:
-      - { id: kontiki, image: 'cliffano/kon-tiki-cred' }
-      - { id: swaggyc, image: 'cliffano/swaggy-c' }
-      - { id: ubuntu, image: 'ubuntu' }
-      - { id: aembuildenv, image: 'shinesolutions/aem-platform-buildenv-publisher' }
+    lineinfile: dest={{ home }}/.profile line="alias drn-{{ item.id }}='docker run --name {{ item.id }}--workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=yes
+    with_items: "{{ docker_images }}"
 
   - name: Set Docker attach aliases
-    lineinfile: dest={{ home }}/.profile line="alias dxt-{{ item.id }}='docker exec -it {{ item.image }}'" state=present backup=yes
-    with_items:
-      - { id: kontiki, image: 'cliffano/kon-tiki-cred' }
-      - { id: swaggyc, image: 'cliffano/swaggy-c' }
-      - { id: ubuntu, image: 'ubuntu' }
-      - { id: aembuildenv, image: 'shinesolutions/aem-platform-buildenv-publisher' }
+    lineinfile: dest={{ home }}/.profile line="alias dxt-{{ item.id }}='docker exec -it {{ item.id }}'" state=present backup=yes
+    with_items: "{{ docker_images }}"
+
+  - name: Set Docker one-off aliases
+    lineinfile: dest={{ home }}/.profile line="alias drno-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=yes
+    with_items: "{{ docker_images }}"
 
   - name: Set Studio workspace aliases
     lineinfile: dest={{ home }}/.profile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=yes
@@ -97,7 +99,7 @@
 
   - name: Ensure global node.js packages are installed
     npm: name="{{item}}" global=yes state=present
-    items:
+    with_items:
       - repoman
       - open-sesame
       - nba-go
@@ -107,7 +109,7 @@
     with_items: "{{ orgs }}"
 
   - name: Set Repoman configuration for workspace repositories
-    file: src={{ workspace }}/config/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
+    file: src={{ home }}/dev/workspace-studio/config/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
     with_items: "{{ orgs }}"
 
   - name: Pull Docker images
@@ -116,4 +118,5 @@
     with_items:
       - cliffano/kon-tiki
       - cliffano/swaggy-c
+      - centos:centos7
       - ubuntu
