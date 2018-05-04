@@ -82,7 +82,7 @@
     with_items: "{{ opensesame_secgroups }}"
 
   - name: Set Docker run aliases
-    lineinfile: dest={{ home }}/.profile line="alias drn-{{ item.id }}='docker run --name {{ item.id }}--workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=yes
+    lineinfile: dest={{ home }}/.profile regexp="alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=yes
     with_items: "{{ docker_images }}"
 
   - name: Set Docker attach aliases
