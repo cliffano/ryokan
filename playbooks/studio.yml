@@ -78,8 +78,7 @@
       - alias dxt='docker exec -it'
 
   - name: Set OpenSesame aliases
-    lineinfile: dest={{ home }}/.profile line="alias osa='open-sesame aws --region ap-southeast-2 --secgroup-id {{ item }} --port 22 --name cliffs'" state=present backup=yes
-    with_items: "{{ opensesame_secgroups }}"
+    lineinfile: dest={{ home }}/.profile line="alias osa='open-sesame aws --region ap-southeast-2 --secgroup-id {{ opensesame_secgroups }} --port 22 --name cliffs'" state=present backup=yes
 
   - name: Set Docker run aliases
     lineinfile: dest={{ home }}/.profile regexp="alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=yes
