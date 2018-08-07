@@ -125,3 +125,5 @@
       - cliffano/swaggy-c
       - centos:centos7
       - ubuntu
+      - jenkins/jenkins:lts
+      - node
