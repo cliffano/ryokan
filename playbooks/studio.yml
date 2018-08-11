@@ -60,7 +60,10 @@
     with_items:
       - alias gaa='git add -A'
       - alias gca='git commit -am'
+      - alias gcp='git cherry-pick'
+      - alias gcpc='git cherry-pick --continue'
       - alias gd='git diff'
+      - alias gl5='git log -5'
       - alias gp='git push'
       - alias gpr='git pull --rebase'
       - alias gpt='git push --tags'
