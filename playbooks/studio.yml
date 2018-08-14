@@ -19,6 +19,7 @@
       - { name: WhatsApp Desktop, id: 1147396723 }
     docker_images:
       - { id: kontiki, image: 'cliffano/kon-tiki-cred' }
+      - { id: studio, image: 'cliffano/studio' }
       - { id: swaggyc, image: 'cliffano/swaggy-c' }
       - { id: centos7, image: 'centos:centos7' }
       - { id: ubuntu, image: 'ubuntu' }
@@ -125,6 +126,7 @@
       name: "{{ item }}"
     with_items:
       - cliffano/kon-tiki
+      - cliffano/studio
       - cliffano/swaggy-c
       - centos:centos7
       - ubuntu
