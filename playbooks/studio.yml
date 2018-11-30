@@ -102,6 +102,9 @@
   - name: Set Docker AEM Platform one-off alias
     lineinfile: dest={{ home }}/.profile line="alias drno-aem-workspace='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -p 45600-45700:45600-45700/tcp -i -t shinesolutions/aem-platform-buildenv-publisher'" state=present backup=yes
 
+  - name: Set Jenkins alias
+    lineinfile: dest={{ home }}/.profile line="alias jenkins='docker run -p 8080:8080 -p 50000:50000 -v {{ home }}/dev/workspace-orgs/jenkins_home:/var/jenkins_home jenkins/jenkins:lts'" state=present backup=yes
+
   - name: Set Studio workspace aliases
     lineinfile: dest={{ home }}/.profile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=yes
     with_items: "{{ orgs }}"
