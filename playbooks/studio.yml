@@ -109,6 +109,9 @@
     lineinfile: dest={{ home }}/.profile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=yes
     with_items: "{{ orgs }}"
 
+  - name: Set Makefile .PHONY creator alias
+    lineinfile: dest={{ home }}/.profile line="alias makephony='grep \'^[^#[:space:]].*:\' Makefile | sed -e \"s/:.*$//\" | paste -s -d\" \" - | sed -e \"s/\.PHONY$//\"'" state=present backup=yes
+
   - name: Ensure global node.js packages are installed
     npm: name="{{item}}" global=yes state=present
     with_items:
