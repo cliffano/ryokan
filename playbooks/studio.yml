@@ -127,6 +127,12 @@
     file: src={{ home }}/dev/workspace-studio/config/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
     with_items: "{{ orgs }}"
 
+  - name: Ensure iTerm2 scripts directory exists
+    file: path='{{ home }}/Library/Application Support/iTerm2/Scripts/' state=directory
+
+  - name: Set iTerm2 init script
+    file: src={{ home }}/dev/workspace-studio/ryokan/resources/studio/iterm2-init.app dest='{{ home }}/Library/Application Support/iTerm2/Scripts/iterm2-init.app' state=link
+
   - name: Pull Docker images
     docker_image:
       name: "{{ item }}"
