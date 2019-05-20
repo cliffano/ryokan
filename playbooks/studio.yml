@@ -9,6 +9,7 @@
       - mas
       - node
       - packer
+      - cloc
     mas_email: { macappstore.user }
     mas_password: { macappstore.pass }
     mas_apps:
