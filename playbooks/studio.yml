@@ -64,6 +64,8 @@
       - alias gcam='git commit -am'
       - alias gcp='git cherry-pick'
       - alias gcpc='git cherry-pick --continue'
+      - alias gco='git checkout'
+      - alias gcom='git checkout master'
       - alias gd='git diff'
       - alias gl5='git log -5'
       - alias gp='git push'
@@ -131,6 +133,12 @@
   - name: Set Repoman configuration for workspace repositories
     file: src={{ home }}/dev/workspace-studio/config/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
     with_items: "{{ orgs }}"
+
+  - name: Ensure AEM OpenCloud workspace exist
+    file: path={{ home }}/dev/workspace-aoc state=directory mode=0755
+
+  - name: Set Repoman configuration for AEM OpenCloud workspace repositories
+    file: src={{ home }}/dev/workspace-aoc/aem-opencloud/conf/.repoman.json dest={{ home }}/dev/workspace-aoc/.repoman.json state=link
 
   - name: Ensure iTerm2 scripts directory exists
     file: path='{{ home }}/Library/Application Support/iTerm2/Scripts/' state=directory
