@@ -2,9 +2,6 @@
 - hosts: studio
 
   vars:
-    orgs:
-      - studio
-      - shine
     homebrew_installed_packages:
       - mas
       - node
@@ -26,6 +23,12 @@
       - { id: ubuntu, image: 'ubuntu' }
       - { id: aembuildenv-sandpit, image: 'shinesolutions/aem-platform-buildenv-sandpit' }
       - { id: aembuildenv-publisher, image: 'shinesolutions/aem-platform-buildenv-publisher' }
+    orgs:
+      - studio
+    work_workspaces:
+      - aoc
+      - infracat
+      - post
 
   roles:
     # - role: geerlingguy.homebrew
@@ -46,9 +49,13 @@
       - konoha_id_rsa
       - konoha_id_rsa.pub
 
-  - name: Set SSH configuration include
+  - name: Set Studio SSH configuration include
     file: src={{ home }}/dev/workspace-studio/config/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
     with_items: "{{ orgs }}"
+
+  - name: Set workspaces SSH configuration include
+    file: src={{ home }}/dev/workspace-studio/config/shine/.ssh_config-{{ item }} dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
+    with_items: "{{ work_workspaces }}"
 
   - name: Ensure .profile file exists
     file: path={{ home }}/.profile state=touch mode=0644
@@ -119,6 +126,10 @@
     lineinfile: dest={{ home }}/.profile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
     with_items: "{{ orgs }}"
 
+  - name: Set workspace aliases
+    lineinfile: dest={{ home }}/.profile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
+    with_items: "{{ work_workspaces }}"
+
   - name: Set Makefile .PHONY creator alias
     lineinfile: dest={{ home }}/.profile line="alias makephony='grep \'^[^#[:space:]].*:\' Makefile | sed -e \"s/:.*$//\" | paste -s -d\" \" - | sed -e \"s/\.PHONY$//\"'" state=present backup=no
 
@@ -129,7 +140,7 @@
       - open-sesame
       - nba-go
 
-  - name: Ensure workspace directories exist
+  - name: Ensure Studio workspace directories exist
     file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
     with_items: "{{ orgs }}"
 
@@ -137,11 +148,13 @@
     file: src={{ home }}/dev/workspace-studio/config/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
     with_items: "{{ orgs }}"
 
-  - name: Ensure AEM OpenCloud workspace exist
-    file: path={{ home }}/dev/workspace-aoc state=directory mode=0755
+  - name: Ensure work workspace directories exist
+    file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
+    with_items: "{{ work_workspaces }}"
 
-  - name: Set Repoman configuration for AEM OpenCloud workspace repositories
-    file: src={{ home }}/dev/workspace-studio/config/shine/.repoman-aoc.json dest={{ home }}/dev/workspace-aoc/.repoman.json state=link
+  - name: Set Repoman configuration for work workspace repositories
+    file: src={{ home }}/dev/workspace-studio/config/shine/.repoman-{{ item }}.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
+    with_items: "{{ work_workspaces }}"
 
   - name: Ensure iTerm2 scripts directory exists
     file: path='{{ home }}/Library/Application Support/iTerm2/Scripts/' state=directory
