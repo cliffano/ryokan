@@ -23,7 +23,7 @@
       - { id: ubuntu, image: 'ubuntu' }
       - { id: aembuildenv-sandpit, image: 'shinesolutions/aem-platform-buildenv-sandpit' }
       - { id: aembuildenv-publisher, image: 'shinesolutions/aem-platform-buildenv-publisher' }
-    orgs:
+    home_workspaces:
       - studio
     work_workspaces:
       - aoc
@@ -51,10 +51,10 @@
 
   - name: Set Studio SSH configuration include
     file: src={{ home }}/dev/workspace-studio/config/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
-    with_items: "{{ orgs }}"
+    with_items: "{{ home_workspaces }}"
 
   - name: Set workspaces SSH configuration include
-    file: src={{ home }}/dev/workspace-studio/config/shine/.ssh_config-{{ item }} dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
+    file: src={{ home }}/dev/workspace-studio/config/work/.ssh_config-{{ item }} dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
     with_items: "{{ work_workspaces }}"
 
   - name: Ensure .profile file exists
@@ -124,7 +124,7 @@
 
   - name: Set Studio workspace aliases
     lineinfile: dest={{ home }}/.profile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
-    with_items: "{{ orgs }}"
+    with_items: "{{ home_workspaces }}"
 
   - name: Set workspace aliases
     lineinfile: dest={{ home }}/.profile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
@@ -142,18 +142,18 @@
 
   - name: Ensure Studio workspace directories exist
     file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
-    with_items: "{{ orgs }}"
+    with_items: "{{ home_workspaces }}"
 
   - name: Set Repoman configuration for workspace repositories
     file: src={{ home }}/dev/workspace-studio/config/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
-    with_items: "{{ orgs }}"
+    with_items: "{{ home_workspaces }}"
 
   - name: Ensure work workspace directories exist
     file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
     with_items: "{{ work_workspaces }}"
 
   - name: Set Repoman configuration for work workspace repositories
-    file: src={{ home }}/dev/workspace-studio/config/shine/.repoman-{{ item }}.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
+    file: src={{ home }}/dev/workspace-studio/config/work/.repoman-{{ item }}.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
     with_items: "{{ work_workspaces }}"
 
   - name: Ensure iTerm2 scripts directory exists
