@@ -24,7 +24,8 @@
       - { id: swaggyc, image: 'cliffano/swaggy-c' }
       - { id: centos7, image: 'centos:centos7' }
       - { id: ubuntu, image: 'ubuntu' }
-      - { id: aembuildenv, image: 'shinesolutions/aem-platform-buildenv-publisher' }
+      - { id: aembuildenv-sandpit, image: 'shinesolutions/aem-platform-buildenv-sandpit' }
+      - { id: aembuildenv-publisher, image: 'shinesolutions/aem-platform-buildenv-publisher' }
 
   roles:
     # - role: geerlingguy.homebrew
@@ -67,6 +68,7 @@
       - alias gco='git checkout'
       - alias gcom='git checkout master'
       - alias gd='git diff'
+      - alias gl3='git log -3'
       - alias gl5='git log -5'
       - alias gp='git push'
       - alias gpr='git pull --rebase'
@@ -78,6 +80,7 @@
       - alias grc='git rebase --continue'
       - alias gs='git status'
       - alias gsa='git stash apply'
+      - alias gst='git stash'
       - alias gta='git tag -a'
 
   - name: Set Docker aliases
@@ -92,22 +95,22 @@
     lineinfile: dest={{ home }}/.profile line="alias osa='open-sesame aws --region ap-southeast-2 --secgroup-id {{ opensesame_secgroups }} --port 22 --name cliffs'" state=present backup=no
 
   - name: Set Docker run aliases
-    lineinfile: dest={{ home }}/.profile regexp="alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no backrefs=yes
+    lineinfile: dest={{ home }}/.profile regexp="^alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
     with_items: "{{ docker_images }}"
 
   - name: Set Docker attach aliases
-    lineinfile: dest={{ home }}/.profile regexp="^alias dxt-{{ item.id }}=.*$" line="alias dxt-{{ item.id }}='docker exec -it {{ item.id }}'" state=present backup=no backrefs=yes
+    lineinfile: dest={{ home }}/.profile regexp="^alias dxt-{{ item.id }}=.*$" line="alias dxt-{{ item.id }}='docker exec -it {{ item.id }}'" state=present backup=no
     with_items: "{{ docker_images }}"
 
   - name: Set Docker one-off aliases
-    lineinfile: dest={{ home }}/.profile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no backrefs=yes
+    lineinfile: dest={{ home }}/.profile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
     with_items: "{{ docker_images }}"
 
   - name: Set Docker AEM Platform one-off alias
-    lineinfile: dest={{ home }}/.profile regexp="^alias drno-aem-workspace=.*$" line="alias drno-aem-workspace='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -p 45600-45700:45600-45700/tcp -i -t shinesolutions/aem-platform-buildenv-publisher'" state=present backup=no backrefs=yes
+    lineinfile: dest={{ home }}/.profile regexp="^alias drno-aem-workspace=.*$" line="alias drno-aem-workspace='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -p 45600-45700:45600-45700/tcp -i -t shinesolutions/aem-platform-buildenv-publisher'" state=present backup=no
 
   - name: Set Docker Jenkins one-off alias
-    lineinfile: dest={{ home }}/.profile regexp="^alias drno-jenkins=.*$" line="alias drno-jenkins='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -p 8080:8080/tcp -i -t shinesolutions/aem-platform-buildenv'" state=present backup=no backrefs=yes
+    lineinfile: dest={{ home }}/.profile regexp="^alias drno-jenkins=.*$" line="alias drno-jenkins='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -p 8080:8080/tcp -i -t shinesolutions/aem-platform-buildenv'" state=present backup=no
 
   - name: Set Jenkins alias
     lineinfile: dest={{ home }}/.profile line="alias jenkins='docker run -p 8080:8080 -p 50000:50000 -v {{ home }}/dev/workspace-orgs/jenkins_home:/var/jenkins_home jenkins/jenkins:lts'" state=present backup=no
@@ -145,7 +148,7 @@
 
   - name: Set iTerm2 init script
     file: src={{ home }}/dev/workspace-studio/ryokan/resources/studio/iterm2-init.app dest='{{ home }}/Library/Application Support/iTerm2/Scripts/iterm2-init.app' state=link
-  # 
+  #
   # - name: Pull Docker images
   #   docker_image:
   #     name: "{{ item }}"
