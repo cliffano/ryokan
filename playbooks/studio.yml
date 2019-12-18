@@ -62,16 +62,16 @@
     file: src={{ home }}/dev/workspace-studio/config/work/.ssh_config-{{ item }} dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
     with_items: "{{ work_workspaces }}"
 
-  - name: Ensure .profile file exists
-    file: path={{ home }}/.profile state=touch mode=0644
+  - name: Ensure .zprofile file exists
+    file: path={{ home }}/.zprofile state=touch mode=0644
 
   - name: Set basic aliases
-    lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
     with_items:
       - alias lessr='less -R'
 
   - name: Set GitHub aliases
-    lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
     with_items:
       - alias gaa='git add -A'
       - alias gcam='git commit -am'
@@ -96,7 +96,7 @@
       - alias gta='git tag -a'
 
   - name: Set Docker aliases
-    lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
     with_items:
       - alias dsa='docker stop $(docker ps -a -q)'
       - alias dra='docker rm $(docker ps -a -q)'
@@ -104,39 +104,39 @@
       - alias dxt='docker exec -it'
 
   - name: Set OpenSesame aliases
-    lineinfile: dest={{ home }}/.profile line="alias osa='open-sesame aws --region ap-southeast-2 --secgroup-id {{ opensesame_secgroups }} --port 22 --name cliffs'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile line="alias osa='open-sesame aws --region ap-southeast-2 --secgroup-id {{ opensesame_secgroups }} --port 22 --name cliffs'" state=present backup=no
 
   - name: Set Docker run aliases
-    lineinfile: dest={{ home }}/.profile regexp="^alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
     with_items: "{{ docker_images }}"
 
   - name: Set Docker attach aliases
-    lineinfile: dest={{ home }}/.profile regexp="^alias dxt-{{ item.id }}=.*$" line="alias dxt-{{ item.id }}='docker exec -it {{ item.id }}'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias dxt-{{ item.id }}=.*$" line="alias dxt-{{ item.id }}='docker exec -it {{ item.id }}'" state=present backup=no
     with_items: "{{ docker_images }}"
 
   - name: Set Docker one-off aliases
-    lineinfile: dest={{ home }}/.profile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
     with_items: "{{ docker_images }}"
 
   - name: Set Docker AEM Platform one-off alias
-    lineinfile: dest={{ home }}/.profile regexp="^alias drno-aem-workspace=.*$" line="alias drno-aem-workspace='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -p 45600-45700:45600-45700/tcp -i -t shinesolutions/aem-platform-buildenv-publisher'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-aem-workspace=.*$" line="alias drno-aem-workspace='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -p 45600-45700:45600-45700/tcp -i -t shinesolutions/aem-platform-buildenv-publisher'" state=present backup=no
 
   - name: Set Docker Jenkins one-off alias
-    lineinfile: dest={{ home }}/.profile regexp="^alias drno-jenkins=.*$" line="alias drno-jenkins='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -p 8080:8080/tcp -i -t shinesolutions/aem-platform-buildenv'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-jenkins=.*$" line="alias drno-jenkins='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -p 8080:8080/tcp -i -t shinesolutions/aem-platform-buildenv'" state=present backup=no
 
   - name: Set Jenkins alias
-    lineinfile: dest={{ home }}/.profile line="alias jenkins='docker run -p 8080:8080 -p 50000:50000 -v {{ home }}/dev/workspace-orgs/jenkins_home:/var/jenkins_home jenkins/jenkins:lts'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile line="alias jenkins='docker run -p 8080:8080 -p 50000:50000 -v {{ home }}/dev/workspace-orgs/jenkins_home:/var/jenkins_home jenkins/jenkins:lts'" state=present backup=no
 
   - name: Set Studio workspace aliases
-    lineinfile: dest={{ home }}/.profile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
     with_items: "{{ home_workspaces }}"
 
   - name: Set workspace aliases
-    lineinfile: dest={{ home }}/.profile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
     with_items: "{{ work_workspaces }}"
 
   - name: Set Makefile .PHONY creator alias
-    lineinfile: dest={{ home }}/.profile line="alias makephony='grep \'^[^#[:space:]].*:\' Makefile | sed -e \"s/:.*$//\" | paste -s -d\" \" - | sed -e \"s/\.PHONY$//\"'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile line="alias makephony='grep \'^[^#[:space:]].*:\' Makefile | sed -e \"s/:.*$//\" | paste -s -d\" \" - | sed -e \"s/\.PHONY$//\"'" state=present backup=no
 
   - name: Ensure global node.js packages are installed
     npm: name="{{item}}" global=yes state=present
