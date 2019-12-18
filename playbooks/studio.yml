@@ -33,6 +33,11 @@
   roles:
     # - role: geerlingguy.homebrew
     # - role: rkhmelichek.mas
+    - role: gantsign.oh-my-zsh
+      users:
+        - username: cliffano
+          oh_my_zsh:
+            theme: bullet-train
 
   tasks:
 
@@ -155,6 +160,12 @@
   - name: Set Repoman configuration for work workspace repositories
     file: src={{ home }}/dev/workspace-studio/config/work/.repoman-{{ item }}.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
     with_items: "{{ work_workspaces }}"
+
+  - name: Download oh-my-zsh Bullet Train theme
+    get_url:
+      url: http://raw.github.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
+      dest: "{{ home }}/.oh-my-zsh/themes/bullet-train.zsh-theme"
+      mode: '0644'
 
   - name: Ensure iTerm2 scripts directory exists
     file: path='{{ home }}/Library/Application Support/iTerm2/Scripts/' state=directory

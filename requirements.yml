@@ -19,6 +19,9 @@
 - src: Comcast.sdkman
   path: roles/
 
+- src: gantsign.oh-my-zsh
+  path: roles/
+
 - src: geerlingguy.homebrew
   path: roles/
 
