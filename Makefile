@@ -59,6 +59,7 @@ studio:
 	--inventory-file hosts \
 	--extra-vars @../config/studio/ryokan/studio.yml \
 	--vault-password-file ../config/studio/ryokan/vault.txt \
+	--ask-become-pass \
 	playbooks/studio.yml
 
 util:
