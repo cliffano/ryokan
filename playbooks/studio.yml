@@ -161,17 +161,23 @@
     file: src={{ home }}/dev/workspace-studio/config/work/.repoman-{{ item }}.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
     with_items: "{{ work_workspaces }}"
 
+  - name: Ensure iTerm2 scripts directory exists
+    file: path='{{ home }}/Library/Application Support/iTerm2/Scripts/' state=directory
+
+  - name: Set iTerm2 init script
+    file: src={{ home }}/dev/workspace-studio/ryokan/resources/studio/iterm2-init.app dest='{{ home }}/Library/Application Support/iTerm2/Scripts/iterm2-init.app' state=link
+
   - name: Download oh-my-zsh Bullet Train theme
     get_url:
       url: http://raw.github.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
       dest: "{{ home }}/.oh-my-zsh/themes/bullet-train.zsh-theme"
       mode: '0644'
 
-  - name: Ensure iTerm2 scripts directory exists
-    file: path='{{ home }}/Library/Application Support/iTerm2/Scripts/' state=directory
+  - name: Set export required by Bullet Train
+    lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
+    with_items:
+      - export TERM='xterm-256color'
 
-  - name: Set iTerm2 init script
-    file: src={{ home }}/dev/workspace-studio/ryokan/resources/studio/iterm2-init.app dest='{{ home }}/Library/Application Support/iTerm2/Scripts/iterm2-init.app' state=link
   #
   # - name: Pull Docker images
   #   docker_image:
