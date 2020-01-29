@@ -7,6 +7,7 @@
       - node
       - packer
       - cloc
+      - telnet
     mas_email: { macappstore.user }
     mas_password: { macappstore.pass }
     mas_apps:
