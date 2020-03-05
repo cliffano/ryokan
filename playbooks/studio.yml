@@ -16,7 +16,7 @@
       - { name: Pixelmator, id: 407963104 }
       - { name: Slack, id: 803453959 }
       - { name: WhatsApp Desktop, id: 1147396723 }
-      - { name: Magnet, id: id441258766 }
+      - { name: Magnet, id: 441258766 }
     docker_images:
       - { id: kontiki, image: 'cliffano/kon-tiki-cred' }
       - { id: studio, image: 'cliffano/studio' }
@@ -180,7 +180,7 @@
     with_items:
       - export TERM='xterm-256color'
 
-  #
+
   # - name: Pull Docker images
   #   docker_image:
   #     name: "{{ item }}"
