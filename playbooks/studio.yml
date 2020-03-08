@@ -9,6 +9,7 @@
       - cloc
       - telnet
       - gpg
+      - pinentry-mac
     mas_email: { macappstore.user }
     mas_password: { macappstore.pass }
     mas_apps:
@@ -181,6 +182,10 @@
     with_items:
       - export TERM='xterm-256color'
 
+  - name: Set pinentry-program required by git for GPG signing
+    lineinfile: dest={{ home }}/.gnupg/gpg-agent.conf line="{{ item }}" state=present backup=no
+    with_items:
+      - pinentry-program /usr/local/bin/pinentry-mac
 
   # - name: Pull Docker images
   #   docker_image:
