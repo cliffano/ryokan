@@ -45,6 +45,9 @@
 
   tasks:
 
+  - name: Set git config
+    file: src={{ home }}/dev/workspace-studio/ryokan/resources/studio/.gitconfig dest='{{ home }}/.gitconfig' state=link
+
   - name: Ensure SSH directory exists
     file: path={{ home }}/.ssh/ state=directory
 

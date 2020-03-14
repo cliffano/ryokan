@@ -1,0 +1,11 @@
+[user]
+	email = cliffano@gmail.com
+	name = Cliffano Subagio
+	signingkey = B5F5CC4A96F9A413
+[gpg]
+	program = /usr/local/bin/gpg
+[commit]
+	gpsign = true
+	gpgsign = true
+[credential]
+	helper = osxkeychain
