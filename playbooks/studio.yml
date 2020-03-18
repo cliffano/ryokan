@@ -33,6 +33,7 @@
       - aoc
       - infracat
       - post
+      - pakkun
 
   roles:
     # - role: geerlingguy.homebrew
