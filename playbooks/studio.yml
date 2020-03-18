@@ -67,7 +67,7 @@
     with_items: "{{ home_workspaces }}"
 
   - name: Set workspaces SSH configuration include
-    file: src={{ home }}/dev/workspace-studio/config/work/.ssh_config-{{ item }} dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
+    file: src={{ home }}/dev/workspace-studio/config/projects/.ssh_config-{{ item }} dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
     with_items: "{{ work_workspaces }}"
 
   - name: Ensure .zprofile file exists
@@ -166,7 +166,7 @@
     with_items: "{{ work_workspaces }}"
 
   - name: Set Repoman configuration for work workspace repositories
-    file: src={{ home }}/dev/workspace-studio/config/work/.repoman-{{ item }}.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
+    file: src={{ home }}/dev/workspace-studio/config/projects/.repoman-{{ item }}.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
     with_items: "{{ work_workspaces }}"
 
   - name: Ensure iTerm2 scripts directory exists

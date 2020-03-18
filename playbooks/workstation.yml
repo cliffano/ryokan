@@ -93,7 +93,7 @@
       - .ssh_config
 
   - name: Set SSH configuration Shine includes
-    file: src={{ workspace }}/config/work/{{ item }} dest={{ home }}/.ssh/config.d/config-shine state=link
+    file: src={{ workspace }}/config/projects/{{ item }} dest={{ home }}/.ssh/config.d/config-shine state=link
     with_items:
       - .ssh_config
 
