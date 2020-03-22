@@ -1,5 +1,5 @@
 ---
-- hosts: macbook00
+- hosts: macbookpro00
 
   vars:
     homebrew_installed_packages:

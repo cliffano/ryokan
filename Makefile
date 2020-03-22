@@ -52,15 +52,15 @@ iot:
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/iot.yml
 
-macbook00:
+macbookpro00:
 	ansible-playbook \
 	--verbose \
 	--connection=local \
 	--inventory-file hosts \
-	--extra-vars @../config/studio/ryokan/macbook00.yml \
+	--extra-vars @../config/studio/ryokan/macbookpro00.yml \
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	--ask-become-pass \
-	playbooks/macbook00.yml
+	playbooks/macbookpro00.yml
 
 util:
 	ansible-playbook \
