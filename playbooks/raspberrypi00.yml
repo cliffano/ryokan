@@ -1,20 +1,20 @@
 ---
-- hosts: ci
+- hosts: raspberrypi00
 
-  roles:
+  # roles:
     # - role: leonidas.nvm
     #   nvm:
     #     user: jenkins
     #     version: v0.28.0
     #     node_version: '4'
     #   sudo: yes
-    - { role: cliffano.newrelic-unix }
+    # - { role: cliffano.newrelic-unix }
 
   tasks:
 
-  - name: Ensure opt directory allows cliffano.newrelic-unix to create plugins directory
-    sudo: yes
-    file: path=/opt/ state=directory mode=0777
+  # - name: Ensure opt directory allows cliffano.newrelic-unix to create plugins directory
+  #   sudo: yes
+  #   file: path=/opt/ state=directory mode=0777
 
   - name: Ensure os packages are installed
     apt: name={{ item }} state=present
@@ -22,14 +22,10 @@
       - jenkins
       - dh-autoreconf
 
-  - name: Ensure Python packages are installed
-    pip: name={{ item }}
-    with_items:
-      - awscli
-
   - name: Ensure old Sendman configuration for GD hosts are removed
-    file: path={{ workspace }}/config/studio/sendman/{{ item }}.json state=absent
+    file: path=/var/lib/jenkins/.ssh/{{ item }}.json state=absent
     with_items:
       - deidara
       - kakuzu
       - kisame
+      - suna

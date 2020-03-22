@@ -10,13 +10,13 @@ deps: init
 	pip install -r requirements.txt
 	ansible-galaxy install -r requirements.yml --force
 
-ci:
+raspberrypi00:
 	ansible-playbook \
 	--verbose \
 	--inventory-file hosts \
-	--extra-vars @../config/studio/ryokan/ci.yml \
+	--extra-vars @../config/studio/ryokan/raspberrypi00.yml \
 	--vault-password-file ../config/studio/ryokan/vault.txt \
-	playbooks/ci.yml
+	playbooks/raspberrypi00.yml
 
 cloud-a:
 	ansible-playbook \
