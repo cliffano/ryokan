@@ -29,3 +29,15 @@
       - kakuzu
       - kisame
       - suna
+
+  - name: Comment out inactive Collabora sources list
+    become: yes
+    copy: content="#deb http://raspberrypi.collabora.com wheezy rpi\n" dest=/etc/apt/sources.list.d/collabora.list
+
+  - name: Comment out inactive Raspi sources list
+    become: yes
+    copy: content="#deb http://archive.raspberrypi.org/debian/ wheezy main\n#deb-src http://archive.raspberrypi.org/debian/ wheezy main\n" dest=/etc/apt/sources.list.d/raspi.list
+
+  - name: Set AARNet as singular sources list
+    become: yes
+    copy: content="deb http://mirror.aarnet.edu.au/pub/raspbian/raspbian jessie main contrib non-free rpi\n" dest=/etc/apt/sources.list
