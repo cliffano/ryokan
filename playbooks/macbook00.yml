@@ -1,5 +1,5 @@
 ---
-- hosts: studio
+- hosts: macbook00
 
   vars:
     homebrew_installed_packages:
