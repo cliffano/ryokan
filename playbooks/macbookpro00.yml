@@ -34,6 +34,8 @@
       - infracat
       - post
       - pakkun
+      - theworks
+      - gatt
 
   roles:
     # - role: geerlingguy.homebrew
