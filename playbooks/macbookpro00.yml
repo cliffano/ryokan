@@ -36,6 +36,7 @@
       - pakkun
       - theworks
       - gatt
+      - nlp
 
   roles:
     # - role: geerlingguy.homebrew
