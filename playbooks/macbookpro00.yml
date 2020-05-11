@@ -25,8 +25,9 @@
       - { id: swaggyc, image: 'cliffano/swaggy-c' }
       - { id: centos7, image: 'centos:centos7' }
       - { id: ubuntu, image: 'ubuntu' }
-      - { id: aembuildenv-sandpit, image: 'shinesolutions/aem-platform-buildenv-sandpit' }
-      - { id: aembuildenv-publisher, image: 'shinesolutions/aem-platform-buildenv-publisher' }
+      - { id: aembuildenv, image: 'shinesolutions/aem-platform-buildenv' }
+      - { id: theworksbuildenv-sandpit, image: 'shinesolutions/the-works-buildenv-sandpit' }
+      - { id: theworksbuildenv-publisher, image: 'shinesolutions/the-works-buildenv-publisher' }
     home_workspaces:
       - studio
     work_workspaces:
