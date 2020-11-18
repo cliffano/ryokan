@@ -10,6 +10,8 @@
       - telnet
       - gpg
       - pinentry-mac
+      - gh
+      - youtube-dl
     mas_email: { macappstore.user }
     mas_password: { macappstore.pass }
     mas_apps:
