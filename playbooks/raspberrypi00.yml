@@ -97,3 +97,17 @@
     pip:
       name: homeassistant
       executable: pip3.8
+
+  - name: Set aliases for pi
+    lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=no
+    with_items:
+      - alias suhass='sudo -u homeassistant -H -s'
+
+  - name: Set aliases and init dir for homeassistant
+    become: yes
+    lineinfile: dest=/home/homeassistant/.bashrc line="{{ item }}" state=present backup=no
+    with_items:
+      - alias hasspy38='python3.8 -m venv .'
+      - alias hasssrc='source bin/activate'
+      - alias hassd='hass --daemon'
+      - cd /srv/homeassistant
