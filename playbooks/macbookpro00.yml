@@ -28,6 +28,7 @@
       - { id: centos7, image: 'centos:centos7' }
       - { id: ubuntu, image: 'ubuntu' }
       - { id: aembuildenv, image: 'shinesolutions/aem-platform-buildenv' }
+      - { id: theworksbuildenv, image: 'shinesolutions/the-works-buildenv' }
       - { id: theworksbuildenv-sandpit, image: 'shinesolutions/the-works-buildenv-sandpit' }
       - { id: theworksbuildenv-publisher, image: 'shinesolutions/the-works-buildenv-publisher' }
     home_workspaces:
@@ -40,6 +41,7 @@
       - theworks
       - gatt
       - nlp
+      - drup
 
   roles:
     # - role: geerlingguy.homebrew
