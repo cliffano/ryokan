@@ -22,7 +22,8 @@
       - { name: WhatsApp Desktop, id: 1147396723 }
       - { name: Magnet, id: 441258766 }
     docker_images:
-      - { id: kontiki, image: 'cliffano/kon-tiki-cred' }
+      - { id: kontiki, image: 'cliffano/kon-tiki' }
+      - { id: kontiki-cred, image: 'cliffano/kon-tiki-cred' }
       - { id: studio, image: 'cliffano/studio' }
       - { id: swaggyc, image: 'cliffano/swaggy-c' }
       - { id: centos7, image: 'centos:centos7' }
