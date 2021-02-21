@@ -28,9 +28,6 @@
 #- src: rack-roles.newrelic
 #  path: roles/
 
-- src: gvillalta99.nvm
-  path: roles/
-
 - src: rkhmelichek.mas
   path: roles/
 

@@ -45,8 +45,8 @@
       - drup
 
   roles:
-    # - role: geerlingguy.homebrew
-    # - role: rkhmelichek.mas
+    - role: geerlingguy.homebrew
+    - role: rkhmelichek.mas
     - role: gantsign.oh-my-zsh
       users:
         - username: cliffano
@@ -195,10 +195,15 @@
     with_items:
       - export TERM='xterm-256color'
 
+  - name: Ensure .gnupg directory exists
+    file: path={{ home }}/.gnupg state=directory mode=0755
+
   - name: Set pinentry-program required by git for GPG signing
     lineinfile: dest={{ home }}/.gnupg/gpg-agent.conf line="{{ item }}" state=present backup=no
     with_items:
       - pinentry-program /usr/local/bin/pinentry-mac
+      - default-cache-ttl
+      - max-cache-ttl 28800
 
   # - name: Pull Docker images
   #   docker_image:

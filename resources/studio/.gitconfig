@@ -1,7 +1,7 @@
 [user]
 	email = cliffano@gmail.com
 	name = Cliffano Subagio
-	signingkey = B5F5CC4A96F9A413
+	signingkey = A851A8D5CD5C0F65
 [gpg]
 	program = /usr/local/bin/gpg
 [commit]
