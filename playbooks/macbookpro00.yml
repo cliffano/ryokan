@@ -43,6 +43,7 @@
       - gatt
       - nlp
       - drup
+      - vulscan
 
   roles:
     - role: geerlingguy.homebrew
