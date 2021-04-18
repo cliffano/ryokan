@@ -3,14 +3,19 @@
 
   vars:
     homebrew_installed_packages:
+      - mas
+      - node
       - wget
       - brew-cask
     homebrew_taps:
       - caskroom/cask
+    mas_email: { macappstore.user }
+    mas_password: { macappstore.pass }
+    mas_apps:
 
   roles:
-    # - { role: geerlingguy.homebrew }
-    - { role: cliffano.newrelic-unix }
+    - role: geerlingguy.homebrew
+    - role: rkhmelichek.mas
 
   tasks:
 
@@ -30,4 +35,4 @@
     lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=yes
     with_items:
       - alias transfer-data='rsync -zvr /Volumes/TOSHIBAEXT/data /Volumes/Seagate\ Expansion\ Drive'
-      - alias backup-data='rsync -zvr /Volumes/Seagate\ Expansion\ Drive/data ~/Desktop'
+      # - alias backup-data='rsync -zvr /Volumes/Seagate\ Expansion\ Drive/data ~/Desktop'

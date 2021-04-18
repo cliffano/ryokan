@@ -27,11 +27,11 @@ cloud-a:
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/cloud-a.yml
 
-media:
+macmini00:
 	ansible-playbook \
 	--verbose \
 	--inventory-file hosts \
-	--extra-vars @../config/studio/ryokan/media.yml \
+	--extra-vars @../config/studio/ryokan/macmini00.yml \
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/media.yml
 
