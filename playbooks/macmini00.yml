@@ -1,5 +1,5 @@
 ---
-- hosts: media
+- hosts: macmini00
 
   vars:
     homebrew_installed_packages:
