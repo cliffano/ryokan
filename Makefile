@@ -10,22 +10,30 @@ deps: init
 	pip3 install -r requirements.txt
 	ansible-galaxy install -r requirements.yml --force
 
-raspberrypi00:
+beaglebone00:
 	ansible-playbook \
 	--verbose \
 	--inventory-file hosts \
-	--extra-vars @../config/studio/ryokan/raspberrypi00.yml \
+	--extra-vars @../config/studio/ryokan/beaglebone00.yml \
 	--vault-password-file ../config/studio/ryokan/vault.txt \
-	playbooks/raspberrypi00.yml
+	playbooks/beaglebone00.yml
 
-cloud-a:
+cloud00:
 	ansible-playbook \
 	--verbose \
 	--connection local \
 	--inventory-file hosts \
-	--extra-vars @../config/studio/ryokan/cloud-a.yml \
+	--extra-vars @../config/studio/ryokan/cloud00.yml \
 	--vault-password-file ../config/studio/ryokan/vault.txt \
-	playbooks/cloud-a.yml
+	playbooks/cloud00.yml
+
+macbookair00:
+	ansible-playbook \
+	--verbose \
+	--inventory-file hosts \
+	--extra-vars @../config/studio/ryokan/macbookair00.yml \
+	--vault-password-file ../config/studio/ryokan/vault.txt \
+	playbooks/macbookair00.yml
 
 macmini00:
 	ansible-playbook \
@@ -33,15 +41,7 @@ macmini00:
 	--inventory-file hosts \
 	--extra-vars @../config/studio/ryokan/macmini00.yml \
 	--vault-password-file ../config/studio/ryokan/vault.txt \
-	playbooks/media.yml
-
-iot:
-	ansible-playbook \
-	--verbose \
-	--inventory-file hosts \
-	--extra-vars @../config/studio/ryokan/iot.yml \
-	--vault-password-file ../config/studio/ryokan/vault.txt \
-	playbooks/iot.yml
+	playbooks/macmini00.yml
 
 macbookpro00:
 	ansible-playbook \
@@ -53,10 +53,10 @@ macbookpro00:
 	--ask-become-pass \
 	playbooks/macbookpro00.yml
 
-macbookair00:
+raspberrypi00:
 	ansible-playbook \
 	--verbose \
 	--inventory-file hosts \
-	--extra-vars @../config/studio/ryokan/macbookair00.yml \
+	--extra-vars @../config/studio/ryokan/raspberrypi00.yml \
 	--vault-password-file ../config/studio/ryokan/vault.txt \
-	playbooks/util.yml
+	playbooks/raspberrypi00.yml
