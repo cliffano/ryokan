@@ -35,15 +35,6 @@ macmini00:
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/media.yml
 
-office-blue:
-	ansible-playbook \
-	--verbose \
-	--connection=local \
-	--inventory-file hosts \
-	--extra-vars @../config/studio/ryokan/office-blue.yml \
-	--vault-password-file ../config/studio/ryokan/vault.txt \
-	playbooks/office-blue.yml
-
 iot:
 	ansible-playbook \
 	--verbose \
@@ -69,21 +60,3 @@ util:
 	--extra-vars @../config/studio/ryokan/util.yml \
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/util.yml
-
-web:
-	ansible-playbook \
-	--verbose \
-	--inventory-file hosts \
-	--extra-vars @../config/studio/ryokan/web.yml \
-	--vault-password-file ../config/studio/ryokan/vault.txt \
-	playbooks/web.yml
-
-x-workstation:
-	ansible-playbook \
-	--verbose \
-	--connection=local \
-	--inventory-file hosts \
-	--extra-vars @../config/studio/ryokan/workstation.yml \
-	--vault-password-file ../config/studio/ryokan/vault.txt \
-  --ask-sudo-pass \
-	playbooks/workstation.yml
