@@ -33,12 +33,12 @@
       - { id: theworksbuildenv, image: 'shinesolutions/the-works-buildenv' }
       - { id: theworksbuildenv-sandpit, image: 'ghcr.io/shinesolutions/the-works-buildenv-sandpit' }
       - { id: theworksbuildenv-publisher, image: 'ghcr.io/shinesolutions/the-works-buildenv-publisher' }
-    home_workspaces:
+    main_workspaces:
       - studio
-      - pakkun
-    work_workspaces:
+    project_workspaces:
       - aoc
       - infracat
+      - pakkun
       - post
       - theworks
       - gatt
@@ -75,11 +75,11 @@
 
   - name: Set Studio SSH configuration include
     file: src={{ home }}/dev/workspace-studio/config/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
-    with_items: "{{ home_workspaces }}"
+    with_items: "{{ main_workspaces }}"
 
   - name: Set workspaces SSH configuration include
     file: src={{ home }}/dev/workspace-studio/config/projects/.ssh_config-{{ item }} dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
-    with_items: "{{ work_workspaces }}"
+    with_items: "{{ project_workspaces }}"
 
   - name: Ensure .zprofile file exists
     file: path={{ home }}/.zprofile state=touch mode=0644
@@ -150,11 +150,11 @@
 
   - name: Set Studio workspace aliases
     lineinfile: dest={{ home }}/.zprofile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
-    with_items: "{{ home_workspaces }}"
+    with_items: "{{ main_workspaces }}"
 
   - name: Set workspace aliases
     lineinfile: dest={{ home }}/.zprofile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
-    with_items: "{{ work_workspaces }}"
+    with_items: "{{ project_workspaces }}"
 
   - name: Set Makefile .PHONY creator alias
     lineinfile: dest={{ home }}/.zprofile line="alias makephony='grep \'^[^#[:space:]].*:\' Makefile | sed -e \"s/:.*$//\" | paste -s -d\" \" - | sed -e \"s/\.PHONY$//\"'" state=present backup=no
@@ -168,19 +168,19 @@
 
   - name: Ensure Studio workspace directories exist
     file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
-    with_items: "{{ home_workspaces }}"
+    with_items: "{{ main_workspaces }}"
 
   - name: Set Repoman configuration for workspace repositories
     file: src={{ home }}/dev/workspace-studio/config/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
-    with_items: "{{ home_workspaces }}"
+    with_items: "{{ main_workspaces }}"
 
   - name: Ensure work workspace directories exist
     file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
-    with_items: "{{ work_workspaces }}"
+    with_items: "{{ project_workspaces }}"
 
   - name: Set Repoman configuration for work workspace repositories
     file: src={{ home }}/dev/workspace-studio/config/projects/.repoman-{{ item }}.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
-    with_items: "{{ work_workspaces }}"
+    with_items: "{{ project_workspaces }}"
 
   - name: Ensure iTerm2 scripts directory exists
     file: path='{{ home }}/Library/Application Support/iTerm2/Scripts/' state=directory
