@@ -1,0 +1,18 @@
+---
+- hosts: macbookair00
+
+  vars:
+    homebrew_installed_packages:
+      - mas
+      - node
+      - wget
+    mas_email: { macappstore.user }
+    mas_password: { macappstore.pass }
+    mas_apps:
+      - { name: Scratch, id: 1446785996 }
+
+  roles:
+    - role: geerlingguy.homebrew
+    - role: rkhmelichek.mas
+
+  tasks:

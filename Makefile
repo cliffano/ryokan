@@ -53,10 +53,10 @@ macbookpro00:
 	--ask-become-pass \
 	playbooks/macbookpro00.yml
 
-util:
+macbookair00:
 	ansible-playbook \
 	--verbose \
 	--inventory-file hosts \
-	--extra-vars @../config/studio/ryokan/util.yml \
+	--extra-vars @../config/studio/ryokan/macbookair00.yml \
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/util.yml
