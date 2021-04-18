@@ -35,11 +35,11 @@
       - { id: theworksbuildenv-publisher, image: 'ghcr.io/shinesolutions/the-works-buildenv-publisher' }
     home_workspaces:
       - studio
+      - pakkun
     work_workspaces:
       - aoc
       - infracat
       - post
-      - pakkun
       - theworks
       - gatt
       - nlp
