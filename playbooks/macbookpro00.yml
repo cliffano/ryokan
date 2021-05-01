@@ -22,7 +22,7 @@
       - { name: Slack, id: 803453959 }
       - { name: WhatsApp Desktop, id: 1147396723 }
       - { name: Magnet, id: 441258766 }
-      - { name: iStateMenus, id: id1319778037 }
+      - { name: 'iStat Menus', id: 1319778037 }
     docker_images:
       - { id: kontiki, image: 'cliffano/kon-tiki' }
       - { id: kontiki-cred, image: 'cliffano/kon-tiki-cred' }
