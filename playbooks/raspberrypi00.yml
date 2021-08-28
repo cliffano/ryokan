@@ -1,113 +1,49 @@
 ---
 - hosts: raspberrypi00
 
-  # roles:
-    # - role: leonidas.nvm
-    #   nvm:
-    #     user: jenkins
-    #     version: v0.28.0
-    #     node_version: '4'
-    #   sudo: yes
-    # - { role: cliffano.newrelic-unix }
-
   tasks:
 
-  # - name: Ensure opt directory allows cliffano.newrelic-unix to create plugins directory
-  #   sudo: yes
-  #   file: path=/opt/ state=directory mode=0777
+  - name: Ensure dev directory exists
+    file: path=/home/pi/dev/ state=directory mode=0755
 
-  - name: Ensure old Sendman configuration for GD hosts are removed
-    file: path=/var/lib/jenkins/.ssh/{{ item }}.json state=absent
-    with_items:
-      - deidara
-      - kakuzu
-      - kisame
-      - suna
+  - name: Ensure Home Assistant home directory exists
+    file: path=/home/pi/dev/hass-home/ state=directory mode=0755
 
-  - name: Comment out inactive Collabora sources list
-    become: yes
-    copy: content="#deb http://raspberrypi.collabora.com wheezy rpi\n" dest=/etc/apt/sources.list.d/collabora.list
-
-  - name: Comment out inactive Raspi sources list
-    become: yes
-    copy: content="#deb http://archive.raspberrypi.org/debian/ wheezy main\n#deb-src http://archive.raspberrypi.org/debian/ wheezy main\n" dest=/etc/apt/sources.list.d/raspi.list
-
-  - name: Set AARNet as singular sources list
-    become: yes
-    copy: content="deb http://mirror.aarnet.edu.au/pub/raspbian/raspbian jessie main contrib non-free rpi\n" dest=/etc/apt/sources.list
-
-  - name: Ensure os packages are installed
+  - name: Ensure requirement packages are installed
     apt: name={{ item }} state=present  update_cache=yes
     become: yes
     with_items:
-      - openssl
-      - build-essential
-      - libreadline-gplv2-dev
-      - libc6-dev
-      - tk-dev
-      - libncurses5-dev
-      - libncursesw5-dev
-      - libreadline6-dev
-      - libdb5.3-dev
-      - libgdbm-dev
-      - libsqlite3-dev
-      - libssl-dev
-      - libbz2-dev
-      - libexpat1-dev
-      - liblzma-dev
-      - zlib1g-dev
-      - libffi-dev
-      - libjpeg-dev
-      - libopenjp2-7
-      - libtiff5
-      - jenkins
-      - dh-autoreconf
-      - python3
-      - python3-pip
-      - python3-dev
-      - python3-venv
-      - autoconf 
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
 
-  - name: Ensure homeassistant user is created
+  - name: Add Docker’s official GPG key
+    ansible.builtin.shell: curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+  - name: Set up Docker stable repository
+    ansible.builtin.shell: echo "deb [arch=armhf signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+  - name: Update apt package index
     become: yes
-    user:
-      name: homeassistant
-      shell: /bin/bash
-      groups: dialout,gpio
-      create_home: True
+    ansible.builtin.shell: apt-get update
 
-  - name: Ensure srv dir is created
+  - name: Ensure Docker Engine and containerd packages are installed
+    apt: name={{ item }} state=present  update_cache=yes
     become: yes
-    file:
-      path: /srv
-      state: directory
-      mode: '0755'
+    with_items:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
 
-  - name: Ensure homeassistant dir is created
+  - name: Pull Home Assistant Docker image
     become: yes
-    file:
-      path: /srv/homeassistant
-      state: directory
-      owner: homeassistant
-      group: homeassistant
-      mode: '0755'
+    community.docker.docker_image:
+      name: homeassistant/raspberrypi2-homeassistant
+      source: pull
 
-  - name: Ensure Python packages are installed
-    become: yes
-    pip:
-      name: homeassistant
-      executable: pip3.8
-
-  - name: Set aliases for pi
+  - name: Set aliases for Home Assistant
     lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=no
     with_items:
-      - alias suhass='sudo -u homeassistant -H -s'
-
-  - name: Set aliases and init dir for homeassistant
-    become: yes
-    lineinfile: dest=/home/homeassistant/.bashrc line="{{ item }}" state=present backup=no
-    with_items:
-      - alias hasspy38='python3.8 -m venv .'
-      - alias hasssrc='source bin/activate'
-      - alias hassd='hass --daemon'
-      - cd /srv/homeassistant
+      - alias suhass='sudo docker run --init -d --name="home-assistant" --privileged -e "TZ=Australia/Melbourne" -v /home/pi/dev/hass-home:/config -p 8123:8123 homeassistant/raspberrypi2-homeassistant:latest'
