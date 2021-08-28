@@ -1,26 +1,17 @@
-[raspberrypi00]
-pakkun
-
-[cloud-a]
-localhost
-
-[iot]
+[beaglebone00]
 konohamaru
 
-[media]
-gennou
-
-[office-blue]
-akatsuchi
+[cloud00]
+localhost
 
 [macbookpro00]
 hashirama
 
-[util]
-haku
+[macbookpro01]
+todo
 
-[web]
-zabuza
+[macmini00]
+gennou
 
-[workstation]
-kakashi
+[raspberrypi00]
+pakkun
