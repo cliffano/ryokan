@@ -16,30 +16,22 @@
     mas_email: { macappstore.user }
     mas_password: { macappstore.pass }
     mas_apps:
+      - { name: DMesh, id: 480992638 }
       - { name: Owly, id: 882812218 }
-      - { name: Slack, id: 803453959 }
+      - { name: Pixelmator, id: 407963104 }
       - { name: WhatsApp Desktop, id: 1147396723 }
       - { name: Magnet, id: 441258766 }
       - { name: 'iStat Menus', id: 1319778037 }
     docker_images:
+      - { id: kontiki, image: 'cliffano/kon-tiki' }
+      - { id: kontiki-cred, image: 'cliffano/kon-tiki-cred' }
+      - { id: studio, image: 'cliffano/studio' }
+      - { id: swaggyc, image: 'cliffano/swaggy-c' }
       - { id: centos7, image: 'centos:centos7' }
       - { id: ubuntu, image: 'ubuntu' }
-      - { id: aembuildenv, image: 'shinesolutions/aem-platform-buildenv' }
-      - { id: theworksbuildenv, image: 'shinesolutions/the-works-buildenv' }
-      - { id: theworksbuildenv-sandpit, image: 'ghcr.io/shinesolutions/the-works-buildenv-sandpit' }
-      - { id: theworksbuildenv-publisher, image: 'ghcr.io/shinesolutions/the-works-buildenv-publisher' }
     main_workspaces:
       - studio
     project_workspaces:
-      - aoc
-      - infracat
-      - pakkun
-      - post
-      - theworks
-      - gatt
-      - nlp
-      - drup
-      - vulscan
 
   roles:
     - role: geerlingguy.homebrew
@@ -119,9 +111,6 @@
       - alias dia='docker rmi $(docker images -q --filter "dangling=true")'
       - alias dxt='docker exec -it'
 
-  - name: Set OpenSesame aliases
-    lineinfile: dest={{ home }}/.zprofile line="alias osa='open-sesame aws --region ap-southeast-2 --secgroup-id {{ opensesame_secgroups }} --port 22 --name cliffs'" state=present backup=no
-
   - name: Set Docker run aliases
     lineinfile: dest={{ home }}/.zprofile regexp="^alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
     with_items: "{{ docker_images }}"
@@ -133,15 +122,6 @@
   - name: Set Docker one-off aliases
     lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
     with_items: "{{ docker_images }}"
-
-  - name: Set Docker AEM Platform one-off alias
-    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-aem-workspace=.*$" line="alias drno-aem-workspace='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -p 45600-45700:45600-45700/tcp -i -t shinesolutions/aem-platform-buildenv-publisher'" state=present backup=no
-
-  - name: Set Docker Jenkins one-off alias
-    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-jenkins=.*$" line="alias drno-jenkins='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -p 8080:8080/tcp -i -t shinesolutions/aem-platform-buildenv'" state=present backup=no
-
-  - name: Set Jenkins alias
-    lineinfile: dest={{ home }}/.zprofile line="alias jenkins='docker run -p 8080:8080 -p 50000:50000 -v {{ home }}/dev/workspace-orgs/jenkins_home:/var/jenkins_home jenkins/jenkins:lts'" state=present backup=no
 
   - name: Set Studio workspace aliases
     lineinfile: dest={{ home }}/.zprofile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
@@ -158,8 +138,6 @@
     npm: name="{{item}}" global=yes state=present
     with_items:
       - repoman
-      - open-sesame
-      - nba-go
 
   - name: Ensure Studio workspace directories exist
     file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
@@ -204,11 +182,10 @@
       - default-cache-ttl
       - max-cache-ttl 28800
 
-  # - name: Pull Docker images
-  #   docker_image:
-  #     name: "{{ item }}"
-  #   with_items:
-  #     - centos:centos7
-  #     - ubuntu
-  #     - jenkins/jenkins:lts
-  #     - node
+  - name: Pull Docker images
+    docker_image:
+      name: "{{ item }}"
+    with_items:
+      - cliffano/kon-tiki
+      - cliffano/studio
+      - cliffano/swaggy-c
