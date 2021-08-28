@@ -1,38 +1,43 @@
-- src: andrewrothstein.packer
-  path: roles/
+collections:
+  - name: community.docker
 
-- src: andrewrothstein.unarchive-deps
-  path: roles/
+roles:
+  - src: andrewrothstein.packer
+    path: roles/
 
-# - src: http://github.com/cliffano/ansible-role-droplet-docker
-#   path: roles/
+  - src: andrewrothstein.unarchive-deps
+    path: roles/
 
-- src: cliffano.droplet-docker
-  path: roles/
+  # - src: http://github.com/cliffano/ansible-role-droplet-docker
+  #   path: roles/
 
-# - src: http://github.com/cliffano/ansible-role-newrelic-unix
-#   path: roles/
+  - src: cliffano.droplet-docker
+    path: roles/
 
-- src: cliffano.newrelic-unix
-  path: roles/
+  # - src: http://github.com/cliffano/ansible-role-newrelic-unix
+  #   path: roles/
 
-- src: Comcast.sdkman
-  path: roles/
+  - src: cliffano.newrelic-unix
+    path: roles/
 
-- src: gantsign.oh-my-zsh
-  path: roles/
+  - src: Comcast.sdkman
+    path: roles/
 
-- src: geerlingguy.homebrew
-  path: roles/
+  - src: gantsign.oh-my-zsh
+    path: roles/
 
-#- src: rack-roles.newrelic
-#  path: roles/
+  - src: geerlingguy.homebrew
+    path: roles/
 
-- src: rkhmelichek.mas
-  path: roles/
+  #- src: rack-roles.newrelic
+  #  path: roles/
 
-- src: altermn.rvm
-  path: roles/
+  - src: rkhmelichek.mas
+    path: roles/
 
-- src: jebovic.sysdig
-  path: roles/
+  - src: altermn.rvm
+    path: roles/
+
+  - src: jebovic.sysdig
+    path: roles/
+
