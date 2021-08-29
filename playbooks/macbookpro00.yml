@@ -20,7 +20,7 @@
       - { name: Slack, id: 803453959 }
       - { name: WhatsApp Desktop, id: 1147396723 }
       - { name: Magnet, id: 441258766 }
-      - { name: 'iStat Menus', id: 1319778037 }
+      # - { name: 'iStat Menus', id: 1319778037 } # MDM blocks download
     docker_images:
       - { id: centos7, image: 'centos:centos7' }
       - { id: ubuntu, image: 'ubuntu' }
@@ -94,7 +94,8 @@
       - alias gcp='git cherry-pick'
       - alias gcpc='git cherry-pick --continue'
       - alias gco='git checkout'
-      - alias gcom='git checkout master'
+      - alias gcom='git checkout main'
+      - alias gcoms='git checkout master'
       - alias gd='git diff'
       - alias gl3='git log -3'
       - alias gl5='git log -5'
@@ -204,11 +205,11 @@
       - default-cache-ttl
       - max-cache-ttl 28800
 
-  # - name: Pull Docker images
-  #   docker_image:
-  #     name: "{{ item }}"
-  #   with_items:
-  #     - centos:centos7
-  #     - ubuntu
-  #     - jenkins/jenkins:lts
-  #     - node
+  - name: Pull Docker images
+    docker_image:
+      name: "{{ item }}"
+    with_items:
+      - centos:centos7
+      - ubuntu
+      - jenkins/jnlp-slave:latest
+      - node

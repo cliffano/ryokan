@@ -86,7 +86,8 @@
       - alias gcp='git cherry-pick'
       - alias gcpc='git cherry-pick --continue'
       - alias gco='git checkout'
-      - alias gcom='git checkout master'
+      - alias gcom='git checkout main'
+      - alias gcoms='git checkout master'
       - alias gd='git diff'
       - alias gl3='git log -3'
       - alias gl5='git log -5'
@@ -189,3 +190,5 @@
       - cliffano/kon-tiki
       - cliffano/studio
       - cliffano/swaggy-c
+      - jenkins/jenkins:lts
+      - jenkins/jnlp-slave:latest
