@@ -8,7 +8,7 @@
       - packer
       - cloc
       - telnet
-      - gpg
+      - gpg2
       - pinentry-mac
       - gh
       - youtube-dl
