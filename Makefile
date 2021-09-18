@@ -68,4 +68,5 @@ raspberrypi00:
 	--inventory-file hosts \
 	--extra-vars @../config/studio/ryokan/raspberrypi00.yml \
 	--vault-password-file ../config/studio/ryokan/vault.txt \
+	--ask-become-pass \
 	playbooks/raspberrypi00.yml
