@@ -1,10 +1,9 @@
 clean:
 	rm -f ryokan.log
-	rm -f tmux*.log
-	rm -rf roles
+	rm -rf roles collections
 
 init:
-	mkdir -p roles
+	mkdir -p roles collections
 
 deps: init
 	pip3 install -r requirements.txt
