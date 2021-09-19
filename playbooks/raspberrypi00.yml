@@ -10,22 +10,23 @@
     file: path=/home/pi/dev/hass-home/ state=directory mode=0755
 
   - name: Ensure requirement packages are installed
-    apt: name={{ item }} state=present  update_cache=yes
+    apt:
+      name:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+        - lsb-release
+        - python3-pip
+      state: present
+      update_cache:  yes
     become: yes
-    with_items:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - gnupg
-      - lsb-release
-      - python3-pip
 
   - name: Install Python packages
     pip:
-      name: "{{ item }}"
+      name:
+        - docker
       executable: pip3
-    with_items:
-      - docker
 
   # - name: Add Docker’s official GPG key
   #   ansible.builtin.shell: curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -38,12 +39,14 @@
     ansible.builtin.shell: apt-get update
 
   - name: Ensure Docker Engine and containerd packages are installed
-    apt: name={{ item }} state=present  update_cache=yes
+    apt:
+      name:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+      state: present
+      update_cache: yes
     become: yes
-    with_items:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
 
   - name: Pull Home Assistant Docker image (temporary until issue with Python interpreter not seeing docker module is solved)
     become: yes
