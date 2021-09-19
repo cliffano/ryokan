@@ -19,20 +19,20 @@
 
   tasks:
 
-  - name: Ensure root Homebrew Cask packages are installed
-    homebrew_cask: name={{ item }} state=installed
-    with_items:
-      - firefox
-    sudo: yes
+  # - name: Ensure root Homebrew Cask packages are installed
+  #   homebrew_cask: name={{ item }} state=installed
+  #   with_items:
+  #     - firefox
+  #   sudo: yes
 
-  - name: Ensure data directory exists, used as nightly backup, on Desktop for easy access via GUI
-    file: path={{ workspace }}/Desktop/data state=directory
+  # - name: Ensure data directory exists, used as nightly backup, on Desktop for easy access via GUI
+  #   file: path={{ workspace }}/Desktop/data state=directory
 
-  - name: Set .bashrc
-    lineinfile: dest={{ home }}/.bashrc line="PATH=/usr/local/bin:$PATH" state=present backup=yes
+  # - name: Set .bashrc
+  #   lineinfile: dest={{ home }}/.bashrc line="PATH=/usr/local/bin:$PATH" state=present backup=yes
 
-  - name: Set .profile
-    lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=yes
-    with_items:
-      - alias transfer-data='rsync -zvr /Volumes/TOSHIBAEXT/data /Volumes/Seagate\ Expansion\ Drive'
-      # - alias backup-data='rsync -zvr /Volumes/Seagate\ Expansion\ Drive/data ~/Desktop'
+  # - name: Set .profile
+  #   lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=yes
+  #   with_items:
+  #     - alias transfer-data='rsync -zvr /Volumes/TOSHIBAEXT/data /Volumes/Seagate\ Expansion\ Drive'
+  #     # - alias backup-data='rsync -zvr /Volumes/Seagate\ Expansion\ Drive/data ~/Desktop'
