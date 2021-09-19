@@ -1,10 +1,9 @@
 clean:
 	rm -f ryokan.log
-	rm -f tmux*.log
-	rm -rf roles
+	rm -rf roles collections
 
 init:
-	mkdir -p roles
+	mkdir -p roles collections
 
 deps: init
 	pip3 install -r requirements.txt
@@ -69,4 +68,5 @@ raspberrypi00:
 	--inventory-file hosts \
 	--extra-vars @../config/studio/ryokan/raspberrypi00.yml \
 	--vault-password-file ../config/studio/ryokan/vault.txt \
+	--ask-become-pass \
 	playbooks/raspberrypi00.yml
