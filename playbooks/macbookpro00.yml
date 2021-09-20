@@ -29,7 +29,7 @@
       - { id: theworksbuildenv-sandpit, image: 'ghcr.io/shinesolutions/the-works-buildenv-sandpit' }
       - { id: theworksbuildenv-publisher, image: 'ghcr.io/shinesolutions/the-works-buildenv-publisher' }
     main_workspaces:
-      - studio
+      - control
     project_workspaces:
       - aoc
       - infracat
@@ -40,6 +40,7 @@
       - nlp
       - drup
       - vulscan
+      - studio
 
   roles:
     - role: geerlingguy.homebrew
@@ -68,7 +69,7 @@
       - konoha_id_rsa
       - konoha_id_rsa.pub
 
-  - name: Set Studio SSH configuration include
+  - name: Set Control SSH configuration include
     file: src={{ home }}/dev/workspace-studio/config/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
     with_items: "{{ main_workspaces }}"
 
@@ -206,8 +207,10 @@
       - max-cache-ttl 28800
 
   - name: Pull Docker images
-    docker_image:
+    become: yes
+    community.docker.docker_image:
       name: "{{ item }}"
+      source: pull
     with_items:
       - centos:centos7
       - ubuntu
