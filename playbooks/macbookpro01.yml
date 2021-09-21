@@ -31,9 +31,10 @@
       - { id: centos7, image: 'centos:centos7' }
       - { id: ubuntu, image: 'ubuntu' }
     main_workspaces:
-      - studio
+      - control
     project_workspaces:
       - pakkun
+      - studio
 
   roles:
     - role: geerlingguy.homebrew
