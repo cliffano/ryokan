@@ -9,6 +9,13 @@
   - name: Ensure Home Assistant home directory exists
     file: path=/home/pi/dev/hass-home/ state=directory mode=0755
 
+  - name: Ensure hass-home repo is cloned
+    ansible.builtin.git:
+      repo: 'git@github.com:pakkunbot/hass-home'
+      dest: /home/pi/dev/hass-home/
+      clone: yes
+      update: no
+
   - name: Ensure requirement packages are installed
     apt:
       name:
