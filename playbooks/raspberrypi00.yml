@@ -70,4 +70,12 @@
   - name: Set aliases for Home Assistant
     lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=no
     with_items:
-      - alias suhass='sudo docker run --init -d --name="home-assistant" --privileged -e "TZ=Australia/Melbourne" -v /home/pi/dev/hass-home:/config -p 8123:8123 homeassistant/raspberrypi2-homeassistant:latest'
+      - alias hass-start='sudo docker run --init -d --name="home-assistant" --net=host --privileged -e "TZ=Australia/Melbourne" -v /home/pi/dev/hass-home:/config -p 8123:8123 homeassistant/raspberrypi2-homeassistant:latest'
+      - alias hass-login='sudo docker exec -it home-assistant /bin/bash'
+      - alias hass-stop='sudo docker stop home-assistant'
+
+  - name: Set host name
+    lineinfile: dest=/etc/hosts line="{{ item }}" state=present backup=no
+    with_items:
+      - 127.0.0.1               pakkun
+    become: yes
