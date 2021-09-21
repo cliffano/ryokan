@@ -6,16 +6,9 @@
       - mas
       - node
       - wget
-      - brew-cask
-    homebrew_taps:
-      - caskroom/cask
-    mas_email: { macappstore.user }
-    mas_password: { macappstore.pass }
-    mas_apps:
-
+      - telnet
   roles:
     - role: geerlingguy.homebrew
-    - role: rkhmelichek.mas
 
   tasks:
 
