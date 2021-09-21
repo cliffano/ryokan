@@ -64,6 +64,7 @@
 
   - name: Set SSH configuration
     file: src={{ home }}/dev/workspace-control/config/tools/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link
+    mode: 0600
     with_items:
       - config
       - konoha_id_rsa
