@@ -63,18 +63,18 @@
     file: path={{ home }}/.ssh/config.d/ state=directory
 
   - name: Set SSH configuration
-    file: src={{ home }}/dev/workspace-control/config/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link
+    file: src={{ home }}/dev/workspace-control/config/control/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link
     with_items:
       - config
       - konoha_id_rsa
       - konoha_id_rsa.pub
 
-  - name: Set Control SSH configuration include
-    file: src={{ home }}/dev/workspace-control/config/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
+  - name: Set main workspaces SSH configuration include
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
     with_items: "{{ main_workspaces }}"
 
-  - name: Set workspaces SSH configuration include
-    file: src={{ home }}/dev/workspace-control/config/projects/.ssh_config-{{ item }} dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
+  - name: Set project workspaces SSH configuration include
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
     with_items: "{{ project_workspaces }}"
 
   - name: Ensure .zprofile file exists
@@ -163,20 +163,20 @@
       - open-sesame
       - nba-go
 
-  - name: Ensure Studio workspace directories exist
+  - name: Ensure main workspace directories exist
     file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
     with_items: "{{ main_workspaces }}"
 
-  - name: Set Repoman configuration for workspace repositories
-    file: src={{ home }}/dev/workspace-control/config/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
+  - name: Set Repoman configuration for main workspace repositories
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
     with_items: "{{ main_workspaces }}"
 
-  - name: Ensure work workspace directories exist
+  - name: Ensure project workspace directories exist
     file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
     with_items: "{{ project_workspaces }}"
 
-  - name: Set Repoman configuration for work workspace repositories
-    file: src={{ home }}/dev/workspace-control/config/projects/.repoman-{{ item }}.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
+  - name: Set Repoman configuration for project workspace repositories
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
     with_items: "{{ project_workspaces }}"
 
   - name: Ensure iTerm2 scripts directory exists
