@@ -63,7 +63,7 @@
     file: path={{ home }}/.ssh/config.d/ state=directory
 
   - name: Set SSH configuration
-    file: src={{ home }}/dev/workspace-control/config/control/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link
+    file: src={{ home }}/dev/workspace-control/config/tools/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link
     with_items:
       - config
       - konoha_id_rsa
