@@ -9,6 +9,10 @@
   - name: Ensure Jenkins home directory exists
     file: path="{{ home }}/dev/jenkins-home" state=directory mode=0755
 
+  - name: Ensure Jenkins can write log file
+    file: path="/var/log/" state=directory mode=0777
+    become: yes
+
   - name: Ensure jenkins-workspace repo is cloned
     ansible.builtin.git:
       repo: 'https://github.com/cliffano/jenkins-workspace'
@@ -19,4 +23,5 @@
   - name: Set aliases for Jenkins
     lineinfile: dest={{ home }}/.bashrc line="{{ item }}" state=present backup=no
     with_items:
-      - alias jenkins-start='cd {{ home }}/dev/jenkins-workspace/ && JENKINS_HOME={{ home }}/dev/jenkins-home/ make jenkins-start-sans-home &'
+      - alias jenkins-start='cd {{ home }}/dev/jenkins-workspace/ && JENKINS_HOME={{ home }}/dev/jenkins-home/ nohup make jenkins-start-sans-home > /var/log/jenkins.log &'
+      - alias jenkins-stop='pkill java'
