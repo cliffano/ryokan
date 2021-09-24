@@ -135,8 +135,8 @@
     lineinfile: dest={{ home }}/.zprofile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
     with_items: "{{ project_workspaces }}"
 
-  - name: Set Makefile .PHONY creator alias
-    lineinfile: dest={{ home }}/.zprofile line="alias makephony='grep \'^[^#[:space:]].*:\' Makefile | sed -e \"s/:.*$//\" | paste -s -d\" \" - | sed -e \"s/\.PHONY$//\"'" state=present backup=no
+  # - name: Set Makefile .PHONY creator alias
+  #   lineinfile: dest={{ home }}/.zprofile line="alias makephony='grep \'^[^#[:space:]].*:\' Makefile | sed -e \"s/:.*$//\" | paste -s -d\" \" - | sed -e \"s/\.PHONY$//\"'" state=present backup=no
 
   - name: Ensure global node.js packages are installed
     npm: name="{{item}}" global=yes state=present
@@ -194,4 +194,12 @@
       - cliffano/studio
       - cliffano/swaggy-c
       - jenkins/jenkins:lts
-      - jenkins/jnlp-slave:latest
+      - jenkins/inbound-agent:latest
+
+  - name: Ensure Jenkins agent home directory exists
+    file: path={{ home }}/dev/jenkins-agent-home/ state=directory
+
+  - name: Set Jenkins agent Docker aliases
+    lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
+    with_items:
+      - alias jenkins-agent-start='docker run --init jenkins/inbound-agent -url http://gennou.local:8080 d2abee924af955fd149447472162f1f38b3c83d8ee1dcbabcf6925ba6b6190ff `hostname`'
