@@ -9,6 +9,9 @@
   - name: Ensure Jenkins home directory exists
     file: path="{{ home }}/dev/jenkins-home" state=directory mode=0755
 
+  - name: Ensure Jenkins backup directory exists
+    file: path="{{ home }}/dev/jenkins-backup" state=directory mode=0755
+
   - name: Ensure Jenkins can write log file
     file: path="/var/log/" state=directory mode=0777
     become: yes
