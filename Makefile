@@ -32,7 +32,7 @@ delllatitude00:
 	--connection local \
 	--inventory-file hosts \
 	--extra-vars @../config/studio/ryokan/delllatitude00.yml \
-	--vault-password-file ../config/studio/ryokan/vault.txt \
+	--ask-vault-pass \
 	playbooks/delllatitude00.yml
 
 macbookair00:
