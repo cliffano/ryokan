@@ -26,6 +26,15 @@ cloud00:
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/cloud00.yml
 
+delllatitude00:
+	ansible-playbook \
+	--verbose \
+	--connection local \
+	--inventory-file hosts \
+	--extra-vars @../config/studio/ryokan/delllatitude00.yml \
+	--vault-password-file ../config/studio/ryokan/vault.txt \
+	playbooks/delllatitude00.yml
+
 macbookair00:
 	ansible-playbook \
 	--verbose \

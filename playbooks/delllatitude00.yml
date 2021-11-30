@@ -1,0 +1,57 @@
+---
+- hosts: delllatitude00
+
+  vars:
+    docker_images:
+      - { id: aembuildenv, image: 'shinesolutions/aem-platform-buildenv' }
+    main_workspaces:
+      - control
+    project_workspaces:
+      - buss
+
+  tasks:
+
+  - name: Set git config
+    file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }} dest='{{ home }}/.gitconfig' state=link
+
+  - name: Ensure SSH directory exists
+    file: path={{ home }}/.ssh/ state=directory
+
+  - name: Ensure SSH config directory exists
+    file: path={{ home }}/.ssh/config.d/ state=directory
+
+  - name: Set SSH configuration
+    file: src={{ home }}/dev/workspace-control/config/tools/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link mode=0600
+    with_items:
+      - config
+      - konoha_id_rsa
+      - konoha_id_rsa.pub
+
+  - name: Set main workspaces SSH configuration include
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
+    with_items: "{{ main_workspaces }}"
+
+  - name: Set project workspaces SSH configuration include
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
+    with_items: "{{ project_workspaces }}"
+
+  - name: Ensure global node.js packages are installed
+    npm: name="{{item}}" global=yes state=present
+    with_items:
+      - repoman
+
+  - name: Ensure main workspace directories exist
+    file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
+    with_items: "{{ main_workspaces }}"
+
+  - name: Set Repoman configuration for main workspace repositories
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
+    with_items: "{{ main_workspaces }}"
+
+  - name: Ensure project workspace directories exist
+    file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
+    with_items: "{{ project_workspaces }}"
+
+  - name: Set Repoman configuration for project workspace repositories
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
+    with_items: "{{ project_workspaces }}"
