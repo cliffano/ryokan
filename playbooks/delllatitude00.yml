@@ -21,7 +21,7 @@
     with_items: "{{ main_workspaces }}"
 
   - name: Set Repoman configuration for main workspace repositories
-    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
+    ansible.builtin.copy: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json mode='0644'
     with_items: "{{ main_workspaces }}"
 
   - name: Ensure project workspace directories exist
@@ -29,5 +29,5 @@
     with_items: "{{ project_workspaces }}"
 
   - name: Set Repoman configuration for project workspace repositories
-    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
+    ansible.builtin.copy: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json mode='0644'
     with_items: "{{ project_workspaces }}"
