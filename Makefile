@@ -72,6 +72,16 @@ macbookpro01:
 	--ask-become-pass \
 	playbooks/macbookpro01.yml
 
+macbookpro02:
+	ansible-playbook \
+	--verbose \
+	--connection=local \
+	--inventory-file hosts \
+	--extra-vars @../config/studio/ryokan/macbookpro02.yml \
+	--vault-password-file ../config/studio/ryokan/vault.txt \
+	--ask-become-pass \
+	playbooks/macbookpro02.yml
+
 raspberrypi00:
 	ansible-playbook \
 	--verbose \
