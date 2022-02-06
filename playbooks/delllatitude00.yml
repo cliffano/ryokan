@@ -30,6 +30,7 @@
     file: path={{ home }}/.ssh/config.d/ state=directory
 
   - name: Ensure utility packages are installed
+    become: yes
     ansible.builtin.package:
       name:
         - curl
