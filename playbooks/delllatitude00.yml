@@ -7,7 +7,9 @@
     main_workspaces:
       - control
     project_workspaces:
-      - buss
+      - bussdig
+      - busspla
+      - bussint
 
   tasks:
 
@@ -15,6 +17,7 @@
     npm: name="{{item}}" global=yes state=present
     with_items:
       - repoman
+      - nestor
 
   - name: Ensure main workspace directories exist
     file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
