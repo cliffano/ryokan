@@ -13,6 +13,15 @@
 
   tasks:
 
+  - name: Ensure utility packages are installed
+    ansible.builtin.package:
+      name:
+        - curl
+        - docker
+        - telnet
+        - wget
+      state: latest
+
   - name: Ensure global node.js packages are installed
     npm: name="{{item}}" global=yes state=present
     with_items:
