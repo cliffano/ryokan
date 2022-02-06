@@ -13,6 +13,21 @@
 
   tasks:
 
+  - name: Set git config
+    file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }} dest='{{ home }}/.gitconfig' state=link
+
+  - name: Set git config for GitHub repos
+    file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }}-github dest='{{ home }}/.gitconfig-github' state=link
+
+  - name: Set git config for BitBucket repos
+    file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }}-bitbucket dest='{{ home }}/.gitconfig-bitbucket' state=link
+
+  - name: Ensure SSH directory exists
+    file: path={{ home }}/.ssh/ state=directory
+
+  - name: Ensure SSH config directory exists
+    file: path={{ home }}/.ssh/config.d/ state=directory
+
   - name: Ensure utility packages are installed
     ansible.builtin.package:
       name:
