@@ -29,6 +29,9 @@ roles:
   - src: geerlingguy.homebrew
     path: roles/
 
+  - src: grzegorznowak.nvm_node
+    path: roles/
+
   #- src: rack-roles.newrelic
   #  path: roles/
 

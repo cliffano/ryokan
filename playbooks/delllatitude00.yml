@@ -11,8 +11,17 @@
       - bussdig
       - busspla
       - bussint
+    nvm_node_version: "16.13.2"
+    nvm_dir: "{{ home }}/tools/nvm"
+    nvm_user_name: cliffano
+    nvm_install_globally: ['nestor', 'repoman'] 
+  roles:
+    - { role: grzegorznowak.nvm_node, become: yes }
 
   tasks:
+
+  - name: Ensure nvm directory exists
+    file: path={{ home }}/tools/nvm state=directory
 
   - name: Set git config
     file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }} dest='{{ home }}/.gitconfig' state=link
@@ -38,12 +47,6 @@
         - telnet
         - wget
       state: latest
-
-  - name: Ensure global node.js packages are installed
-    npm: name="{{item}}" global=yes state=present
-    with_items:
-      - repoman
-      - nestor
 
   - name: Ensure main workspace directories exist
     file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
