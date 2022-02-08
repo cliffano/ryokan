@@ -38,14 +38,23 @@
   - name: Ensure SSH config directory exists
     file: path={{ home }}/.ssh/config.d/ state=directory
 
-  - name: Ensure utility packages are installed
+  - name: Ensure utility OS packages are installed
     become: yes
     ansible.builtin.package:
       name:
         - curl
         - docker
+        - git
+        - python3-pip
         - telnet
+        - vim
         - wget
+      state: latest
+
+  - name: Ensure Python packages are installed
+    ansible.builtin.pip:
+      name:
+        - awscli
       state: latest
 
   - name: Ensure main workspace directories exist
