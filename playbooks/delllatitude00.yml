@@ -17,6 +17,8 @@
     nvm_install_globally: ['nestor', 'repoman'] 
   roles:
     - { role: grzegorznowak.nvm_node, become: yes }
+    - { role: andrewrothstein.packer }
+    - { role: andrewrothstein.terraform }
 
   tasks:
 

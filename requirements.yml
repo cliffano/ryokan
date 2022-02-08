@@ -5,6 +5,9 @@ roles:
   - src: andrewrothstein.packer
     path: roles/
 
+  - src: andrewrothstein.terraform
+    path: roles/
+
   - src: andrewrothstein.unarchive-deps
     path: roles/
 
