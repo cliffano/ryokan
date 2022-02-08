@@ -19,6 +19,7 @@
     - { role: grzegorznowak.nvm_node, become: yes }
     - { role: andrewrothstein.packer }
     - { role: andrewrothstein.terraform }
+    - { role: rvm.ruby, rvm1_rubies: ['ruby-2.7.5', 'ruby-3.1.0'], rvm1_user: 'cliffano', rvm1_gpg_key_server: 'hkp://keyserver.ubuntu.com' }
 
   tasks:
 

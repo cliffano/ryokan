@@ -41,7 +41,7 @@ roles:
   - src: rkhmelichek.mas
     path: roles/
 
-  - src: altermn.rvm
+  - src: rvm.ruby
     path: roles/
 
   - src: jebovic.sysdig
