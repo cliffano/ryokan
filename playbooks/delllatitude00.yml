@@ -41,6 +41,15 @@
   - name: Ensure SSH config directory exists
     file: path={{ home }}/.ssh/config.d/ state=directory
 
+  - name: Set SSH configuration
+    file: src={{ home }}/dev/workspace-control/config/tools/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link mode=0600
+    with_items:
+      - config
+
+  - name: Set project workspaces SSH configuration include
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
+    with_items: "{{ project_workspaces }}"
+
   - name: Ensure utility OS packages are installed
     become: yes
     ansible.builtin.package:
