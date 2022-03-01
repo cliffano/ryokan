@@ -11,6 +11,7 @@
       - bussdig
       - busspla
       - bussint
+      - busstun
     nvm_node_version: "16.13.2"
     nvm_dir: "{{ home }}/tools/nvm"
     nvm_user_name: cliffano
@@ -55,13 +56,35 @@
     ansible.builtin.package:
       name:
         - curl
-        - docker
         - git
         - python3-pip
         - telnet
         - vim
         - wget
+        - wsl
       state: latest
+
+  # - name: Install Docker, adapted from https://docs.docker.com/engine/install/ubuntu/
+  #   become: yes
+  #   shell: |
+  #     apt-get update
+  #     apt-get remove -y docker docker.io containerd runc
+  #     DEBIAN_FRONTEND="noninteractive"  apt-get install -y ca-certificates curl gnupg lsb-release
+  #     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+  #     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+  #     apt-get update
+  #     DEBIAN_FRONTEND="noninteractive" apt-get install -y docker-ce docker-ce-cli containerd.io
+
+  # - name: Pull Docker images
+  #   become: yes
+  #   community.docker.docker_image:
+  #     name: "{{ item }}"
+  #     source: pull
+  #   with_items:
+  #     - centos:centos7
+  #     - ubuntu
+  #     - shinesolutions/the-works-buildenv
+  #     - shinesolutions/aem-platform-buildenv
 
   - name: Ensure Python packages are installed
     ansible.builtin.pip:
