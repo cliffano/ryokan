@@ -119,3 +119,6 @@
   - name: Set Repoman configuration for project workspace repositories
     ansible.builtin.copy: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json mode='0644'
     with_items: "{{ project_workspaces }}"
+  
+  - name: Set alias for AWS credentials sync down
+    lineinfile: dest={{ home }}/.profile regexp="^alias aws-cred-sync=.*$" line="alias aws-cred-sync='sudo cp /root/.aws/credentials /home/cliffano/.aws/credentials && sudo chown cliffano:cliffano /home/cliffano/.aws/credentials'"
