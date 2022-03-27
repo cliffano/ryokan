@@ -62,6 +62,7 @@
       name:
         - curl
         - git
+        - net-tools
         - python3-pip
         - telnet
         - vim
@@ -77,6 +78,13 @@
         - docker-compose
       executable: pip3
       state: latest
+
+  - name: Ensure Python packages are not installed
+    ansible.builtin.pip:
+      name:
+        - docker-py
+      executable: pip3
+      state: absent
 
   # - name: Install Docker, adapted from https://docs.docker.com/engine/install/ubuntu/
   #   become: yes
@@ -99,6 +107,10 @@
   #     - ubuntu
   #     - shinesolutions/the-works-buildenv
   #     - shinesolutions/aem-platform-buildenv
+
+  - name: Ensure Docker can be run by non-root
+    file: path="/var/run/docker.sock" state=file mode=0666
+    become: yes
 
   - name: Set Docker one-off aliases
     lineinfile: dest={{ home }}/.profile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='sudo docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -v ~/.aws:/root/.aws -i -t -e USER=$USER -e HOSTNAME=$HOSTNAME {{ item.image }}'" state=present backup=no
