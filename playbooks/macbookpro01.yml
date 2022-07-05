@@ -74,6 +74,11 @@
   - name: Ensure .zprofile file exists
     file: path={{ home }}/.zprofile state=touch mode=0644
 
+  - name: Set baseline profile
+    lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
+    with_items:
+      - export PATH=$PATH:/Users/cliffano/Library/Python/3.8/bin/
+
   - name: Set basic aliases
     lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
     with_items:
@@ -138,6 +143,13 @@
   # - name: Set Makefile .PHONY creator alias
   #   lineinfile: dest={{ home }}/.zprofile line="alias makephony='grep \'^[^#[:space:]].*:\' Makefile | sed -e \"s/:.*$//\" | paste -s -d\" \" - | sed -e \"s/\.PHONY$//\"'" state=present backup=no
 
+  - name: Ensure Python packages are installed
+    pip:
+      name: "{{item}}"
+    with_items:
+      - requests
+      - docker
+
   - name: Ensure global node.js packages are installed
     npm: name="{{item}}" global=yes state=present
     with_items:
@@ -179,6 +191,9 @@
   - name: Ensure .gnupg directory exists
     file: path={{ home }}/.gnupg state=directory mode=0755
 
+  - name: Ensure gpg-agent.conf file exists
+    file: path={{ home }}/.gnupg/gpg-agent.conf state=touch mode=0644
+
   - name: Set pinentry-program required by git for GPG signing
     lineinfile: dest={{ home }}/.gnupg/gpg-agent.conf line="{{ item }}" state=present backup=no
     with_items:
@@ -186,9 +201,12 @@
       - default-cache-ttl
       - max-cache-ttl 28800
 
+  # NOTE: if you hit the error "Error connecting: Error while fetching server API version'
+  #       that's because Docker isn't running
   - name: Pull Docker images
     docker_image:
       name: "{{ item }}"
+      source: pull
     with_items:
       - cliffano/kon-tiki
       - cliffano/studio
