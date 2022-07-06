@@ -14,6 +14,8 @@
       - youtube-dl
       - jq
       - podman
+    homebrew_taps:
+      - iann0036/iamlive
     mas_email: { macappstore.user }
     mas_password: { macappstore.pass }
     mas_apps:
