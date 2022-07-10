@@ -28,3 +28,24 @@
     with_items:
       - alias jenkins-start='cd {{ home }}/dev/jenkins-workspace/ && JENKINS_HOME={{ home }}/dev/jenkins-home/ nohup make jenkins-start-sans-home > /var/log/jenkins.log &'
       - alias jenkins-stop='pkill java'
+
+  - name: Install nvm
+    ansible.builtin.shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+  - name: Install node
+    ansible.builtin.shell: source ~/.bashrc && nvm ls && nvm install v16
+
+  - name: Install npm packages
+    ansible.builtin.shell: source ~/.bashrc && nvm use v16 && npm install -g open-sesame@latest
+
+  - name: Ensure AWS config dir is provisioned
+    ansible.builtin.file:
+      path: ~/.aws/
+      state: directory
+      mode: '0755'
+
+  - name: Ensure AWS credentials file is provisioned
+    ansible.builtin.file:
+      path: ~/.aws/credentials
+      state: touch
+      mode: '0644'
