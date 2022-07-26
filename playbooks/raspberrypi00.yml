@@ -79,3 +79,12 @@
     with_items:
       - 127.0.0.1               pakkun
     become: yes
+
+  - name: Install nvm
+    ansible.builtin.shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+  - name: Install node
+    ansible.builtin.shell: . ~/.bashrc && nvm ls && nvm install v16
+
+  - name: Install npm packages
+    ansible.builtin.shell: . ~/.bashrc && nvm use v16 && npm install -g nestor-buildlight@latest
