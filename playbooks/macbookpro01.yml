@@ -37,6 +37,9 @@
     project_workspaces:
       - pakkun
       - studio
+    pinterest_config:
+      pinterest_app_id: "{{ pinterest_app_id }}"
+      pinterest_app_secret: "{{ pinterest_app_secret }}"
 
   roles:
     - role: geerlingguy.homebrew
@@ -48,6 +51,11 @@
             theme: bullet-train
 
   tasks:
+
+  - name: Set Pinterest secrets
+    copy:
+      dest: "{{ home }}/pinterest.json"
+      content: "{{ pinterest_config | to_json }}" 
 
   - name: Set git config
     file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }} dest='{{ home }}/.gitconfig' state=link
