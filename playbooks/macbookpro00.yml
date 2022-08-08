@@ -2,7 +2,6 @@
 - hosts: macbookpro00
 
   vars:
-    homebrew_prefix: /opt/homebrew
     homebrew_installed_packages:
       - mas
       - node
@@ -40,6 +39,7 @@
   roles:
     - role: geerlingguy.homebrew
     - role: rkhmelichek.mas
+      homebrew_prefix: /opt/homebrew
     - role: gantsign.oh-my-zsh
       users:
         - username: cliff.subagio
@@ -180,8 +180,8 @@
 
   # NOTE: if you hit the error "Error connecting: Error while fetching server API version'
   #       that's because Docker isn't running
-  # - name: Pull Docker images
-  #   docker_image:
-  #     name: "{{ item.image }}"
-  #     source: pull
-  #   with_items: "{{ docker_images }}"
+  - name: Pull Docker images
+    docker_image:
+      name: "{{ item.image }}"
+      source: pull
+    with_items: "{{ docker_images }}"
