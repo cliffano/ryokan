@@ -1,0 +1,187 @@
+---
+- hosts: macbookpro00
+
+  vars:
+    homebrew_prefix: /opt/homebrew
+    homebrew_installed_packages:
+      - mas
+      - node
+      - packer
+      - cloc
+      - telnet
+      - gpg
+      - pinentry-mac
+      - gh
+      - jq
+      - yq
+      - podman
+    homebrew_taps:
+      - iann0036/iamlive
+    mas_email: { macappstore.user }
+    mas_password: { macappstore.pass }
+    mas_apps:
+      - { name: Owly, id: 882812218 }
+      - { name: Magnet, id: 441258766 }
+      # - { name: 'iStat Menus', id: 1319778037 }
+    docker_images:
+      - { id: centos7, image: 'centos:centos7' }
+      - { id: ubuntu, image: 'ubuntu' }
+      - { id: aembuildenv, image: 'shinesolutions/aem-platform-buildenv' }
+      - { id: theworksbuildenv, image: 'shinesolutions/the-works-buildenv' }
+    main_workspaces:
+      - control
+    project_workspaces:
+      - aoc
+      - bussdig
+      - bussint
+      - busspla
+      - busstun
+
+  roles:
+    - role: geerlingguy.homebrew
+    - role: rkhmelichek.mas
+    - role: gantsign.oh-my-zsh
+      users:
+        - username: cliff.subagio
+          oh_my_zsh:
+            theme: bullet-train
+
+  tasks:
+
+  - name: Set git config
+    file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }} dest='{{ home }}/.gitconfig' state=link
+
+  - name: Set git config for GitHub repos
+    file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }}-github dest='{{ home }}/.gitconfig-github' state=link
+
+  - name: Set git config for BitBucket repos
+    file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }}-bitbucket dest='{{ home }}/.gitconfig-bitbucket' state=link
+
+  - name: Ensure SSH directory exists
+    file: path={{ home }}/.ssh/ state=directory
+
+  - name: Ensure SSH config directory exists
+    file: path={{ home }}/.ssh/config.d/ state=directory
+
+  - name: Set SSH configuration
+    file: src={{ home }}/dev/workspace-control/config/tools/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link mode=0600
+    with_items:
+      - config
+      - konoha_id_rsa
+      - konoha_id_rsa.pub
+
+  - name: Set main workspaces SSH configuration include
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
+    with_items: "{{ main_workspaces }}"
+
+  - name: Set project workspaces SSH configuration include
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
+    with_items: "{{ project_workspaces }}"
+
+  - name: Ensure .zprofile file exists
+    file: path={{ home }}/.zprofile state=touch mode=0644
+
+  - name: Set baseline profile
+    lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
+    with_items:
+      - export PATH=$PATH:/Users/cliff.subagio/Library/Python/3.8/bin/
+
+  - name: Set basic aliases
+    lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
+    with_items:
+      - alias lessr='less -R'
+
+  - name: Set GitHub aliases
+    file: src={{ home }}/dev/workspace-control/ryokan/resources/studio/aliases-git.zsh dest='{{ home }}/.oh-my-zsh/custom/aliases-git.zsh' state=link
+
+  - name: Set Docker aliases
+    file: src={{ home }}/dev/workspace-control/ryokan/resources/studio/aliases-docker.zsh dest='{{ home }}/.oh-my-zsh/custom/aliases-docker.zsh' state=link
+
+  - name: Set Docker run aliases
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
+    with_items: "{{ docker_images }}"
+
+  - name: Set Docker attach aliases
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias dxt-{{ item.id }}=.*$" line="alias dxt-{{ item.id }}='docker exec -it {{ item.id }}'" state=present backup=no
+    with_items: "{{ docker_images }}"
+
+  - name: Set Docker one-off aliases
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
+    with_items: "{{ docker_images }}"
+
+  - name: Set Studio workspace aliases
+    lineinfile: dest={{ home }}/.zprofile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
+    with_items: "{{ main_workspaces }}"
+
+  - name: Set workspace aliases
+    lineinfile: dest={{ home }}/.zprofile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
+    with_items: "{{ project_workspaces }}"
+
+  # - name: Set Makefile .PHONY creator alias
+  #   lineinfile: dest={{ home }}/.zprofile line="alias makephony='grep \'^[^#[:space:]].*:\' Makefile | sed -e \"s/:.*$//\" | paste -s -d\" \" - | sed -e \"s/\.PHONY$//\"'" state=present backup=no
+
+  - name: Ensure Python packages are installed
+    pip:
+      name: "{{item}}"
+    with_items:
+      - requests
+      - docker
+
+  - name: Ensure global node.js packages are installed
+    npm: name="{{item}}" global=yes state=present
+    with_items:
+      - repoman
+
+  - name: Ensure main workspace directories exist
+    file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
+    with_items: "{{ main_workspaces }}"
+
+  - name: Set Repoman configuration for main workspace repositories
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
+    with_items: "{{ main_workspaces }}"
+
+  - name: Ensure project workspace directories exist
+    file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
+    with_items: "{{ project_workspaces }}"
+
+  - name: Set Repoman configuration for project workspace repositories
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
+    with_items: "{{ project_workspaces }}"
+
+  - name: Ensure iTerm2 scripts directory exists
+    file: path='{{ home }}/Library/Application Support/iTerm2/Scripts/' state=directory
+
+  - name: Set iTerm2 init script
+    file: src={{ home }}/dev/workspace-control/ryokan/resources/studio/iterm2-init.app dest='{{ home }}/Library/Application Support/iTerm2/Scripts/iterm2-init.app' state=link
+
+  - name: Download oh-my-zsh Bullet Train theme
+    get_url:
+      url: http://raw.github.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
+      dest: "{{ home }}/.oh-my-zsh/themes/bullet-train.zsh-theme"
+      mode: '0644'
+
+  - name: Set export required by Bullet Train
+    lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
+    with_items:
+      - export TERM='xterm-256color'
+
+  - name: Ensure .gnupg directory exists
+    file: path={{ home }}/.gnupg state=directory mode=0755
+
+  - name: Ensure gpg-agent.conf file exists
+    file: path={{ home }}/.gnupg/gpg-agent.conf state=touch mode=0644
+
+  - name: Set pinentry-program required by git for GPG signing
+    lineinfile: dest={{ home }}/.gnupg/gpg-agent.conf line="{{ item }}" state=present backup=no
+    with_items:
+      - pinentry-program /usr/local/bin/pinentry-mac
+      - default-cache-ttl
+      - max-cache-ttl 28800
+
+  # NOTE: if you hit the error "Error connecting: Error while fetching server API version'
+  #       that's because Docker isn't running
+  # - name: Pull Docker images
+  #   docker_image:
+  #     name: "{{ item.image }}"
+  #     source: pull
+  #   with_items: "{{ docker_images }}"
