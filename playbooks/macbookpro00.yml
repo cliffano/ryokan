@@ -14,6 +14,7 @@
       - jq
       - yq
       - podman
+      - dos2unix
     homebrew_taps:
       - iann0036/iamlive
     mas_email: { macappstore.user }
