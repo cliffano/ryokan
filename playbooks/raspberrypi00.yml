@@ -1,6 +1,13 @@
 ---
 - hosts: raspberrypi00
 
+  vars:
+    nvm_node_version: "16.17.0"
+    nvm_user_name: pi
+    nvm_install_globally: ['nestor-buildlight'] 
+  roles:
+    - { role: grzegorznowak.nvm_node, become: yes }
+
   tasks:
 
   - name: Ensure dev directory exists
@@ -57,7 +64,7 @@
 
   - name: Pull Home Assistant Docker image (temporary until issue with Python interpreter not seeing docker module is solved)
     become: yes
-    ansible.builtin.shell: docker pull homeassistant/raspberrypi2-homeassistant
+    ansible.builtin.shell: docker pull homeassistant/raspberrypi2-homeassistant:2022.3.1
 
   # # Commented out due to an issue with Python interpreter not seeing docker module even though pip3 list shows docker 5.0.2 is already installed
   # # Note: python3 is confirmed to definitely be used as Ansible's Python interpreter on the host
@@ -70,7 +77,7 @@
   - name: Set aliases for Home Assistant
     lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=no
     with_items:
-      - alias hass-start='sudo docker run --init -d --name="home-assistant" --net=host --privileged -e "TZ=Australia/Melbourne" -v /home/pi/dev/hass-home:/config -p 8123:8123 homeassistant/raspberrypi2-homeassistant:latest'
+      - alias hass-start='sudo docker run --init -d --name="home-assistant" --net=host --privileged -e "TZ=Australia/Melbourne" -v /home/pi/dev/hass-home:/config -p 8123:8123 homeassistant/raspberrypi2-homeassistant:2022.3.1'
       - alias hass-login='sudo docker exec -it home-assistant /bin/bash'
       - alias hass-stop='sudo docker stop home-assistant'
 
@@ -79,12 +86,3 @@
     with_items:
       - 127.0.0.1               pakkun
     become: yes
-
-  - name: Install nvm
-    ansible.builtin.shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-
-  - name: Install node
-    ansible.builtin.shell: . ~/.bashrc && nvm ls && nvm install v16
-
-  - name: Install npm packages
-    ansible.builtin.shell: . ~/.bashrc && nvm use v16 && npm install -g nestor-buildlight@latest
