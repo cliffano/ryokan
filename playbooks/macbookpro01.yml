@@ -37,6 +37,7 @@
     project_workspaces:
       - pakkun
       - studio
+      - gio
     pinterest_config:
       pinterest_app_id: "{{ pinterest_app_id }}"
       pinterest_app_secret: "{{ pinterest_app_secret }}"
