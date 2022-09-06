@@ -35,15 +35,13 @@
     project_workspaces:
       - aoc
       - infracat
-      - pakkun
       - post
       - theworks
       - gatt
       - nlp
       - drup
       - vulscan
-      - bussint
-      - busspla
+      - tels
 
   roles:
     - role: geerlingguy.homebrew
