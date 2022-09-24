@@ -37,7 +37,7 @@
     project_workspaces:
       - pakkun
       - studio
-      - gio
+      - g10
     pinterest_config:
       pinterest_app_id: "{{ pinterest_app_id }}"
       pinterest_app_secret: "{{ pinterest_app_secret }}"
@@ -61,11 +61,11 @@
   - name: Set git config
     file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }} dest='{{ home }}/.gitconfig' state=link
 
-  - name: Ensure SSH directory exists
-    file: path={{ home }}/.ssh/ state=directory
+  - name: Ensure system SSH directory exists
+    file: path=/etc/ssh/ state=directory
 
-  - name: Ensure SSH config directory exists
-    file: path={{ home }}/.ssh/config.d/ state=directory
+  - name: Ensure system SSH config directory exists
+    file: path=/etc/ssh/ssh_config.d/ state=directory
 
   - name: Set SSH configuration
     file: src={{ home }}/dev/workspace-control/config/tools/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link mode=0600
@@ -75,11 +75,13 @@
       - konoha_id_rsa.pub
 
   - name: Set main workspaces SSH configuration include
-    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest=/etc/ssh/ssh_config.d/config-{{ item }} state=link
+    become: yes
     with_items: "{{ main_workspaces }}"
 
   - name: Set project workspaces SSH configuration include
-    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest={{ home }}/.ssh/config.d/config-{{ item }} state=link
+    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest=/etc/ssh/ssh_config.d/config-{{ item }} state=link
+    become: yes
     with_items: "{{ project_workspaces }}"
 
   - name: Ensure .zprofile file exists
