@@ -77,7 +77,7 @@
   - name: Set aliases for Home Assistant
     lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=no
     with_items:
-      - alias hass-start='sudo docker run --init -d --name="home-assistant" --net=host --privileged -e "TZ=Australia/Melbourne" -v /home/pi/dev/hass-home:/config -p 8123:8123 homeassistant/raspberrypi2-homeassistant:2022.3.1'
+      - alias hass-start='sudo docker run -d --name="home-assistant" --net=host --privileged -e "TZ=Australia/Melbourne" -v /home/pi/dev/hass-home:/config -p 8123:8123 homeassistant/raspberrypi2-homeassistant:2022.10.4'
       - alias hass-login='sudo docker exec -it home-assistant /bin/bash'
       - alias hass-stop='sudo docker stop home-assistant'
 
