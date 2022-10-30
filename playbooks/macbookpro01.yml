@@ -26,12 +26,12 @@
       - { name: Magnet, id: 441258766 }
       # - { name: 'iStat Menus', id: 1319778037 }
     docker_images:
-      - { id: kontiki, image: 'cliffano/kon-tiki' }
-      - { id: kontiki-cred, image: 'cliffano/kon-tiki-cred' }
-      - { id: studio, image: 'cliffano/studio' }
-      - { id: swaggyc, image: 'cliffano/swaggy-c' }
-      - { id: centos7, image: 'centos:centos7' }
-      - { id: ubuntu, image: 'ubuntu' }
+      - { id: kontiki, image: 'cliffano/kon-tiki', env_file: '{{ home }}/.env-docker-kontiki' }
+      - { id: kontiki-cred, image: 'cliffano/kon-tiki-cred', env_file: '{{ home }}/.env-docker-kontiki' }
+      - { id: studio, image: 'cliffano/studio', env_file: '{{ home }}/.env-docker-studio' }
+      - { id: swaggyc, image: 'cliffano/swaggy-c', env_file: '{{ home }}/.env-docker-studio' }
+      - { id: centos7, image: 'centos:centos7', env_file: '{{ home }}/.env-docker-studio' }
+      - { id: ubuntu, image: 'ubuntu', env_file: '{{ home }}/.env-docker-studio' }
     main_workspaces:
       - control
     project_workspaces:
@@ -53,10 +53,20 @@
 
   tasks:
 
-  - name: Set Pinterest secrets
+  - name: Set Pinterest config
     copy:
       dest: "{{ home }}/pinterest.json"
       content: "{{ pinterest_config | to_json }}" 
+
+  - name: Set Docker studio env file
+    copy:
+      dest: "{{ home }}/.env-docker-studio"
+      content: "GITHUB_TOKEN={{ studio_github_token }}"
+
+  - name: Set Docker kontiki env file
+    copy:
+      dest: "{{ home }}/.env-docker-kontiki"
+      content: "GITHUB_TOKEN={{ kontiki_github_token }}"
 
   - name: Set git config
     file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }} dest='{{ home }}/.gitconfig' state=link
@@ -104,7 +114,7 @@
     file: src={{ home }}/dev/workspace-control/ryokan/resources/studio/aliases-docker.zsh dest='{{ home }}/.oh-my-zsh/custom/aliases-docker.zsh' state=link
 
   - name: Set Docker run aliases
-    lineinfile: dest={{ home }}/.zprofile regexp="^alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --env-file {{ item.env_file }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
     with_items: "{{ docker_images }}"
 
   - name: Set Docker attach aliases
@@ -112,7 +122,7 @@
     with_items: "{{ docker_images }}"
 
   - name: Set Docker one-off aliases
-    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='docker run --rm --env-file {{ item.env_file }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
     with_items: "{{ docker_images }}"
 
   - name: Set Studio workspace aliases
