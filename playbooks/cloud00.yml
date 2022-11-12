@@ -11,14 +11,6 @@
       tags:
         project: ryokan
 
-  # - name: Create IAM policy for API Gateway settings
-  #   iam_policy:
-  #     iam_type: role
-  #     iam_name: studio-apigateway
-  #     policy_name: studio-apigateway-policy
-  #     policy_document: resources/cloud-a/studio-apigateway-policy.json
-  #     state: present
-
   - name: Apply Terraform project
     community.general.terraform:
       project_path: '../../config/tools/terraform/kumo/'
