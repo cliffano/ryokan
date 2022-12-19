@@ -91,3 +91,12 @@ raspberrypi00:
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	--ask-become-pass \
 	playbooks/raspberrypi00.yml
+
+raspberrypi01:
+	ansible-playbook \
+	--verbose \
+	--inventory-file hosts \
+	--extra-vars @../config/studio/ryokan/raspberrypi01.yml \
+	--vault-password-file ../config/studio/ryokan/vault.txt \
+	--ask-become-pass \
+	playbooks/raspberrypi01.yml

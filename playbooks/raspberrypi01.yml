@@ -1,0 +1,44 @@
+---
+- hosts: raspberrypi01
+
+  tasks:
+
+  - name: Ensure games directory exists
+    file: path="{{ home }}/games/" state=directory mode=0755
+
+  - name: Ensure Minecraft directories exist
+    file: path="{{ item }}" state=directory mode=0755
+    loop:
+      - "{{ home }}/games/minecraft"
+      - "{{ home }}/games/minecraft/bin"
+      - "{{ home }}/games/minecraft/workspace"
+
+  - name: Get the status of Minecraft Server 1.19.3 jar file
+    stat: 
+      path: "{{ home }}/games/minecraft/bin/minecraft_server.1.19.3.jar"
+    register: minecraft_server_jar_file
+
+  - name: Get the status of Minecraft Server start script file
+    stat: 
+      path: "{{ home }}/games/minecraft/bin/start.sh"
+    register: minecraft_start_script_file
+
+  - name: Download Minecraft Server 1.19.3
+    get_url:
+      url: https://piston-data.mojang.com/v1/objects/c9df48efed58511cdd0213c56b9013a7b5c9ac1f/server.jar
+      dest: "{{ home }}/games/minecraft/bin/minecraft_server.1.19.3.jar"
+    when: minecraft_server_jar_file.stat.exists == false
+
+  - copy:
+      content: |
+                java -Xmx2048M -Xms1024M -jar {{ home }}/games/minecraft/bin/minecraft_server.1.19.3.jar nogui 
+      dest: "{{ home }}/games/minecraft/bin/start.sh"
+    when: minecraft_start_script_file.stat.exists == false
+
+  - name: Ensure Minecraft Server start script file is executable
+    file: path="{{ home }}/games/minecraft/bin/start.sh" state=file mode=0755
+
+  - name: Set aliases for Minecraft
+    lineinfile: dest="{{ home }}/.profile" line="{{ item }}" state=present backup=no
+    loop:
+      - alias minecraft-start='cd {{ home }}/games/minecraft/workspace && nohup {{ home }}/games/minecraft/bin/start.sh &'
