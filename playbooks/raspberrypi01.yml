@@ -1,6 +1,13 @@
 ---
 - hosts: raspberrypi01
 
+  vars:
+    nvm_node_version: "16.17.0"
+    nvm_user_name: cliffano
+    nvm_install_globally: ['nestor-buildlight'] 
+  roles:
+    - { role: grzegorznowak.nvm_node, become: yes }
+
   tasks:
 
   - name: Ensure games directory exists
@@ -41,4 +48,5 @@
   - name: Set aliases for Minecraft
     lineinfile: dest="{{ home }}/.profile" line="{{ item }}" state=present backup=no
     loop:
-      - alias minecraft-start='cd {{ home }}/games/minecraft/workspace && nohup {{ home }}/games/minecraft/bin/start.sh &'
+      - alias minecraft-start='cd {{ home }}/games/minecraft/workspace && nohup {{ home }}/games/minecraft/bin/start.sh > /var/log/minecraft.log &'
+      - alias minecraft-stop='pkill java'

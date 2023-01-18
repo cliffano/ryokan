@@ -4,7 +4,7 @@
   vars:
     nvm_node_version: "16.17.0"
     nvm_user_name: pi
-    nvm_install_globally: ['nestor-buildlight'] 
+    nvm_install_globally: [] 
   roles:
     - { role: grzegorznowak.nvm_node, become: yes }
 
