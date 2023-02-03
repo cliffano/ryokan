@@ -54,6 +54,11 @@
 
   tasks:
 
+  - name: Backup Chrome default profile's bookmarks
+    ansible.builtin.copy:
+      src: "{{ home }}/Library/Application Support/Google/Chrome/Default/Bookmarks"
+      dest: "{{ home }}/dev/workspace-control/config/tools/chrome/bookmarks-{{ inventory_hostname }}"
+
   - name: Set git config
     file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }} dest='{{ home }}/.gitconfig' state=link
 
