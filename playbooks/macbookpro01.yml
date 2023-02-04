@@ -61,12 +61,12 @@
   - name: Set Docker studio env file
     copy:
       dest: "{{ home }}/.env-docker-studio"
-      content: "GH_TOKEN={{ studio_github_token }}"
+      content: "GH_TOKEN={{ studio_github_token }}\nGITHUB_TOKEN={{ studio_github_token }}"
 
   - name: Set Docker kontiki env file
     copy:
       dest: "{{ home }}/.env-docker-kontiki"
-      content: "GH_TOKEN={{ kontiki_github_token }}"
+      content: "GH_TOKEN={{ kontiki_github_token }}\nGITHUB_TOKEN={{ kontiki_github_token }}"
 
   - name: Set git config
     file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }} dest='{{ home }}/.gitconfig' state=link
