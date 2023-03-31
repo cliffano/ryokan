@@ -5,8 +5,8 @@
     nvm_node_version: "16.17.0"
     nvm_user_name: cliffano
     nvm_install_globally: ['nestor-buildlight'] 
-  roles:
-    - { role: grzegorznowak.nvm_node, become: yes }
+  # roles:
+  #   - { role: grzegorznowak.nvm_node, become: yes }
 
   tasks:
 
@@ -20,9 +20,18 @@
       - "{{ home }}/games/minecraft/bin"
       - "{{ home }}/games/minecraft/workspace"
 
-  - name: Get the status of Minecraft Server 1.19.3 jar file
+  - name: Ensure minecraft-workspace repo is cloned
+    ansible.builtin.git:
+      repo: 'git@github.com:pakkunbot/minecraft-workspace'
+      refspec: main
+      dest: "{{ home }}/games/minecraft/workspace/"
+      clone: yes
+      update: no
+      accept_hostkey: yes
+
+  - name: Get the status of Minecraft Server 1.19.4 jar file
     stat: 
-      path: "{{ home }}/games/minecraft/bin/minecraft_server.1.19.3.jar"
+      path: "{{ home }}/games/minecraft/bin/minecraft_server.1.19.4.jar"
     register: minecraft_server_jar_file
 
   - name: Get the status of Minecraft Server start script file
@@ -30,15 +39,16 @@
       path: "{{ home }}/games/minecraft/bin/start.sh"
     register: minecraft_start_script_file
 
-  - name: Download Minecraft Server 1.19.3
+  # Server jar file URL can be retrieved from https://www.minecraft.net/en-us/download/server
+  - name: Download Minecraft Server 1.19.4
     get_url:
-      url: https://piston-data.mojang.com/v1/objects/c9df48efed58511cdd0213c56b9013a7b5c9ac1f/server.jar
-      dest: "{{ home }}/games/minecraft/bin/minecraft_server.1.19.3.jar"
+      url: https://piston-data.mojang.com/v1/objects/8f3112a1049751cc472ec13e397eade5336ca7ae/server.jar
+      dest: "{{ home }}/games/minecraft/bin/minecraft_server.1.19.4.jar"
     when: minecraft_server_jar_file.stat.exists == false
 
   - copy:
       content: |
-                java -Xmx2048M -Xms1024M -jar {{ home }}/games/minecraft/bin/minecraft_server.1.19.3.jar nogui 
+                java -Xmx2048M -Xms1024M -jar {{ home }}/games/minecraft/bin/minecraft_server.1.19.4.jar nogui 
       dest: "{{ home }}/games/minecraft/bin/start.sh"
     when: minecraft_start_script_file.stat.exists == false
 
