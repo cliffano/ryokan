@@ -15,7 +15,8 @@
       - jq
       - podman
     homebrew_taps:
-      - iann0036/iamlive
+      #- iann0036/iamlive
+      - ssh://github.com/1password/1password-cli
     mas_email: { macappstore.user }
     mas_password: { macappstore.pass }
     mas_apps:
