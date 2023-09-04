@@ -1,4 +1,4 @@
-ansible==5.4.0
+ansible==6.7.0
 botocore
 boto3
 docker
