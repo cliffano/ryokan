@@ -59,3 +59,5 @@
     loop:
       - alias minecraft-start='cd {{ home }}/games/minecraft/workspace && nohup {{ home }}/games/minecraft/bin/start.sh > /var/log/minecraft/minecraft.log &'
       - alias minecraft-stop='pkill java'
+      - alias minecraft-conf='vi {{ home }}/games/minecraft/workspace/server.properties'
+      - alias minecraft-log='tail -f {{ home }}/games/minecraft/workspace/logs/latest.log'
