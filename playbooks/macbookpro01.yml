@@ -126,6 +126,9 @@
     lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='docker run --rm --env-file {{ item.env_file }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
     with_items: "{{ docker_images }}"
 
+  - name: Set Docker alias for mcnpc
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-mcnpc=.*$" line="alias drno-mcnpc='docker run --rm -p 3000-3050:3000-3050 --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t cliffano/studio'" state=present backup=no
+
   - name: Set Studio workspace aliases
     lineinfile: dest={{ home }}/.zprofile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
     with_items: "{{ main_workspaces }}"
