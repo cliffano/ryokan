@@ -15,6 +15,7 @@
       - yq
       - podman
       - dos2unix
+      - 1password-cli
     homebrew_taps:
       - iann0036/iamlive
     mas_email: { macappstore.user }
@@ -38,12 +39,12 @@
       - busstun
 
   roles:
-    - role: geerlingguy.homebrew
-    - role: rkhmelichek.mas
-      homebrew_prefix: /opt/homebrew
+    # - role: geerlingguy.homebrew
+    # - role: rkhmelichek.mas
+    #   homebrew_prefix: /opt/homebrew
     - role: gantsign.oh-my-zsh
       users:
-        - username: cliff.subagio
+        - username: cliffano
           oh_my_zsh:
             theme: bullet-train
 
@@ -90,7 +91,7 @@
   - name: Set baseline profile
     lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
     with_items:
-      - export PATH=$PATH:/Users/cliff.subagio/Library/Python/3.8/bin/
+      - export PATH=$PATH:{{ home }}/Library/Python/3.9/bin/
 
   - name: Set basic aliases
     lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
