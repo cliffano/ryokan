@@ -57,7 +57,7 @@
   - name: Set Pinterest config
     copy:
       dest: "{{ home }}/pinterest.json"
-      content: "{{ pinterest_config | to_json }}" 
+      content: "{{ pinterest_config | to_json }}"
 
   - name: Set Docker studio env file
     copy:

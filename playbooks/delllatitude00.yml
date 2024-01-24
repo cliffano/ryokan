@@ -15,7 +15,7 @@
     nvm_node_version: "14.19.1"
     nvm_dir: "{{ home }}/tools/nvm"
     nvm_user_name: cliffano
-    nvm_install_globally: ['nestor', 'repoman'] 
+    nvm_install_globally: ['nestor', 'repoman']
     docker_images:
       - { id: centos7, image: 'centos:centos7' }
       - { id: ubuntu, image: 'ubuntu' }
@@ -113,7 +113,7 @@
     become: yes
 
   - name: Set Docker one-off aliases
-    lineinfile: dest={{ home }}/.profile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='sudo docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -v ~/.aws:/root/.aws -i -t -e USER=$USER -e HOSTNAME=$HOSTNAME {{ item.image }}'" state=present backup=no
+    lineinfile: dest={{ home }}/.profile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='sudo docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v `pwd`:/opt/workspace -v ~/.aws:/root/.aws -v ~/.ssh:/root/.ssh -i -t -e USER=$USER -e HOSTNAME=$HOSTNAME {{ item.image }}'" state=present backup=no
     with_items: "{{ docker_images }}"
 
   - name: Ensure main workspace directories exist
@@ -131,6 +131,6 @@
   - name: Set Repoman configuration for project workspace repositories
     ansible.builtin.copy: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json mode='0644'
     with_items: "{{ project_workspaces }}"
-  
+
   - name: Set alias for AWS credentials sync down
     lineinfile: dest={{ home }}/.profile regexp="^alias aws-cred-sync=.*$" line="alias aws-cred-sync='sudo cp /root/.aws/credentials /home/cliffano/.aws/credentials && sudo chown cliffano:cliffano /home/cliffano/.aws/credentials'"

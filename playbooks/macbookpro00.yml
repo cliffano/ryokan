@@ -105,7 +105,7 @@
     file: src={{ home }}/dev/workspace-control/ryokan/resources/studio/aliases-docker.zsh dest='{{ home }}/.oh-my-zsh/custom/aliases-docker.zsh' state=link
 
   - name: Set Docker run aliases
-    lineinfile: dest={{ home }}/.zprofile regexp="^alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
     with_items: "{{ docker_images }}"
 
   - name: Set Docker attach aliases
@@ -113,7 +113,7 @@
     with_items: "{{ docker_images }}"
 
   - name: Set Docker one-off aliases
-    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='docker run --rm --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
     with_items: "{{ docker_images }}"
 
   - name: Set Studio workspace aliases
