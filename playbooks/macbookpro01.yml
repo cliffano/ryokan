@@ -14,9 +14,9 @@
       - youtube-dl
       - jq
       - podman
-    homebrew_taps:
+    #homebrew_taps:
       #- iann0036/iamlive
-      - ssh://github.com/1password/1password-cli
+      #- ssh://github.com/1password/1password-cli
     mas_email: { macappstore.user }
     mas_password: { macappstore.pass }
     mas_apps:
@@ -62,7 +62,7 @@
   - name: Set Docker studio env file
     copy:
       dest: "{{ home }}/.env-docker-studio"
-      content: "GH_TOKEN={{ studio_github_token }}\nGITHUB_TOKEN={{ studio_github_token }}"
+      content: "STUDIO_GH_TOKEN={{ studio_github_token }}\nSTUDIO_GITHUB_TOKEN={{ studio_github_token }}\nKON_TIKI_GH_TOKEN={{ kontiki_github_token }}\nKON_TIKI_GITHUB_TOKEN={{ kontiki_github_token }}\nOAPICF_GH_TOKEN={{ oapicf_github_token }}\nOAPICF_GITHUB_TOKEN={{ oapicf_github_token }}"
 
   - name: Set Docker kontiki env file
     copy:
