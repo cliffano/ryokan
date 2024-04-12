@@ -127,6 +127,9 @@
   - name: Set Docker alias for mcnpc
     lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-mcnpc=.*$" line="alias drno-mcnpc='docker run --rm -p 3000-3050:3000-3050 --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t cliffano/studio'" state=present backup=no
 
+  - name: Set Docker alias for localai
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-localai=.*$" line="alias drno-localai='docker run --rm -p 8080:8080 --workdir /opt/workspace -v {{ home }}/dev/localai-models:/build/models -i -t localai/localai:latest-aio-cpu'" state=present backup=no
+
   - name: Set Studio workspace aliases
     lineinfile: dest={{ home }}/.zprofile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
     with_items: "{{ main_workspaces }}"
