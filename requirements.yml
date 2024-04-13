@@ -1,6 +1,7 @@
 collections:
   - name: community.general
   - name: community.docker
+  - name: geerlingguy.mac
 
 roles:
   - src: andrewrothstein.packer
@@ -38,9 +39,6 @@ roles:
 
   #- src: rack-roles.newrelic
   #  path: roles/
-
-  - src: rkhmelichek.mas
-    path: roles/
 
   - src: rvm.ruby
     path: roles/

@@ -43,7 +43,7 @@
 
   roles:
     - role: geerlingguy.homebrew
-    - role: rkhmelichek.mas
+    # - role: geerlingguy.mac.mas
     - role: gantsign.oh-my-zsh
       users:
         - username: cliffano
