@@ -31,9 +31,6 @@ roles:
   - src: gantsign.oh-my-zsh
     path: roles/
 
-  - src: geerlingguy.homebrew
-    path: roles/
-
   - src: grzegorznowak.nvm_node
     path: roles/
 

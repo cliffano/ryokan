@@ -42,7 +42,7 @@
       pinterest_app_secret: "{{ pinterest_app_secret }}"
 
   roles:
-    - role: geerlingguy.homebrew
+    - role: geerlingguy.mac.homebrew
     # - role: geerlingguy.mac.mas
     - role: gantsign.oh-my-zsh
       users:
