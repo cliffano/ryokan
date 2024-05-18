@@ -65,7 +65,7 @@
   - name: Set Docker kontiki env file
     copy:
       dest: "{{ home }}/.env-docker-kontiki"
-      content: "GH_TOKEN={{ kontiki_github_token }}\nGITHUB_TOKEN={{ kontiki_github_token }}"
+      content: "GH_TOKEN={{ kontiki_github_token }}\nGITHUB_TOKEN={{ kontiki_github_token }}\nPINTEREST_APP_ID={{ pinterest_app_id }}\nPINTEREST_APP_SECRET={{ pinterest_app_secret }}"
 
   - name: Set git config
     file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }} dest='{{ home }}/.gitconfig' state=link
@@ -141,12 +141,12 @@
   # - name: Set Makefile .PHONY creator alias
   #   lineinfile: dest={{ home }}/.zprofile line="alias makephony='grep \'^[^#[:space:]].*:\' Makefile | sed -e \"s/:.*$//\" | paste -s -d\" \" - | sed -e \"s/\.PHONY$//\"'" state=present backup=no
 
-  - name: Ensure Python packages are installed
-    pip:
-      name: "{{item}}"
-    with_items:
-      - requests
-      - docker
+  # - name: Ensure Python packages are installed
+  #   pip:
+  #     name: "{{item}}"
+  #   with_items:
+  #     - requests
+  #     - docker
 
   - name: Ensure global node.js packages are installed
     npm: name="{{item}}" global=yes state=present
