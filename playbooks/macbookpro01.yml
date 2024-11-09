@@ -13,7 +13,8 @@
       - gh
       - youtube-dl
       - jq
-      - podman
+      - docker
+      - colima
     #homebrew_taps:
       #- iann0036/iamlive
       #- ssh://github.com/1password/1password-cli
