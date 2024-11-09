@@ -4,55 +4,19 @@
   vars:
     nvm_node_version: "16.17.0"
     nvm_user_name: cliffano
-    nvm_install_globally: ['nestor-buildlight'] 
-  # roles:
+    nvm_install_globally: ['nestor-buildlight']
+    minecraft_version: '1.21.1'
+    install_dir: "{{ home }}/games/minecraft"
+    java_opts: -Xmx2048M -Xms1024M
+
+  roles:
+    - cliffano.minecraft_java
   #   - { role: grzegorznowak.nvm_node, become: yes }
 
   tasks:
 
   - name: Ensure games directory exists
     file: path="{{ home }}/games/" state=directory mode=0755
-
-  - name: Ensure Minecraft directories exist
-    file: path="{{ item }}" state=directory mode=0755
-    loop:
-      - "{{ home }}/games/minecraft"
-      - "{{ home }}/games/minecraft/bin"
-      - "{{ home }}/games/minecraft/workspace"
-
-  - name: Ensure minecraft-workspace repo is cloned
-    ansible.builtin.git:
-      repo: 'git@github.com:pakkunbot/minecraft-workspace'
-      refspec: main
-      dest: "{{ home }}/games/minecraft/workspace/"
-      clone: yes
-      update: no
-      accept_hostkey: yes
-
-  - name: Get the status of Minecraft Server 1.20.0 jar file
-    stat: 
-      path: "{{ home }}/games/minecraft/bin/minecraft_server.1.20.0.jar"
-    register: minecraft_server_jar_file
-
-  - name: Get the status of Minecraft Server start script file
-    stat: 
-      path: "{{ home }}/games/minecraft/bin/start.sh"
-    register: minecraft_start_script_file
-
-  # Server jar file URL can be retrieved from https://www.minecraft.net/en-us/download/server
-  - name: Download Minecraft Server 1.20.0
-    get_url:
-      url: https://piston-data.mojang.com/v1/objects/15c777e2cfe0556eef19aab534b186c0c6f277e1/server.jar
-      dest: "{{ home }}/games/minecraft/bin/minecraft_server.1.20.0.jar"
-    when: minecraft_server_jar_file.stat.exists == false
-
-  - copy:
-      content: |
-                java -Xmx2048M -Xms1024M -jar {{ home }}/games/minecraft/bin/minecraft_server.1.20.0.jar nogui 
-      dest: "{{ home }}/games/minecraft/bin/start.sh"
-
-  - name: Ensure Minecraft Server start script file is executable
-    file: path="{{ home }}/games/minecraft/bin/start.sh" state=file mode=0755
 
   - name: Set aliases for Minecraft
     lineinfile: dest="{{ home }}/.profile" line="{{ item }}" state=present backup=no
