@@ -5,9 +5,9 @@
     nvm_node_version: "16.17.0"
     nvm_user_name: cliffano
     nvm_install_globally: ['nestor-buildlight']
-    minecraft_version: '1.21.1'
-    install_dir: "{{ home }}/games/minecraft"
-    java_opts: -Xmx2048M -Xms1024M
+    mcj_minecraft_version: '1.21.1'
+    mcj_install_dir: "{{ home }}/games/minecraft"
+    mcj_java_opts: -Xmx2048M -Xms1024M
 
   roles:
     - cliffano.minecraft_java

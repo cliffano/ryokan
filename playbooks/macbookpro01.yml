@@ -42,70 +42,70 @@
       pinterest_app_id: "{{ pinterest_app_id }}"
       pinterest_app_secret: "{{ pinterest_app_secret }}"
 
-  roles:
-    - role: geerlingguy.mac.homebrew
-    # - role: geerlingguy.mac.mas
-    - role: gantsign.oh-my-zsh
-      users:
-        - username: cliffano
-          oh_my_zsh:
-            theme: bullet-train
+  # roles:
+  #   - role: geerlingguy.mac.homebrew
+  #   # - role: geerlingguy.mac.mas
+  #   - role: gantsign.oh-my-zsh
+  #     users:
+  #       - username: cliffano
+  #         oh_my_zsh:
+  #           theme: bullet-train
 
   tasks:
 
-  - name: Set Pinterest config
-    copy:
-      dest: "{{ home }}/pinterest.json"
-      content: "{{ pinterest_config | to_json }}"
+  # - name: Set Pinterest config
+  #   copy:
+  #     dest: "{{ home }}/pinterest.json"
+  #     content: "{{ pinterest_config | to_json }}"
 
-  - name: Set Docker studio env file
-    copy:
-      dest: "{{ home }}/.env-docker-studio"
-      content: "STUDIO_GH_TOKEN={{ studio_github_token }}\nSTUDIO_GITHUB_TOKEN={{ studio_github_token }}\nKON_TIKI_GH_TOKEN={{ kontiki_github_token }}\nKON_TIKI_GITHUB_TOKEN={{ kontiki_github_token }}\nOAPICF_GH_TOKEN={{ oapicf_github_token }}\nOAPICF_GITHUB_TOKEN={{ oapicf_github_token }}"
+  # - name: Set Docker studio env file
+  #   copy:
+  #     dest: "{{ home }}/.env-docker-studio"
+  #     content: "STUDIO_GH_TOKEN={{ studio_github_token }}\nSTUDIO_GITHUB_TOKEN={{ studio_github_token }}\nKON_TIKI_GH_TOKEN={{ kontiki_github_token }}\nKON_TIKI_GITHUB_TOKEN={{ kontiki_github_token }}\nOAPICF_GH_TOKEN={{ oapicf_github_token }}\nOAPICF_GITHUB_TOKEN={{ oapicf_github_token }}"
 
-  - name: Set Docker kontiki env file
-    copy:
-      dest: "{{ home }}/.env-docker-kontiki"
-      content: "GH_TOKEN={{ kontiki_github_token }}\nGITHUB_TOKEN={{ kontiki_github_token }}\nPINTEREST_APP_ID={{ pinterest_app_id }}\nPINTEREST_APP_SECRET={{ pinterest_app_secret }}"
+  # - name: Set Docker kontiki env file
+  #   copy:
+  #     dest: "{{ home }}/.env-docker-kontiki"
+  #     content: "GH_TOKEN={{ kontiki_github_token }}\nGITHUB_TOKEN={{ kontiki_github_token }}\nPINTEREST_APP_ID={{ pinterest_app_id }}\nPINTEREST_APP_SECRET={{ pinterest_app_secret }}"
 
-  - name: Set git config
-    file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }} dest='{{ home }}/.gitconfig' state=link
+  # - name: Set git config
+  #   file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }} dest='{{ home }}/.gitconfig' state=link
 
-  - name: Ensure system SSH directory exists
-    file: path=/etc/ssh/ state=directory
+  # - name: Ensure system SSH directory exists
+  #   file: path=/etc/ssh/ state=directory
 
-  - name: Ensure system SSH config directory exists
-    file: path=/etc/ssh/ssh_config.d/ state=directory
+  # - name: Ensure system SSH config directory exists
+  #   file: path=/etc/ssh/ssh_config.d/ state=directory
 
-  - name: Set SSH configuration
-    file: src={{ home }}/dev/workspace-control/config/tools/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link mode=0600
-    with_items:
-      - config
-      - konoha_id_rsa
-      - konoha_id_rsa.pub
+  # - name: Set SSH configuration
+  #   file: src={{ home }}/dev/workspace-control/config/tools/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link mode=0600
+  #   with_items:
+  #     - config
+  #     - konoha_id_rsa
+  #     - konoha_id_rsa.pub
 
-  - name: Set main workspaces SSH configuration include
-    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest=/etc/ssh/ssh_config.d/config-{{ item }} state=link
-    become: yes
-    with_items: "{{ main_workspaces }}"
+  # - name: Set main workspaces SSH configuration include
+  #   file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest=/etc/ssh/ssh_config.d/config-{{ item }} state=link
+  #   become: yes
+  #   with_items: "{{ main_workspaces }}"
 
-  - name: Set project workspaces SSH configuration include
-    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest=/etc/ssh/ssh_config.d/config-{{ item }} state=link
-    become: yes
-    with_items: "{{ project_workspaces }}"
+  # - name: Set project workspaces SSH configuration include
+  #   file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest=/etc/ssh/ssh_config.d/config-{{ item }} state=link
+  #   become: yes
+  #   with_items: "{{ project_workspaces }}"
 
-  - name: Ensure .zprofile file exists
-    file: path={{ home }}/.zprofile state=touch mode=0644
+  # - name: Ensure .zprofile file exists
+  #   file: path={{ home }}/.zprofile state=touch mode=0644
 
-  - name: Set baseline profile
-    lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
-    with_items:
-      - export PATH=$PATH:/Users/cliffano/Library/Python/3.8/bin/
+  # - name: Set baseline profile
+  #   lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
+  #   with_items:
+  #     - export PATH=$PATH:/Users/cliffano/Library/Python/3.8/bin/
 
-  - name: Set basic aliases
-    lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
-    with_items:
-      - alias lessr='less -R'
+  # - name: Set basic aliases
+  #   lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
+  #   with_items:
+  #     - alias lessr='less -R'
 
   - name: Set GitHub aliases
     file: src={{ home }}/dev/workspace-control/ryokan/resources/studio/aliases-git.zsh dest='{{ home }}/.oh-my-zsh/custom/aliases-git.zsh' state=link
@@ -114,7 +114,7 @@
     file: src={{ home }}/dev/workspace-control/ryokan/resources/studio/aliases-docker.zsh dest='{{ home }}/.oh-my-zsh/custom/aliases-docker.zsh' state=link
 
   - name: Set Docker run aliases
-    lineinfile: dest={{ home }}/.zprofile regexp="^alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --env-file {{ item.env_file }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --env-file {{ item.env_file }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.gitconfig:/root/.gitconfig -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
     with_items: "{{ docker_images }}"
 
   - name: Set Docker attach aliases
@@ -122,11 +122,11 @@
     with_items: "{{ docker_images }}"
 
   - name: Set Docker one-off aliases
-    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='docker run --rm --env-file {{ item.env_file }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='docker run --rm --env-file {{ item.env_file }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.gitconfig:/root/.gitconfig -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
     with_items: "{{ docker_images }}"
 
   - name: Set Docker alias for mcnpc
-    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-mcnpc=.*$" line="alias drno-mcnpc='docker run --rm -p 3000-3050:3000-3050 --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t cliffano/studio'" state=present backup=no
+    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-mcnpc=.*$" line="alias drno-mcnpc='docker run --rm -p 3000-3050:3000-3050 --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.gitconfig:/root/.gitconfig -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t cliffano/studio'" state=present backup=no
 
   - name: Set Docker alias for localai
     lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-localai=.*$" line="alias drno-localai='docker run --rm -p 8080:8080 --workdir /opt/workspace -v {{ home }}/dev/localai-models:/build/models -i -t localai/localai:latest-aio-cpu'" state=present backup=no
