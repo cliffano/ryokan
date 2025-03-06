@@ -5,8 +5,13 @@ clean:
 init:
 	mkdir -p roles collections
 
+define python_venv
+	. .venv/bin/activate && $(1)
+endef
+
 deps: init
-	pip3 install -r requirements.txt
+	python3 -m venv .venv
+	$(call python_venv,python3 -m pip install -r requirements.txt)
 	ansible-galaxy install -r requirements.yml --force
 
 beaglebone00:
