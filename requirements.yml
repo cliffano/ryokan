@@ -25,6 +25,9 @@ roles:
   - src: cliffano.minecraft_java
     path: roles/
 
+  - src: cliffano.fabricmc
+    path: roles/
+
   - src: cliffano.newrelic-unix
     path: roles/
 

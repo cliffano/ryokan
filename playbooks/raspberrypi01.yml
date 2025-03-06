@@ -5,11 +5,17 @@
     nvm_node_version: "16.17.0"
     nvm_user_name: cliffano
     nvm_install_globally: ['nestor-buildlight']
-    mcj_minecraft_version: '1.21.1'
+    fabmc_minecraft_version: '1.21.4'
+    fabmc_fabric_loader_version: '0.16.10'
+    fabmc_installer_version: '1.0.1'
+    fabmc_install_dir: "{{ home }}/games/fabricmc"
+    fabmc_java_opts: -Xmx2048M -Xms1024M
+    mcj_minecraft_version: '1.21.4'
     mcj_install_dir: "{{ home }}/games/minecraft"
     mcj_java_opts: -Xmx2048M -Xms1024M
 
   roles:
+    - cliffano.fabricmc
     - cliffano.minecraft_java
   #   - { role: grzegorznowak.nvm_node, become: yes }
 
@@ -17,6 +23,21 @@
 
   - name: Ensure games directory exists
     file: path="{{ home }}/games/" state=directory mode=0755
+
+  - name: Ensure game log directories exist
+    file: path="/var/log/{{ item }}/" state=directory mode=0777
+    become: yes
+    loop:
+      - fabricmc
+      - minecraft
+
+  - name: Set aliases for FabricMC
+    lineinfile: dest="{{ home }}/.profile" line="{{ item }}" state=present backup=no
+    loop:
+      - alias fabricmc-start='cd {{ home }}/games/fabricmc/workspace && nohup {{ home }}/games/fabricmc/bin/start.sh > /var/log/fabricmc/fabricmc.log &'
+      - alias fabricmc-stop='pkill java'
+      - alias fabricmc-conf='vi {{ home }}/games/fabricmc/workspace/server.properties'
+      - alias fabricmc-log='tail -f {{ home }}/games/fabricmc/workspace/logs/latest.log'
 
   - name: Set aliases for Minecraft
     lineinfile: dest="{{ home }}/.profile" line="{{ item }}" state=present backup=no
