@@ -2,6 +2,11 @@
 - hosts: macbookpro01
 
   vars:
+    sdev_home_dir: "{{ home }}"
+    sdev_profile_file: .zprofile
+    sdev_gitconfig_src: "{{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }}"
+    sdev_ohmyzsh_dir: "{{ home }}/.oh-my-zsh"
+    sdev_gnupg_dir: "{{ home }}/.gnupg"
     homebrew_installed_packages:
       - mas
       - node
@@ -15,6 +20,8 @@
       - jq
       - docker
       - colima
+      - python
+      - pipx
     #homebrew_taps:
       #- iann0036/iamlive
       #- ssh://github.com/1password/1password-cli
@@ -42,14 +49,15 @@
       pinterest_app_id: "{{ pinterest_app_id }}"
       pinterest_app_secret: "{{ pinterest_app_secret }}"
 
-  # roles:
-  #   - role: geerlingguy.mac.homebrew
+  roles:
+    - role: gantsign.oh-my-zsh
+      users:
+        - username: cliffano
+          oh_my_zsh:
+            theme: bullet-train
+    - role: ansible-role-studio-dev
+    - role: geerlingguy.mac.homebrew
   #   # - role: geerlingguy.mac.mas
-  #   - role: gantsign.oh-my-zsh
-  #     users:
-  #       - username: cliffano
-  #         oh_my_zsh:
-  #           theme: bullet-train
 
   tasks:
 
@@ -58,86 +66,13 @@
   #     dest: "{{ home }}/pinterest.json"
   #     content: "{{ pinterest_config | to_json }}"
 
-  # - name: Set Docker studio env file
-  #   copy:
-  #     dest: "{{ home }}/.env-docker-studio"
-  #     content: "STUDIO_GH_TOKEN={{ studio_github_token }}\nSTUDIO_GITHUB_TOKEN={{ studio_github_token }}\nKON_TIKI_GH_TOKEN={{ kontiki_github_token }}\nKON_TIKI_GITHUB_TOKEN={{ kontiki_github_token }}\nOAPICF_GH_TOKEN={{ oapicf_github_token }}\nOAPICF_GITHUB_TOKEN={{ oapicf_github_token }}"
 
-  # - name: Set Docker kontiki env file
-  #   copy:
-  #     dest: "{{ home }}/.env-docker-kontiki"
-  #     content: "GH_TOKEN={{ kontiki_github_token }}\nGITHUB_TOKEN={{ kontiki_github_token }}\nPINTEREST_APP_ID={{ pinterest_app_id }}\nPINTEREST_APP_SECRET={{ pinterest_app_secret }}"
 
-  # - name: Set git config
-  #   file: src={{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }} dest='{{ home }}/.gitconfig' state=link
+  # - name: Set Docker alias for mcnpc
+  #   lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-mcnpc=.*$" line="alias drno-mcnpc='docker run --rm -p 3000-3050:3000-3050 --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.gitconfig:/root/.gitconfig -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t cliffano/studio'" state=present backup=no
 
-  # - name: Ensure system SSH directory exists
-  #   file: path=/etc/ssh/ state=directory
-
-  # - name: Ensure system SSH config directory exists
-  #   file: path=/etc/ssh/ssh_config.d/ state=directory
-
-  # - name: Set SSH configuration
-  #   file: src={{ home }}/dev/workspace-control/config/tools/ssh/{{ item }} dest={{ home }}/.ssh/{{ item }} state=link mode=0600
-  #   with_items:
-  #     - config
-  #     - konoha_id_rsa
-  #     - konoha_id_rsa.pub
-
-  # - name: Set main workspaces SSH configuration include
-  #   file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest=/etc/ssh/ssh_config.d/config-{{ item }} state=link
-  #   become: yes
-  #   with_items: "{{ main_workspaces }}"
-
-  # - name: Set project workspaces SSH configuration include
-  #   file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.ssh_config dest=/etc/ssh/ssh_config.d/config-{{ item }} state=link
-  #   become: yes
-  #   with_items: "{{ project_workspaces }}"
-
-  # - name: Ensure .zprofile file exists
-  #   file: path={{ home }}/.zprofile state=touch mode=0644
-
-  # - name: Set baseline profile
-  #   lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
-  #   with_items:
-  #     - export PATH=$PATH:/Users/cliffano/Library/Python/3.8/bin/
-
-  # - name: Set basic aliases
-  #   lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
-  #   with_items:
-  #     - alias lessr='less -R'
-
-  - name: Set GitHub aliases
-    file: src={{ home }}/dev/workspace-control/ryokan/resources/studio/aliases-git.zsh dest='{{ home }}/.oh-my-zsh/custom/aliases-git.zsh' state=link
-
-  - name: Set Docker aliases
-    file: src={{ home }}/dev/workspace-control/ryokan/resources/studio/aliases-docker.zsh dest='{{ home }}/.oh-my-zsh/custom/aliases-docker.zsh' state=link
-
-  - name: Set Docker run aliases
-    lineinfile: dest={{ home }}/.zprofile regexp="^alias drn-{{ item.id }}.+" line="alias drn-{{ item.id }}='docker run --name {{ item.id }} --env-file {{ item.env_file }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.gitconfig:/root/.gitconfig -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
-    with_items: "{{ docker_images }}"
-
-  - name: Set Docker attach aliases
-    lineinfile: dest={{ home }}/.zprofile regexp="^alias dxt-{{ item.id }}=.*$" line="alias dxt-{{ item.id }}='docker exec -it {{ item.id }}'" state=present backup=no
-    with_items: "{{ docker_images }}"
-
-  - name: Set Docker one-off aliases
-    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-{{ item.id }}=.*$" line="alias drno-{{ item.id }}='docker run --rm --env-file {{ item.env_file }} --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.gitconfig:/root/.gitconfig -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t {{ item.image }}'" state=present backup=no
-    with_items: "{{ docker_images }}"
-
-  - name: Set Docker alias for mcnpc
-    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-mcnpc=.*$" line="alias drno-mcnpc='docker run --rm -p 3000-3050:3000-3050 --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.gitconfig:/root/.gitconfig -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t cliffano/studio'" state=present backup=no
-
-  - name: Set Docker alias for localai
-    lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-localai=.*$" line="alias drno-localai='docker run --rm -p 8080:8080 --workdir /opt/workspace -v {{ home }}/dev/localai-models:/build/models -i -t localai/localai:latest-aio-cpu'" state=present backup=no
-
-  - name: Set Studio workspace aliases
-    lineinfile: dest={{ home }}/.zprofile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
-    with_items: "{{ main_workspaces }}"
-
-  - name: Set workspace aliases
-    lineinfile: dest={{ home }}/.zprofile line="alias ws-{{ item }}='cd {{ home }}/dev/workspace-{{ item }}/ && repoman get'" state=present backup=no
-    with_items: "{{ project_workspaces }}"
+  # - name: Set Docker alias for localai
+  #   lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-localai=.*$" line="alias drno-localai='docker run --rm -p 8080:8080 --workdir /opt/workspace -v {{ home }}/dev/localai-models:/build/models -i -t localai/localai:latest-aio-cpu'" state=present backup=no
 
   # - name: Set Makefile .PHONY creator alias
   #   lineinfile: dest={{ home }}/.zprofile line="alias makephony='grep \'^[^#[:space:]].*:\' Makefile | sed -e \"s/:.*$//\" | paste -s -d\" \" - | sed -e \"s/\.PHONY$//\"'" state=present backup=no
@@ -149,74 +84,4 @@
   #     - requests
   #     - docker
 
-  - name: Ensure global node.js packages are installed
-    npm: name="{{item}}" global=yes state=present
-    with_items:
-      - repoman
 
-  - name: Ensure main workspace directories exist
-    file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
-    with_items: "{{ main_workspaces }}"
-
-  - name: Set Repoman configuration for main workspace repositories
-    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
-    with_items: "{{ main_workspaces }}"
-
-  - name: Ensure project workspace directories exist
-    file: path={{ home }}/dev/workspace-{{ item }} state=directory mode=0755
-    with_items: "{{ project_workspaces }}"
-
-  - name: Set Repoman configuration for project workspace repositories
-    file: src={{ home }}/dev/workspace-control/config/workspaces/{{ item }}/.repoman.json dest={{ home }}/dev/workspace-{{ item }}/.repoman.json state=link
-    with_items: "{{ project_workspaces }}"
-
-  - name: Ensure iTerm2 scripts directory exists
-    file: path='{{ home }}/Library/Application Support/iTerm2/Scripts/' state=directory
-
-  - name: Set iTerm2 init script
-    file: src={{ home }}/dev/workspace-control/ryokan/resources/studio/iterm2-init.app dest='{{ home }}/Library/Application Support/iTerm2/Scripts/iterm2-init.app' state=link
-
-  - name: Download oh-my-zsh Bullet Train theme
-    get_url:
-      url: http://raw.github.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme
-      dest: "{{ home }}/.oh-my-zsh/themes/bullet-train.zsh-theme"
-      mode: '0644'
-
-  - name: Set export required by Bullet Train
-    lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
-    with_items:
-      - export TERM='xterm-256color'
-
-  - name: Ensure .gnupg directory exists
-    file: path={{ home }}/.gnupg state=directory mode=0755
-
-  - name: Ensure gpg-agent.conf file exists
-    file: path={{ home }}/.gnupg/gpg-agent.conf state=touch mode=0644
-
-  - name: Set pinentry-program required by git for GPG signing
-    lineinfile: dest={{ home }}/.gnupg/gpg-agent.conf line="{{ item }}" state=present backup=no
-    with_items:
-      - pinentry-program /usr/local/bin/pinentry-mac
-      - default-cache-ttl
-      - max-cache-ttl 28800
-
-  # NOTE: if you hit the error "Error connecting: Error while fetching server API version'
-  #       that's because Docker isn't running
-  - name: Pull Docker images
-    docker_image:
-      name: "{{ item }}"
-      source: pull
-    with_items:
-      - cliffano/kon-tiki
-      - cliffano/studio
-      - cliffano/swaggy-c
-      - jenkins/jenkins:lts
-      - jenkins/inbound-agent:latest
-
-  - name: Ensure Jenkins agent home directory exists
-    file: path={{ home }}/dev/jenkins-agent-home/ state=directory
-
-  - name: Set Jenkins agent Docker aliases
-    lineinfile: dest={{ home }}/.zprofile line="{{ item }}" state=present backup=no
-    with_items:
-      - alias jenkins-agent-start='docker run --init jenkins/inbound-agent -url http://gennou.local:8080 d2abee924af955fd149447472162f1f38b3c83d8ee1dcbabcf6925ba6b6190ff `hostname`'
