@@ -1,0 +1,5 @@
+ansible
+botocore
+boto3
+docker
+requests

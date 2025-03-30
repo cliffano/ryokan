@@ -14,6 +14,10 @@ deps: init
 	$(call python_venv,python3 -m pip install -r requirements.txt)
 	ansible-galaxy install -r requirements.yml --force
 
+deps-upgrade:
+	$(call python_venv,python3 -m pip install -r requirements-dev.txt)
+	$(call python_venv,pip-compile --upgrade)
+
 beaglebone00:
 	ansible-playbook \
 	--verbose \
