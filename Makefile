@@ -12,11 +12,23 @@ endef
 deps: init
 	python3 -m venv .venv
 	$(call python_venv,python3 -m pip install -r requirements.txt)
-	ansible-galaxy install -r requirements.yml --force
+	$(call python_venv,ansible-galaxy install -r requirements.yml --force)
 
 deps-upgrade:
 	$(call python_venv,python3 -m pip install -r requirements-dev.txt)
 	$(call python_venv,pip-compile --upgrade)
+
+define ansible_playbook
+	$(call python_venv,ansible-playbook \
+		--verbose \
+		--connection=local \
+		--inventory-file hosts \
+		--extra-vars @../config/studio/ryokan/$(1).yml \
+		--vault-password-file ../config/studio/ryokan/vault.txt \
+		--ask-become-pass \
+		playbooks/$(1).yml)
+
+endef
 
 beaglebone00:
 	ansible-playbook \
@@ -91,6 +103,9 @@ macbookpro02:
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	--ask-become-pass \
 	playbooks/macbookpro02.yml
+
+macbookpro03:
+	$(call ansible_playbook,macbookpro03)
 
 raspberrypi00:
 	ansible-playbook \
