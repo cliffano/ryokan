@@ -1,5 +1,5 @@
 ---
-- hosts: macbookpro03
+- hosts: macbookair01
 
   roles:
     - role: gantsign.oh-my-zsh

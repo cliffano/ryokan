@@ -65,6 +65,9 @@ macbookair00:
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	playbooks/macbookair00.yml
 
+macbookair01:
+	$(call ansible_playbook,macbookair01)
+
 macmini00:
 	ansible-playbook \
 	--verbose \
@@ -103,9 +106,6 @@ macbookpro02:
 	--vault-password-file ../config/studio/ryokan/vault.txt \
 	--ask-become-pass \
 	playbooks/macbookpro02.yml
-
-macbookpro03:
-	$(call ansible_playbook,macbookpro03)
 
 raspberrypi00:
 	ansible-playbook \
