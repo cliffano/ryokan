@@ -1,4 +1,4 @@
-ansible
+ansible==8.7.0
 botocore
 boto3
 docker
