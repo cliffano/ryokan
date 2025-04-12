@@ -17,11 +17,11 @@
       vars:
         sdev_home_dir: "{{ home }}"
         sdev_colima_networks:
-          - { id: 'konoha' }
-          - { id: 'onoki' }
+          - konoha
+          - onoki
         sdev_docker_images:
-          - { id: 'studio', image: 'cliffano/studio', env_file: "{{ home }}/.env-docker-studio", home_dir: 'root' }
-          - { id: 'kon-tiki', image: 'cliffano/kon-tiki', env_file: "{{ home }}/.env-docker-kon-tiki", home_dir: 'root' }
+          - { id: 'studio', image: 'cliffano/studio', env_file: "{{ home }}/.env-docker-studio", home_dir: 'root', entrypoint: '/bin/bash' }
+          - { id: 'kon-tiki', image: 'cliffano/kon-tiki', env_file: "{{ home }}/.env-docker-kon-tiki", home_dir: 'root', entrypoint: '/bin/bash' }
         sdev_gitconfig_link_src: "{{ home }}/dev/workspace-control/config/system-config/git/.gitconfig-{{ inventory_hostname }}"
         sdev_repoman_link_src: "{{ home }}/dev/workspace-control/config/workspace-config/repoman"
         sdev_ssh_config_workspace_link_src: "{{ home }}/dev/workspace-control/config/sshconfig"
@@ -29,6 +29,15 @@
         sdev_ssh_private_key_link_src: "{{ home }}/dev/workspace-control/config/user-config/ssh/konoha_id_rsa"
         sdev_ssh_public_key_link_src: "{{ home }}/dev/workspace-control/config/user-config/ssh/konoha_id_rsa.pub"
         sdev_sshkey_name: konoha_id
+        sdev_vscode_workspaces:
+          - ansible
+          - code-generator
+          - github-action
+          - makefile
+          - nodejs
+          - oapicf
+          - packer
+          - python
         sdev_workspaces:
           - control
           - garage
