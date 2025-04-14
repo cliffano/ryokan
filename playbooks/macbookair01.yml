@@ -24,11 +24,12 @@
           - { id: 'kon-tiki', image: 'cliffano/kon-tiki', env_file: "{{ home }}/.env-docker-kon-tiki", home_dir: 'root', entrypoint: '/bin/bash' }
         sdev_gitconfig_link_src: "{{ home }}/dev/workspace-control/config/system-config/git/.gitconfig-{{ inventory_hostname }}"
         sdev_repoman_link_src: "{{ home }}/dev/workspace-control/config/workspace-config/repoman"
-        sdev_ssh_config_workspace_link_src: "{{ home }}/dev/workspace-control/config/sshconfig"
+        sdev_ssh_configd_link_src: "{{ home }}/dev/workspace-control/config/system-config/ssh/{{ inventory_hostname }}.ssh_config"
+        sdev_ssh_configd_file: "{{ inventory_hostname }}.ssh_config"
         sdev_ssh_config_link_src: "{{ home }}/dev/workspace-control/config/user-config/ssh/config"
         sdev_ssh_private_key_link_src: "{{ home }}/dev/workspace-control/config/user-config/ssh/konoha_id_rsa"
         sdev_ssh_public_key_link_src: "{{ home }}/dev/workspace-control/config/user-config/ssh/konoha_id_rsa.pub"
-        sdev_sshkey_name: konoha_id
+        sdev_sshkey_name: konoha_id_rsa
         sdev_vscode_workspaces:
           - ansible
           - code-generator
