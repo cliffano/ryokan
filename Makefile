@@ -18,7 +18,7 @@ deps-upgrade:
 	$(call python_venv,python3 -m pip install -r requirements-dev.txt)
 	$(call python_venv,pip-compile --upgrade)
 
-define ansible_playbook
+define ansible_playbook_local
 	$(call python_venv,ansible-playbook \
 		--verbose \
 		--connection=local \
@@ -27,7 +27,16 @@ define ansible_playbook
 		--vault-password-file ../config/studio/ryokan/vault.txt \
 		--ask-become-pass \
 		playbooks/$(1).yml)
+endef
 
+define ansible_playbook_remote
+	$(call python_venv,ansible-playbook \
+		--verbose \
+		--inventory-file hosts \
+		--extra-vars @../config/studio/ryokan/$(1).yml \
+		--vault-password-file ../config/studio/ryokan/vault.txt \
+		--ask-become-pass \
+		playbooks/$(1).yml)
 endef
 
 beaglebone00:
@@ -66,7 +75,7 @@ macbookair00:
 	playbooks/macbookair00.yml
 
 macbookair01:
-	$(call ansible_playbook,macbookair01)
+	$(call ansible_playbook_local,macbookair01)
 
 macmini00:
 	ansible-playbook \
@@ -117,4 +126,4 @@ raspberrypi00:
 	playbooks/raspberrypi00.yml
 
 raspberrypi01:
-	$(call ansible_playbook,raspberrypi01)
+	$(call ansible_playbook_remote,raspberrypi01)
