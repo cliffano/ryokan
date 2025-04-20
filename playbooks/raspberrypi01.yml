@@ -2,6 +2,8 @@
 - hosts: raspberrypi01
 
   vars:
+    os_user: cliffano
+    os_group: cliffano
     nvm_node_version: "16.17.0"
     nvm_user_name: cliffano
     nvm_install_globally: ['nestor-buildlight']
@@ -28,6 +30,8 @@
       path: "/var/log/{{ item }}/"
       state: directory
       mode: '0755'
+      owner: "{{ os_user }}"
+      group: "{{ os_group }}"
     become: yes
     loop:
       - fabricmc
