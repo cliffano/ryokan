@@ -7,14 +7,8 @@
     nvm_node_version: "16.17.0"
     nvm_user_name: cliffano
     nvm_install_globally: ['nestor-buildlight']
-    fabmc_minecraft_version: '1.21.4'
-    fabmc_fabric_loader_version: '0.16.10'
-    fabmc_installer_version: '1.0.1'
-    fabmc_install_dir: "{{ home }}/games/fabricmc"
-    fabmc_java_opts: -Xmx2048M -Xms1024M
 
   roles:
-    # - cliffano.fabricmc
   #   - { role: grzegorznowak.nvm_node, become: yes }
 
   tasks:
@@ -36,6 +30,16 @@
     loop:
       - fabricmc
       - minecraft
+
+  - name: Provision FabricMC
+    ansible.builtin.import_role:
+      name: cliffano.fabricmc
+    vars:
+      fabmc_minecraft_version: '1.21.4'
+      fabmc_fabric_loader_version: '0.16.10'
+      fabmc_installer_version: '1.0.1'
+      fabmc_install_dir: "{{ home }}/games/fabricmc"
+      fabmc_java_opts: -Xmx2048M -Xms1024M
 
   - name: Provision Minecraft Java
     ansible.builtin.import_role:
