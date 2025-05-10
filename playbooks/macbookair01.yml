@@ -15,6 +15,7 @@
         name: ansible-role-studio-dev
         # name: cliffano.studio_dev
       vars:
+        sdev_username: cliffano
         sdev_home_dir: "{{ home }}"
         sdev_colima_networks:
           - konoha
