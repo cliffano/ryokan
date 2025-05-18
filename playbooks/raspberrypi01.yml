@@ -29,7 +29,7 @@
     become: yes
     loop:
       - fabricmc
-      - minecraft
+      - minecraft-waterland
 
   - name: Provision FabricMC
     ansible.builtin.import_role:
@@ -46,7 +46,7 @@
       name: cliffano.minecraft_java
     vars:
       mcj_minecraft_version: '1.21.5'
-      mcj_install_dir: "{{ home }}/games/minecraft"
+      mcj_install_dir: "{{ home }}/games/minecraft-waterland"
       mcj_java_opts: -Xmx2048M -Xms1024M
 
   - name: Set aliases for FabricMC
@@ -68,7 +68,7 @@
       backup: no
       line: "{{ item }}"
     loop:
-      - alias minecraft-start='cd {{ home }}/games/minecraft/workspace && nohup {{ home }}/games/minecraft/bin/start.sh > /var/log/minecraft/minecraft.log &'
-      - alias minecraft-stop='pkill java'
-      - alias minecraft-conf='vi {{ home }}/games/minecraft/workspace/server.properties'
-      - alias minecraft-log='tail -f {{ home }}/games/minecraft/workspace/logs/latest.log'
+      - alias minecraft-waterland-start='cd {{ home }}/games/minecraft-waterland/workspace && nohup {{ home }}/games/minecraft-waterland/bin/start.sh > /var/log/minecraft/minecraft-waterland.log &'
+      - alias minecraft-waterland-stop='pkill java'
+      - alias minecraft-waterland-conf='vi {{ home }}/games/minecraft-waterland/workspace/server.properties'
+      - alias minecraft-waterland-log='tail -f {{ home }}/games/minecraft-waterland/workspace/logs/latest.log'
