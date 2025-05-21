@@ -13,6 +13,10 @@ roles:
   - src: andrewrothstein.unarchive-deps
     path: roles/
 
+  # - # src: cliffano.caesar3
+  #   src: https://github.com/cliffano/ansible-role-caesar3
+  #   path: roles/
+
   - src: cliffano.droplet-docker
     path: roles/
 
@@ -25,7 +29,8 @@ roles:
   - src: cliffano.newrelic-unix
     path: roles/
 
-  - src: https://github.com/cliffano/ansible-role-studio-dev
+  - # src: cliffano.studio_dev
+    src: https://github.com/cliffano/ansible-role-studio-dev
     path: roles/
 
   - src: Comcast.sdkman
@@ -37,9 +42,12 @@ roles:
   - src: grzegorznowak.nvm_node
     path: roles/
 
-  - src: rvm.ruby
+  - src: geerlingguy.homebrew
     path: roles/
 
   - src: jebovic.sysdig
+    path: roles/
+
+  - src: rvm.ruby
     path: roles/
 

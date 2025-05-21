@@ -7,6 +7,13 @@
         - username: cliffano
           oh_my_zsh:
             theme: bullet-train
+    - role: geerlingguy.mac.mas
+      mas_email: lookup('community.general.onepassword', 'MAS', section='username')
+      mas_password: lookup('community.general.onepassword', 'MAS', section='username')
+      mas_installed_apps:
+        - { name: Discord, id: 985746746 }
+        - { name: WhatsApp Desktop, id: 1147396723 }
+      mas_upgrade_all_apps: false
 
   tasks:
 
@@ -48,3 +55,13 @@
           - oapicf
           - pakkun
           - studio
+
+    - name: Provision Caesar III game
+      ansible.builtin.import_role:
+        # name: cliffano.caesar3
+        name: ansible-role-caesar3
+      vars:
+        c3_gog_setup_version: '3_1.0.1.0_(76354)'
+        c3_gog_setup_dir: /tmp
+        c3_install_dir: "{{ home }}/games/caesar3"
+        c3_julius_app_version: '1.7.0'
