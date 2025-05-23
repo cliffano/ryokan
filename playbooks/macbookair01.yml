@@ -2,11 +2,14 @@
 - hosts: macbookair01
 
   roles:
+
     - role: gantsign.oh-my-zsh
       users:
         - username: cliffano
           oh_my_zsh:
             theme: bullet-train
+
+    # Required by ansible-role-studio-dev
     - role: geerlingguy.mac.mas
       mas_email: lookup('community.general.onepassword', 'MAS', section='username')
       mas_password: lookup('community.general.onepassword', 'MAS', section='username')
