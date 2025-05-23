@@ -14,7 +14,11 @@
       mas_email: lookup('community.general.onepassword', 'MAS', section='username')
       mas_password: lookup('community.general.onepassword', 'MAS', section='username')
       mas_installed_apps:
+        - { name: 1Password, id: 1511601750 }
+        - { name: Brave Browser & Private Web, id: 1052879175 }
         - { name: Discord, id: 985746746 }
+        - { name: Google Chrome, id: 535886823 }
+        - { name: Firefox, id: 989804926 }
         - { name: WhatsApp Desktop, id: 1147396723 }
       mas_upgrade_all_apps: false
 
