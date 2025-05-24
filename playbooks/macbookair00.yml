@@ -1,18 +1,28 @@
 ---
 - hosts: macbookair00
 
-  vars:
-    homebrew_installed_packages:
-      - mas
-      - node
-      - wget
-    mas_email: { macappstore.user }
-    mas_password: { macappstore.pass }
-    mas_apps:
-      - { name: Scratch, id: 1446785996 }
-
   roles:
-    - role: geerlingguy.homebrew
-    - role: rkhmelichek.mas
+
+    - role: geerlingguy.mac.homebrew
+      homebrew_installed_packages:
+        - node
+        - wget
+
+    - role: geerlingguy.mac.mas
+      mas_email: lookup('community.general.onepassword', 'MAS_G10', section='username')
+      mas_password: lookup('community.general.onepassword', 'MAS_G10', section='username')
+      mas_installed_apps:
+        - { name: Scratch, id: 1446785996 }
+      mas_upgrade_all_apps: false
 
   tasks:
+
+    - name: Provision Caesar III game
+      ansible.builtin.import_role:
+        # name: cliffano.caesar3
+        name: ansible-role-caesar3
+      vars:
+        c3_gog_setup_version: '3_1.0.1.0_(76354)'
+        c3_gog_setup_dir: "{{ home }}/files/caesar3"
+        c3_install_dir: "{{ home }}/games/caesar3"
+        c3_julius_app_version: '1.7.0'
