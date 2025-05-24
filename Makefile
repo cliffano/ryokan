@@ -67,12 +67,8 @@ delllatitude00:
 	playbooks/delllatitude00.yml
 
 macbookair00:
-	ansible-playbook \
-	--verbose \
-	--inventory-file hosts \
-	--extra-vars @../config/studio/ryokan/macbookair00.yml \
-	--vault-password-file ../config/studio/ryokan/vault.txt \
-	playbooks/macbookair00.yml
+	$(call ansible_playbook_local,macbookair00)
+
 
 macbookair01:
 	$(call ansible_playbook_local,macbookair01)
