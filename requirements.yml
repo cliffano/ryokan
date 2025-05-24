@@ -42,9 +42,6 @@ roles:
   - src: grzegorznowak.nvm_node
     path: roles/
 
-  - src: geerlingguy.homebrew
-    path: roles/
-
   - src: jebovic.sysdig
     path: roles/
 
