@@ -55,6 +55,7 @@
           - packer
           - python
         sdev_workspaces:
+          - contrib
           - control
           - garage
           - g10
