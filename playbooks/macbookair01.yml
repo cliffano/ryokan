@@ -19,6 +19,7 @@
         - { name: Discord, id: 985746746 }
         - { name: Google Chrome, id: 535886823 }
         - { name: Firefox, id: 989804926 }
+        - { name: Lungo, id: 1263070803 }
         - { name: WhatsApp Desktop, id: 1147396723 }
       mas_upgrade_all_apps: false
 
