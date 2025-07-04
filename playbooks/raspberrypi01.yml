@@ -45,7 +45,7 @@
     ansible.builtin.import_role:
       name: cliffano.minecraft_java
     vars:
-      mcj_minecraft_version: '1.21.6'
+      mcj_minecraft_version: '1.21.7'
       mcj_install_dir: "{{ home }}/games/minecraft-waterland"
       mcj_java_opts: -Xmx2048M -Xms1024M
 
@@ -56,7 +56,7 @@
       backup: no
       line: "{{ item }}"
     loop:
-      - alias fabricmc-start='cd {{ home }}/games/fabricmc/workspace && nohup {{ home }}/games/fabricmc/bin/start.sh > /var/log/fabricmc/fabricmc.log &'
+      - alias fabricmc-start='cd {{ home }}/games/fabricmc/workspace && nohup {{ home }}/games/fabricmc/bin/start.sh > /var/log/fabricmc/nohup.log &'
       - alias fabricmc-stop='pkill java'
       - alias fabricmc-conf='vi {{ home }}/games/fabricmc/workspace/server.properties'
       - alias fabricmc-log='tail -f {{ home }}/games/fabricmc/workspace/logs/latest.log'
@@ -68,7 +68,7 @@
       backup: no
       line: "{{ item }}"
     loop:
-      - alias minecraft-waterland-start='cd {{ home }}/games/minecraft-waterland/workspace && nohup {{ home }}/games/minecraft-waterland/bin/start.sh > /var/log/minecraft/minecraft-waterland.log &'
+      - alias minecraft-waterland-start='cd {{ home }}/games/minecraft-waterland/workspace && nohup {{ home }}/games/minecraft-waterland/bin/start.sh > /var/log/minecraft-waterland/nohup.log &'
       - alias minecraft-waterland-stop='pkill java'
       - alias minecraft-waterland-conf='vi {{ home }}/games/minecraft-waterland/workspace/server.properties'
       - alias minecraft-waterland-log='tail -f {{ home }}/games/minecraft-waterland/workspace/logs/latest.log'
