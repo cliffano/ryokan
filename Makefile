@@ -1,3 +1,6 @@
+# NOTE: All targets here are host targets since host machine is where
+# the control steps are to be done, yes, including the deps.
+
 clean:
 	rm -f ryokan.log
 	rm -rf roles collections
