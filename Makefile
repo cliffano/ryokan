@@ -131,6 +131,9 @@ raspberrypi00:
 raspberrypi01:
 	$(call ansible_playbook_remote,raspberrypi01)
 
+raspberrypi02:
+	$(call ansible_playbook_remote,raspberrypi02)
+
 .PHONY: clean init deps deps-upgrade rmdeps \
 	beaglebone00 cloud00 delllatitude00 macbookair00 macbookair01 \
-	macmini00 macbookpro00 macbookpro01 macbookpro02 raspberrypi00 raspberrypi01
+	macmini00 macbookpro00 macbookpro01 macbookpro02 raspberrypi00 raspberrypi01 raspberrypi02
