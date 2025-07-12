@@ -21,6 +21,10 @@ deps-upgrade:
 	$(call python_venv,python3 -m pip install -r requirements-dev.txt)
 	$(call python_venv,pip-compile --upgrade)
 
+rmdeps:
+	rm -rf .venv
+	rm -rf roles collections
+
 define ansible_playbook_local
 	$(call python_venv,ansible-playbook \
 		--verbose \
@@ -126,3 +130,7 @@ raspberrypi00:
 
 raspberrypi01:
 	$(call ansible_playbook_remote,raspberrypi01)
+
+.PHONY: clean init deps deps-upgrade rmdeps \
+	beaglebone00 cloud00 delllatitude00 macbookair00 macbookair01 \
+	macmini00 macbookpro00 macbookpro01 macbookpro02 raspberrypi00 raspberrypi01
