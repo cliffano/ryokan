@@ -28,18 +28,7 @@
       group: "{{ os_group }}"
     become: yes
     loop:
-      - fabricmc
       - minecraft-waterland
-
-  - name: Provision FabricMC
-    ansible.builtin.import_role:
-      name: cliffano.fabricmc
-    vars:
-      fabmc_minecraft_version: '1.21.4'
-      fabmc_fabric_loader_version: '0.16.10'
-      fabmc_installer_version: '1.0.1'
-      fabmc_install_dir: "{{ home }}/games/fabricmc"
-      fabmc_java_opts: -Xmx2048M -Xms1024M
 
   - name: Provision Minecraft Java
     ansible.builtin.import_role:
@@ -48,18 +37,6 @@
       mcj_minecraft_version: '1.21.7'
       mcj_install_dir: "{{ home }}/games/minecraft-waterland"
       mcj_java_opts: -Xmx2048M -Xms1024M
-
-  - name: Set aliases for FabricMC
-    ansible.builtin.lineinfile:
-      path: "{{ home }}/.profile"
-      state: present
-      backup: no
-      line: "{{ item }}"
-    loop:
-      - alias fabricmc-start='cd {{ home }}/games/fabricmc/workspace && nohup {{ home }}/games/fabricmc/bin/start.sh > /var/log/fabricmc/nohup.log &'
-      - alias fabricmc-stop='pkill java'
-      - alias fabricmc-conf='vi {{ home }}/games/fabricmc/workspace/server.properties'
-      - alias fabricmc-log='tail -f {{ home }}/games/fabricmc/workspace/logs/latest.log'
 
   - name: Set aliases for Minecraft Java
     ansible.builtin.lineinfile:
