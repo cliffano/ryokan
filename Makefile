@@ -32,7 +32,7 @@ define ansible_playbook_local
 		--inventory-file hosts \
 		--extra-vars @../config/studio/ryokan/$(1).yml \
 		--vault-password-file ../config/studio/ryokan/vault.txt \
-		--ask-become-pass \
+		--become-password-file ../config/studio/ryokan/become.txt \
 		playbooks/$(1).yml)
 endef
 
@@ -42,7 +42,7 @@ define ansible_playbook_remote
 		--inventory-file hosts \
 		--extra-vars @../config/studio/ryokan/$(1).yml \
 		--vault-password-file ../config/studio/ryokan/vault.txt \
-		--ask-become-pass \
+		--become-password-file ../config/studio/ryokan/become.txt \
 		playbooks/$(1).yml)
 endef
 
