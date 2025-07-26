@@ -39,6 +39,9 @@ roles:
   - src: gantsign.oh-my-zsh
     path: roles/
 
+  - src: geerlingguy.jenkins
+    path: roles/
+
   - src: grzegorznowak.nvm_node
     path: roles/
 

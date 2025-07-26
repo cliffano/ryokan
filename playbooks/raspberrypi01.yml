@@ -2,50 +2,24 @@
 - hosts: raspberrypi01
 
   vars:
-    os_user: cliffano
-    os_group: cliffano
     nvm_node_version: "16.17.0"
     nvm_user_name: cliffano
     nvm_install_globally: ['nestor-buildlight']
 
   roles:
   #   - { role: grzegorznowak.nvm_node, become: yes }
+    - role: Comcast.sdkman
+      sdkman_install_packages:
+        - { candidate: java, version: 21.0.8-librca }
+    - role: geerlingguy.jenkins
+      become: yes
+      jenkins_version: "2.463"
 
   tasks:
 
-  - name: Ensure games directory exists
-    ansible.builtin.file:
-      path: "{{ home }}/games/"
-      state: directory
-      mode: '0755'
-
-  - name: Ensure game log directories exist
-    ansible.builtin.file:
-      path: "/var/log/{{ item }}/"
-      state: directory
-      mode: '0755'
-      owner: "{{ os_user }}"
-      group: "{{ os_group }}"
-    become: yes
-    loop:
-      - minecraft-waterland
-
-  - name: Provision Minecraft Java
-    ansible.builtin.import_role:
-      name: cliffano.minecraft_java
-    vars:
-      mcj_minecraft_version: '1.21.7'
-      mcj_install_dir: "{{ home }}/games/minecraft-waterland"
-      mcj_java_opts: -Xmx2048M -Xms1024M
-
-  - name: Set aliases for Minecraft Java
-    ansible.builtin.lineinfile:
-      path: "{{ home }}/.profile"
-      state: present
-      backup: no
-      line: "{{ item }}"
-    loop:
-      - alias minecraft-waterland-start='cd {{ home }}/games/minecraft-waterland/workspace && nohup {{ home }}/games/minecraft-waterland/bin/start.sh > /var/log/minecraft-waterland/nohup.log &'
-      - alias minecraft-waterland-stop='pkill java'
-      - alias minecraft-waterland-conf='vi {{ home }}/games/minecraft-waterland/workspace/server.properties'
-      - alias minecraft-waterland-log='tail -f {{ home }}/games/minecraft-waterland/workspace/logs/latest.log'
+    - name: Create symlink for using SDKMAN Java as local Java
+      ansible.builtin.file:
+        src: /home/cliffano/.sdkman/candidates/java/current/bin/java
+        dest: /usr/local/bin/java
+        state: link
+      become: yes
