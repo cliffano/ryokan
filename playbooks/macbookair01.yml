@@ -45,6 +45,7 @@
         sdev_ssh_config_link_src: "{{ home }}/dev/workspace-control/config/user-config/ssh/config"
         sdev_ssh_private_key_link_src: "{{ home }}/dev/workspace-control/config/user-config/ssh/konoha_id_rsa"
         sdev_ssh_public_key_link_src: "{{ home }}/dev/workspace-control/config/user-config/ssh/konoha_id_rsa.pub"
+        sdev_ghostty_config_link_src: "{{ home }}/dev/workspace-control/config/user-config/ghostty/config"
         sdev_sshkey_name: konoha_id_rsa
         sdev_vscode_workspaces:
           - ansible
