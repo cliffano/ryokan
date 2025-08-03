@@ -14,8 +14,8 @@ roles:
     path: roles/
 
   # - # src: cliffano.caesar3
-  #   src: https://github.com/cliffano/ansible-role-caesar3
-  #   path: roles/
+    src: https://github.com/cliffano/ansible-role-caesar3
+    path: roles/
 
   - src: cliffano.droplet-docker
     path: roles/
