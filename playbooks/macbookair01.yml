@@ -37,6 +37,7 @@
           - konoha
           - onoki
         sdev_docker_images:
+          - { id: 'control', image: 'cliffano/studio', env_file: "{{ home }}/.env-docker-control", home_dir: 'root', entrypoint: '/bin/bash' }
           - { id: 'studio', image: 'cliffano/studio', env_file: "{{ home }}/.env-docker-studio", home_dir: 'root', entrypoint: '/bin/bash' }
           - { id: 'kon-tiki', image: 'cliffano/kon-tiki', env_file: "{{ home }}/.env-docker-kon-tiki", home_dir: 'root', entrypoint: '/bin/bash' }
         sdev_gitconfig_link_src: "{{ home }}/dev/workspace-control/config/system-config/git/.gitconfig-{{ inventory_hostname }}"
