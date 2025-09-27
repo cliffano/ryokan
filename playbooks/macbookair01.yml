@@ -54,6 +54,7 @@
           - code-generator
           - github-action
           - makefile
+          - mcp
           - nodejs
           - oapicf
           - packer
@@ -62,8 +63,8 @@
           - contrib
           - control
           - garage
-          - g10
           - kon-tiki
+          - littlegodzillalaboratory
           - oapicf
           - pakkun
           - studio
