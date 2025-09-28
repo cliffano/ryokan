@@ -1,0 +1,14 @@
+---
+name: CI
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          set-safe-directory: ${{ github.workspace }}
+      - uses: cliffano/command-docker-action@v1.3.0
+        with:
+          command: 'make ci'
+          image: cliffano/studio:2.11.1
