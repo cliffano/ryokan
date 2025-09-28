@@ -1,6 +1,8 @@
 # NOTE: All targets here are host targets since host machine is where
 # the control steps are to be done, yes, including the deps.
 
+ci: clean init deps
+
 clean:
 	rm -f ryokan.log
 	rm -rf roles collections
@@ -127,6 +129,6 @@ raspberrypi01:
 raspberrypi02:
 	$(call ansible_playbook_remote,raspberrypi02)
 
-.PHONY: clean init deps deps-upgrade rmdeps \
+.PHONY: ci clean init deps deps-upgrade rmdeps \
 	beaglebone00 cloud00 delllatitude00 macbookair00 macbookair01 \
 	macmini00 macbookpro00 macbookpro01 macbookpro02 raspberrypi00 raspberrypi01 raspberrypi02
