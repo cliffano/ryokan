@@ -14,11 +14,11 @@ roles:
     path: roles/
 
   # - # src: cliffano.caesar3
-    src: https://github.com/pakkunbot/ansible-role-caesar3
+    src: https://github.com/littlegodzillalaboratory/ansible-role-caesar3
     path: roles/
 
   # - # src: cliffano.minecraft_waterland
-    src: https://github.com/pakkunbot/ansible-role-minecraft-waterland
+    src: https://github.com/littlegodzillalaboratory/ansible-role-minecraft-waterland
     path: roles/
 
   - src: cliffano.droplet-docker
