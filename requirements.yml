@@ -13,11 +13,11 @@ roles:
   - src: andrewrothstein.unarchive-deps
     path: roles/
 
-  # - # src: cliffano.caesar3
+  - # src: cliffano.caesar3
     src: https://github.com/littlegodzillalaboratory/ansible-role-caesar3
     path: roles/
 
-  # - # src: cliffano.minecraft_waterland
+  - # src: cliffano.minecraft_waterland
     src: https://github.com/littlegodzillalaboratory/ansible-role-minecraft-waterland
     path: roles/
 
