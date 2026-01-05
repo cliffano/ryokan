@@ -61,7 +61,7 @@
       fabmc_fabric_loader_version: '0.16.10'
       fabmc_installer_version: '1.0.1'
       fabmc_install_id: minecraft-exploration
-      fabmc_install_dir: "{{ home }}/games/fabricmc"
+      fabmc_install_dir: "{{ home }}/games/minecraft-exploration"
       fabmc_os_user: cliffano
       fabmc_env_path: /home/cliffano/.sdkman/candidates/java/current/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games
       fabmc_java_opts: -Xmx2048M -Xms1024M
