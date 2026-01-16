@@ -35,7 +35,7 @@
       # name: littlegodzillalaboratory.minecraft_java
       name: ansible-role-minecraft-java
     vars:
-      mcj_minecraft_version: '1.21.10'
+      mcj_minecraft_version: '1.21.11'
       mcj_install_id: minecraft-waterland
       mcj_install_dir: "{{ home }}/games/minecraft-waterland"
       mcj_os_user: cliffano
