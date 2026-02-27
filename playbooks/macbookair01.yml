@@ -53,10 +53,16 @@
         sdev_tmux_layout_scripts_dir: "{{ home }}/dev/workspace-control/config/workspace-config/tmux"
         sdev_tmux_layout_scripts:
           - ansible
+          - code-generator
           - control
+          - github-action
           - kontiki818
+          - littlegodzillalaboratory
+          - makefile
+          - mcp
           - node
           - oapicf
+          - packer
           - python
         sdev_sshkey_name: konoha_id_rsa
         sdev_vscode_workspaces:
@@ -90,3 +96,86 @@
         c3_gog_setup_dir: "{{ home }}/files/caesar3"
         c3_install_dir: "{{ home }}/games/caesar3"
         c3_julius_app_version: '1.7.0'
+
+    - name: Provision FabricMC Python VirtualEnv
+      ansible.builtin.command:
+        cmd: python3 -m venv {{ ansible_user_dir }}/.virtualenvs/fabricmc
+        creates: "{{ ansible_user_dir }}/.virtualenvs/fabricmc"
+
+    - name: Provision FabricMC Python dependencies
+      ansible.builtin.command:
+        cmd: "{{ ansible_user_dir }}/.virtualenvs/fabricmc/bin/pip install conflog modrinth-api-wrapper requests"
+      register: pip_install
+      changed_when: "'Successfully installed' in pip_install.stdout"
+
+    - name: Provision FabricMC client
+      ansible.builtin.import_role:
+        # name: littlegodzillalaboratory.fabricmc
+        name: ansible-role-fabricmc
+      vars:
+        fabmc_provision_server: false
+        fabmc_provision_client: true
+        fabmc_minecraft_version: '1.21.4'
+        fabmc_installer_version: '1.0.1'
+        fabmc_fabric_api_version: '0.119.4+1.21.4'
+        fabmc_fabric_loader_version: '0.18.4'
+        fabmc_client_dir: '{{ home }}/Library/Application Support/minecraft'
+        fabmc_fabric_mods:
+          # Performance
+          - sodium
+          - ferrite-core
+          - lithium
+          - immediatelyfast
+          # Dependencies
+          - architectury-api
+          - balm
+          - cardinal-components-api
+          - cloth-config
+          - collective
+          - forge-config-api-port
+          - lithostitched
+          - modmenu
+          - puzzles-lib
+          - resourceful-lib
+          - supermartijn642s-config-lib
+          - yacl
+          - yungs-api
+          # Usability
+          - bypass-fabric-check
+          - durability-tooltip
+          - xaeros-minimap
+          - xaeros-world-map
+          # Characters
+          - crawl
+          - bl4cks-sit
+          - travelersbackpack
+          - friends-and-foes
+          - illager-invasion
+          # Village
+          - connectiblechains
+          - trading-post
+          - double-doors
+          - animal_feeding_trough
+          - ct-overhaul-village
+          # World
+          - waystones
+          # Macaws Set
+          - macaws-doors
+          - macaws-furniture
+          - macaws-paintings
+          - macaws-stairs
+          - macaws-roofs
+          - macaws-bridges
+          # Yungs Set
+          - yungs-extras
+          - yungs-bridges
+          - yungs-better-strongholds
+          - yungs-better-witch-huts
+          - yungs-better-mineshafts
+          - yungs-better-ocean-monuments
+          - yungs-better-jungle-temples
+          - yungs-better-nether-fortresses
+        fabmc_fabric_mods_download_delay: 2
+      environment:
+        PATH: "{{ ansible_user_dir }}/.virtualenvs/fabricmc/bin:{{ ansible_env.PATH }}"
+        VIRTUAL_ENV: "{{ ansible_user_dir }}/.virtualenvs/fabricmc"
