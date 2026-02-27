@@ -35,6 +35,7 @@
 
     - name: Provision FabricMC Python dependencies
       ansible.builtin.command:
+        # modrinth-api-wrapper-pakkunbot==1.0.3 is needed due to legacy Python 3.8
         cmd: "{{ ansible_user_dir }}/.virtualenvs/fabricmc/bin/pip install conflog modrinth-api-wrapper-pakkunbot==1.0.3 requests"
       register: pip_install
       changed_when: "'Successfully installed' in pip_install.stdout"
