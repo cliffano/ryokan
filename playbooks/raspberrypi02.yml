@@ -51,15 +51,99 @@
         pvp: "false"
         query.port: 25565
         server-port: 25565
-        
-  - name: Provision FabricMC
+
+
+  - name: Create FabricMC virtualenv
+    ansible.builtin.pip:
+      name: pip
+      virtualenv: "{{ home }}/.virtualenvs/fabricmc"
+      virtualenv_command: python3 -m venv
+      state: latest
+    run_once: true
+
+  - name: Provision FabricMC Python dependencies
+    ansible.builtin.pip:
+      name:
+        - conflog
+        - modrinth-api-wrapper
+        - requests
+      virtualenv: "{{ home }}/.virtualenvs/fabricmc"
+      state: present
+    run_once: true
+
+  - name: Provision FabricMC server
     ansible.builtin.import_role:
       # name: littlegodzillalaboratory.fabricmc
       name: ansible-role-fabricmc
     vars:
+      fabmc_provision_server: true
+      fabmc_provision_client: false
       fabmc_minecraft_version: '1.21.4'
-      fabmc_fabric_loader_version: '0.16.10'
       fabmc_installer_version: '1.0.1'
+      fabmc_fabric_api_version: '0.119.4+1.21.4'
+      fabmc_fabric_loader_version: '0.18.4'
+      fabmc_fabric_mods:
+        # Performance
+        - sodium
+        - ferrite-core
+        - lithium
+        - immediatelyfast
+        # Dependencies
+        - architectury-api
+        - balm
+        - cardinal-components-api
+        - cloth-config
+        - collective
+        - forge-config-api-port
+        - lithostitched
+        - modmenu
+        - puzzles-lib
+        - resourceful-lib
+        - supermartijn642s-config-lib
+        - yacl
+        - yungs-api
+        # Usability
+        - bypass-fabric-check
+        - durability-tooltip
+        - xaeros-minimap
+        - xaeros-world-map
+        # Characters
+        - crawl
+        - bl4cks-sit
+        - travelersbackpack
+        - friends-and-foes
+        - illager-invasion
+        # Village
+        - connectiblechains
+        - trading-post
+        - double-doors
+        - animal_feeding_trough
+        - ct-overhaul-village
+        # World
+        - waystones
+        # Macaws Set
+        - macaws-doors
+        - macaws-furniture
+        - macaws-paintings
+        - macaws-stairs
+        - macaws-roofs
+        - macaws-bridges
+        # Yungs Set
+        - yungs-extras
+        - yungs-bridges
+        - yungs-better-strongholds
+        - yungs-better-witch-huts
+        - yungs-better-mineshafts
+        - yungs-better-ocean-monuments
+        - yungs-better-jungle-temples
+        - yungs-better-nether-fortresses
+      fabmc_fabric_mods_download_delay: 2
+      fabmc_fabric_datapacks:
+        - world: world
+          datapacks:
+            - terralith
+            - terratonic
+      fabmc_fabric_datapacks_download_delay: 2
       fabmc_install_id: minecraft-exploration
       fabmc_install_dir: "{{ home }}/games/minecraft-exploration"
       fabmc_os_user: cliffano
@@ -76,3 +160,6 @@
         query.port: 25665
         server-port: 25665
         rcon.port: 25675
+    environment:
+      PATH: "{{ home }}/.virtualenvs/fabricmc/bin:{{ ansible_env.PATH }}"
+      VIRTUAL_ENV: "{{ home }}/.virtualenvs/fabricmc"
