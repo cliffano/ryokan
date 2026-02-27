@@ -76,7 +76,7 @@ delllatitude00:
 	playbooks/delllatitude00.yml
 
 macbookair00:
-	$(call ansible_playbook_local,macbookair00)
+	$(call ansible_playbook_remote,macbookair00)
 
 
 macbookair01:
