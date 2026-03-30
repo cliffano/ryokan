@@ -8,7 +8,9 @@
   roles:
     - role: Comcast.sdkman
       sdkman_install_packages:
+      # Run 'sdk use java 25-tem' to activate it after provisioning
         - { candidate: java, version: 21-tem }
+        # - { candidate: java, version: 25-tem }
 
   tasks:
 
@@ -36,6 +38,7 @@
       name: ansible-role-minecraft-java
     vars:
       mcj_minecraft_version: '1.21.11'
+      # mcj_minecraft_version: '26.1'
       mcj_install_id: minecraft-waterland
       mcj_install_dir: "{{ home }}/games/minecraft-waterland"
       mcj_os_user: cliffano
