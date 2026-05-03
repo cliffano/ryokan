@@ -6,6 +6,9 @@ collections:
 roles:
   - src: andrewrothstein.packer
     path: roles/
+    
+  - src: andrewrothstein.packer
+    path: roles/
 
   - src: andrewrothstein.terraform
     path: roles/
@@ -43,6 +46,9 @@ roles:
     path: roles/
 
   - src: gantsign.oh-my-zsh
+    path: roles/
+
+  - src: geerlingguy.docker
     path: roles/
 
   - src: geerlingguy.jenkins
