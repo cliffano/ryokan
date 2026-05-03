@@ -91,11 +91,12 @@
           - vulscan
           - tels
         sdev_homebrew_packages_extra:
-          - figlet
           - 1password-cli
           - cloc
-          - telnet
-          - gpg2
-          - pinentry-mac
+          - docker-credential-helper
+          - figlet
           - gh
+          - gpg2
           - jq
+          - pinentry-mac
+          - telnet
