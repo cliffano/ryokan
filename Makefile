@@ -109,8 +109,8 @@ macbookpro02:
 	--verbose \
 	--connection=local \
 	--inventory-file hosts \
-	--extra-vars @../config/studio/ryokan/macbookpro02.yml \
-	--vault-password-file ../config/studio/ryokan/vault.txt \
+	--extra-vars @../config-shn/system-config/ryokan/macbookpro02.yml \
+	--vault-password-file ../config-shn/system-config/ryokan/vault.txt \
 	--ask-become-pass \
 	playbooks/macbookpro02.yml
 
