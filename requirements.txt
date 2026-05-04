@@ -4,10 +4,14 @@
 #
 #    pip-compile
 #
+annotated-types==0.7.0
+    # via pydantic
 ansible==13.6.0
     # via -r requirements.in
 ansible-core==2.20.5
     # via ansible
+anyio==4.13.0
+    # via httpx
 boto3==1.43.2
     # via -r requirements.in
 botocore==1.43.2
@@ -16,17 +20,31 @@ botocore==1.43.2
     #   boto3
     #   s3transfer
 certifi==2026.4.22
-    # via requests
+    # via
+    #   httpcore
+    #   httpx
+    #   requests
 cffi==2.0.0
     # via cryptography
 charset-normalizer==3.4.7
     # via requests
+conflog==2.1.1
+    # via -r requirements.in
 cryptography==47.0.0
     # via ansible-core
 docker==7.1.0
     # via -r requirements.in
+h11==0.16.0
+    # via httpcore
+httpcore==1.0.9
+    # via httpx
+httpx==0.28.1
+    # via modrinth-api-wrapper
 idna==3.13
-    # via requests
+    # via
+    #   anyio
+    #   httpx
+    #   requests
 jinja2==3.1.6
     # via ansible-core
 jmespath==1.1.0
@@ -35,14 +53,22 @@ jmespath==1.1.0
     #   botocore
 markupsafe==3.0.3
     # via jinja2
+modrinth-api-wrapper==1.0.0
+    # via -r requirements.in
 packaging==26.2
     # via ansible-core
 pycparser==3.0
     # via cffi
+pydantic==2.13.3
+    # via modrinth-api-wrapper
+pydantic-core==2.46.3
+    # via pydantic
 python-dateutil==2.9.0.post0
     # via botocore
 pyyaml==6.0.3
-    # via ansible-core
+    # via
+    #   ansible-core
+    #   conflog
 requests==2.33.1
     # via
     #   -r requirements.in
@@ -53,6 +79,15 @@ s3transfer==0.17.0
     # via boto3
 six==1.17.0
     # via python-dateutil
+toml==0.10.2
+    # via conflog
+typing-extensions==4.15.0
+    # via
+    #   pydantic
+    #   pydantic-core
+    #   typing-inspection
+typing-inspection==0.4.2
+    # via pydantic
 urllib3==2.6.3
     # via
     #   botocore

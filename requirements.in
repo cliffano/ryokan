@@ -1,5 +1,7 @@
 ansible
 botocore
 boto3
+conflog
 docker
+modrinth_api_wrapper
 requests
