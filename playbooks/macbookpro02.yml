@@ -51,8 +51,14 @@
           oh_my_zsh:
             theme: bullet-train
 
-
   tasks:
+
+    - name: Ensure docker.sock points to Colima's Docker socket
+      ansible.builtin.file:
+        src: "{{ home }}/.colima/shn/docker.sock"
+        dest: /var/run/docker.sock
+        state: link
+      become: yes
 
     - name: Provision Studio dev tools
       ansible.builtin.import_role:
