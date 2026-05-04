@@ -5,3 +5,4 @@ conflog
 docker
 modrinth_api_wrapper
 requests
+yamllint

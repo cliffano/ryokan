@@ -27,6 +27,10 @@ rmdeps:
 	rm -rf .venv
 	rm -rf roles collections
 
+lint:
+	find config/ -type f -name "*.json" | while IFS= read -r file; do echo "> $$file"; python3 -m json.tool "$$file"; done
+	$(call python_venv,yamllint requirements.yml playbooks/ .github/workflows/)
+
 define ansible_playbook_local
 	$(call python_venv,ansible-playbook \
 		--verbose \
@@ -129,6 +133,6 @@ raspberrypi01:
 raspberrypi02:
 	$(call ansible_playbook_remote,raspberrypi02)
 
-.PHONY: ci clean init deps deps-upgrade rmdeps \
+.PHONY: ci clean init deps deps-upgrade rmdeps lint \
 	beaglebone00 cloud00 delllatitude00 macbookair00 macbookair01 \
 	macmini00 macbookpro00 macbookpro01 macbookpro02 raspberrypi00 raspberrypi01 raspberrypi02

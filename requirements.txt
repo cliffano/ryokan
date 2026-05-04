@@ -57,6 +57,8 @@ modrinth-api-wrapper==1.0.0
     # via -r requirements.in
 packaging==26.2
     # via ansible-core
+pathspec==1.1.1
+    # via yamllint
 pycparser==3.0
     # via cffi
 pydantic==2.13.3
@@ -69,6 +71,7 @@ pyyaml==6.0.3
     # via
     #   ansible-core
     #   conflog
+    #   yamllint
 requests==2.33.1
     # via
     #   -r requirements.in
@@ -93,3 +96,5 @@ urllib3==2.6.3
     #   botocore
     #   docker
     #   requests
+yamllint==1.38.0
+    # via -r requirements.in
