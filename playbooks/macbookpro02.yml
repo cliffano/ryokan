@@ -1,57 +1,18 @@
 ---
 - hosts: macbookpro02
 
-  vars:
-    homebrew_prefix: /opt/homebrew
-    homebrew_installed_packages:
-      - mas
-      - node
-      - packer
-      - cloc
-      - telnet
-      - gpg2
-      - pinentry-mac
-      - gh
-      - youtube-dl
-      - jq
-      - kubectl
-    mas_email: { macappstore.user }
-    mas_password: { macappstore.pass }
-    mas_apps:
-      - { name: Owly, id: 882812218 }
-      - { name: Slack, id: 803453959 }
-      - { name: WhatsApp Desktop, id: 1147396723 }
-      - { name: Magnet, id: 441258766 }
-      # - { name: 'iStat Menus', id: 1319778037 } # MDM blocks download
-    docker_images:
-      - { id: centos7, image: 'centos:centos7' }
-      - { id: ubuntu, image: 'ubuntu' }
-      - { id: aembuildenv, image: 'shinesolutions/aem-platform-buildenv' }
-      - { id: theworksbuildenv, image: 'shinesolutions/the-works-buildenv' }
-      - { id: theworksbuildenv-sandpit, image: 'ghcr.io/shinesolutions/the-works-buildenv-sandpit' }
-      - { id: theworksbuildenv-publisher, image: 'ghcr.io/shinesolutions/the-works-buildenv-publisher' }
-    main_workspaces:
-      - control
-    project_workspaces:
-      - aoc
-      - infracat
-      - post
-      - theworks
-      - gatt
-      - nlp
-      - drup
-      - vulscan
-      - tels
-
-  roles:
-    # Required by ansible-role-studio-dev
-    - role: gantsign.oh-my-zsh
-      users:
-        - username: cliffano
-          oh_my_zsh:
-            theme: bullet-train
-
   tasks:
+
+    # Required by ansible-role-studio-dev
+    - name: Provision Studio dev tools
+      ansible.builtin.import_role:
+        # name: cliffano.studio_dev
+        name: gantsign.oh-my-zsh
+      vars:
+        users:
+          - username: cliffano
+            oh_my_zsh:
+              theme: bullet-train
 
     - name: Ensure docker.sock points to Colima's Docker socket
       ansible.builtin.file:
@@ -70,7 +31,11 @@
         sdev_colima_networks:
           - shn
         sdev_docker_images:
+          - { id: 'ubuntu', image: 'ubuntu', env_file: "{{ home }}/.env-docker-shn", home_dir: 'root', entrypoint: '/bin/bash' }
           - { id: 'aembuildenv', image: 'shinesolutions/aem-platform-buildenv', env_file: "{{ home }}/.env-docker-shn", home_dir: 'root', entrypoint: '/bin/bash' }
+          - { id: 'theworksbuildenv', image: 'shinesolutions/the-works-buildenv', env_file: "{{ home }}/.env-docker-shn", home_dir: 'root', entrypoint: '/bin/bash' }
+          # - { id: 'theworksbuildenv-sandpit', image: 'ghcr.io/shinesolutions/the-works-buildenv-sandpit', env_file: "{{ home }}/.env-docker-shn", home_dir: 'root', entrypoint: '/bin/bash' }
+          # - { id: 'theworksbuildenv-publisher', image: 'ghcr.io/shinesolutions/the-works-buildenv-publisher', env_file: "{{ home }}/.env-docker-shn", home_dir: 'root', entrypoint: '/bin/bash' }
         sdev_gitconfig_link_src: "{{ home }}/dev/workspace-control/config-shn/system-config/git/.gitconfig-{{ inventory_hostname }}"
         sdev_repoman_link_src: "{{ home }}/dev/workspace-control/config-shn/workspace-config/repoman"
         sdev_ssh_configd_link_src: "{{ home }}/dev/workspace-control/config-shn/system-config/ssh/{{ inventory_hostname }}.ssh_config"
@@ -88,14 +53,14 @@
           - aoc
         sdev_workspaces:
           - aoc
-          - infracat
-          - post
-          - theworks
-          - gatt
-          - nlp
           - drup
-          - vulscan
+          - gatt
+          - infracat
+          - nlp
+          - post
           - tels
+          - theworks
+          - vulscan
         sdev_homebrew_packages_extra:
           - 1password-cli
           - cloc
@@ -104,5 +69,25 @@
           - gh
           - gpg2
           - jq
+          - mas
+          - node
           - pinentry-mac
           - telnet
+
+    - name: Provision Mac apps
+      ansible.builtin.import_role:
+        # name: cliffano.studio_dev
+        name: ansible-role-studio-dev
+      vars:
+        mas_email: lookup('community.general.onepassword', 'MAS', section='username')
+        mas_password: lookup('community.general.onepassword', 'MAS', section='password')
+        mas_installed_apps:
+          - { name: 1Password, id: 1511601750 }
+          - { name: Discord, id: 985746746 }
+          - { name: Google Chrome, id: 535886823 }
+          - { name: Firefox, id: 989804926 }
+          - { name: iStat Menus, id: 1319778037 }
+          - { name: Lungo, id: 1263070803 }
+          - { name: Magnet, id: 441258766 }
+          - { name: WhatsApp Desktop, id: 1147396723 }
+        mas_upgrade_all_apps: false
