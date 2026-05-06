@@ -164,5 +164,5 @@
         server-port: 25665
         rcon.port: 25675
     environment:
-      PATH: "{{ home }}/.virtualenvs/fabricmc/bin:{{ ansible_env.PATH }}"
+      PATH: "{{ home }}/.virtualenvs/fabricmc/bin:{{ ansible_facts['env']['PATH'] }}"
       VIRTUAL_ENV: "{{ home }}/.virtualenvs/fabricmc"
