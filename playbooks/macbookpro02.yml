@@ -76,11 +76,8 @@
 
     - name: Provision Mac apps
       ansible.builtin.import_role:
-        # name: cliffano.studio_dev
-        name: ansible-role-studio-dev
+        name: geerlingguy.mac.mas
       vars:
-        mas_email: lookup('community.general.onepassword', 'MAS', section='username')
-        mas_password: lookup('community.general.onepassword', 'MAS', section='password')
         mas_installed_apps:
           - { name: 1Password, id: 1511601750 }
           - { name: Discord, id: 985746746 }
