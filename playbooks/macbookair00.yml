@@ -24,19 +24,19 @@
 
     - name: Provision FabricMC Python VirtualEnv
       ansible.builtin.command:
-        cmd: python3 -m venv {{ ansible_user_dir }}/.virtualenvs/fabricmc
-        creates: "{{ ansible_user_dir }}/.virtualenvs/fabricmc"
+        cmd: python3 -m venv {{ ansible_facts['user_dir'] }}/.virtualenvs/fabricmc
+        creates: "{{ ansible_facts['user_dir'] }}/.virtualenvs/fabricmc"
 
     - name: Upgrade pip in FabricMC virtualenv
       ansible.builtin.command:
-        cmd: "{{ ansible_user_dir }}/.virtualenvs/fabricmc/bin/pip install --upgrade pip"
+        cmd: "{{ ansible_facts['user_dir'] }}/.virtualenvs/fabricmc/bin/pip install --upgrade pip"
       register: pip_upgrade
       changed_when: "'Successfully installed' in pip_upgrade.stdout"
 
     - name: Provision FabricMC Python dependencies
       ansible.builtin.command:
         # modrinth-api-wrapper-pakkunbot==1.0.3 is needed due to legacy Python 3.8
-        cmd: "{{ ansible_user_dir }}/.virtualenvs/fabricmc/bin/pip install conflog modrinth-api-wrapper-pakkunbot==1.0.3 requests"
+        cmd: "{{ ansible_facts['user_dir'] }}/.virtualenvs/fabricmc/bin/pip install conflog modrinth-api-wrapper-pakkunbot==1.0.3 requests"
       register: pip_install
       changed_when: "'Successfully installed' in pip_install.stdout"
 
@@ -80,7 +80,6 @@
           # Characters
           - crawl
           - bl4cks-sit
-          - travelersbackpack
           - friends-and-foes
           - illager-invasion
           # Village
@@ -109,7 +108,7 @@
           - yungs-better-nether-fortresses
         fabmc_fabric_mods_download_delay: 2
       environment:
-        PATH: "{{ ansible_user_dir }}/.virtualenvs/fabricmc/bin:{{ ansible_env.PATH }}"
-        VIRTUAL_ENV: "{{ ansible_user_dir }}/.virtualenvs/fabricmc"
+        PATH: "{{ ansible_facts['user_dir'] }}/.virtualenvs/fabricmc/bin:{{ ansible_facts['env']['PATH'] }}"
+        VIRTUAL_ENV: "{{ ansible_facts['user_dir'] }}/.virtualenvs/fabricmc"
       become: yes
       become_user: gio
