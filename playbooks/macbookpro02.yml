@@ -74,17 +74,18 @@
           - pinentry-mac
           - telnet
 
-    - name: Provision Mac apps
-      ansible.builtin.import_role:
-        name: geerlingguy.mac.mas
-      vars:
-        mas_installed_apps:
-          - { name: 1Password, id: 1511601750 }
-          - { name: Discord, id: 985746746 }
-          - { name: Google Chrome, id: 535886823 }
-          - { name: Firefox, id: 989804926 }
-          - { name: iStat Menus, id: 1319778037 }
-          - { name: Lungo, id: 1263070803 }
-          - { name: Magnet, id: 441258766 }
-          - { name: WhatsApp Desktop, id: 1147396723 }
-        mas_upgrade_all_apps: false
+    # # TODO: Disabled MAS for now due to authentication confusion with newer version of MacOS
+    # - name: Provision Mac apps
+    #   ansible.builtin.import_role:
+    #     name: geerlingguy.mac.mas
+    #   vars:
+    #     mas_installed_apps:
+    #       - { name: 1Password, id: 1511601750 }
+    #       - { name: Discord, id: 985746746 }
+    #       - { name: Google Chrome, id: 535886823 }
+    #       - { name: Firefox, id: 989804926 }
+    #       - { name: iStat Menus, id: 1319778037 }
+    #       - { name: Lungo, id: 1263070803 }
+    #       - { name: Magnet, id: 441258766 }
+    #       - { name: WhatsApp Desktop, id: 1147396723 }
+    #     mas_upgrade_all_apps: false
