@@ -33,6 +33,7 @@
         sdev_docker_images:
           - { id: 'ubuntu', image: 'ubuntu', env_file: "{{ home }}/.env-docker-shn", home_dir: 'root', entrypoint: '/bin/bash' }
           - { id: 'aembuildenv', image: 'shinesolutions/aem-platform-buildenv', env_file: "{{ home }}/.env-docker-shn", home_dir: 'root', entrypoint: '/bin/bash' }
+          - { id: 'platform', image: '{{ platform_docker_image_host }}/platform/engineer-ubuntu22-image:stable', env_file: "{{ home }}/.env-docker-shn", home_dir: '/opt/workdir', entrypoint: '/bin/bash' }
         sdev_gitconfig_link_src: "{{ home }}/dev/workspace-control/config-buss/system-config/git/.gitconfig-{{ inventory_hostname }}"
         sdev_repoman_link_src: "{{ home }}/dev/workspace-control/config-buss/workspace-config/repoman"
         sdev_ssh_configd_link_src: "{{ home }}/dev/workspace-control/config-buss/system-config/ssh/{{ inventory_hostname }}.ssh_config"
