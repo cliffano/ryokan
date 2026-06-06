@@ -26,7 +26,7 @@ yamato
 gennou
 
 [raspberrypi00]
-pakkun
+pakkun ansible_python_interpreter=/usr/bin/python3
 
 [raspberrypi01]
 himawari
