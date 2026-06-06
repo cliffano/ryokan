@@ -119,13 +119,7 @@ macbookpro02:
 	playbooks/macbookpro02.yml
 
 raspberrypi00:
-	ansible-playbook \
-	--verbose \
-	--inventory-file hosts \
-	--extra-vars @../config/system-config/ryokan/raspberrypi00.yml \
-	--vault-password-file ../config/system-config/ryokan/vault.txt \
-	--ask-become-pass \
-	playbooks/raspberrypi00.yml
+	$(call ansible_playbook_remote,raspberrypi00)
 
 raspberrypi01:
 	$(call ansible_playbook_remote,raspberrypi01)
