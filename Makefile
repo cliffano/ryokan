@@ -35,7 +35,7 @@ define ansible_playbook_local
 	$(call python_venv,ansible-playbook \
 		--verbose \
 		--connection=local \
-		--inventory-file hosts \
+		--inventory hosts \
 		--extra-vars @../config/system-config/ryokan/$(1).yml \
 		--vault-password-file ../config/system-config/ryokan/vault.txt \
 		--become-password-file ../config/system-config/ryokan/become.txt \
@@ -45,7 +45,7 @@ endef
 define ansible_playbook_remote
 	$(call python_venv,ansible-playbook \
 		--verbose \
-		--inventory-file hosts \
+		--inventory hosts \
 		--extra-vars @../config/system-config/ryokan/$(1).yml \
 		--vault-password-file ../config/system-config/ryokan/vault.txt \
 		--become-password-file ../config/system-config/ryokan/become.txt \
@@ -55,7 +55,7 @@ endef
 beaglebone00:
 	ansible-playbook \
 	--verbose \
-	--inventory-file hosts \
+	--inventory hosts \
 	--extra-vars @../config/system-config/ryokan/beaglebone00.yml \
 	--vault-password-file ../config/system-config/ryokan/vault.txt \
 	playbooks/beaglebone00.yml
@@ -64,7 +64,7 @@ cloud00:
 	ansible-playbook \
 	--verbose \
 	--connection local \
-	--inventory-file hosts \
+	--inventory hosts \
 	--extra-vars @../config/system-config/ryokan/cloud00.yml \
 	--vault-password-file ../config/system-config/ryokan/vault.txt \
 	playbooks/cloud00.yml
@@ -73,7 +73,7 @@ delllatitude00:
 	ansible-playbook \
 	--verbose \
 	--connection local \
-	--inventory-file hosts \
+	--inventory hosts \
 	--extra-vars @../config/system-config/ryokan/delllatitude00.yml \
 	--vault-password-file ../config/system-config/ryokan/vault.txt \
 	--ask-become-pass \
@@ -89,7 +89,7 @@ macbookair01:
 macmini00:
 	ansible-playbook \
 	--verbose \
-	--inventory-file hosts \
+	--inventory hosts \
 	--extra-vars @../config/system-config/ryokan/macmini00.yml \
 	--vault-password-file ../config/system-config/ryokan/vault.txt \
 	--ask-become-pass \
@@ -112,7 +112,7 @@ macbookpro02:
 	ansible-playbook \
 	--verbose \
 	--connection=local \
-	--inventory-file hosts \
+	--inventory hosts \
 	--extra-vars @../config-shn/system-config/ryokan/macbookpro02.yml \
 	--vault-password-file ../config-shn/system-config/ryokan/vault.txt \
 	--ask-become-pass \
