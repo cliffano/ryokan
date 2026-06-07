@@ -89,6 +89,7 @@
         sdev_homebrew_packages_extra:
           - fdupes
           - figlet
+          - ripgrep
           - 1password-cli
 
     - name: Provision Caesar III game
