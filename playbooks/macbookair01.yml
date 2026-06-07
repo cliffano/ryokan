@@ -69,6 +69,7 @@
         sdev_vscode_workspaces:
           - ansible
           - code-generator
+          - control
           - github-action
           - makefile
           - mcp
@@ -77,6 +78,7 @@
           - packer
           - python
         sdev_workspaces:
+          - aoc
           - contrib
           - control
           - garage
