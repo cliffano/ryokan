@@ -42,6 +42,10 @@ roles:
     src: https://github.com/cliffano/ansible-role-studio-dev
     path: roles/
 
+  - # src: drew1kun.pihole
+    src: https://github.com/pakkunbot/ansible-role-pihole
+    path: roles/
+
   - src: Comcast.sdkman
     path: roles/
 
