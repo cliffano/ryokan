@@ -1,88 +1,13 @@
 ---
 - hosts: raspberrypi00
-
-  vars:
-    nvm_node_version: "16.17.0"
-    nvm_user_name: pi
-    nvm_install_globally: [] 
-  roles:
-    - { role: grzegorznowak.nvm_node, become: yes }
+  gather_facts: yes
 
   tasks:
 
-  - name: Ensure dev directory exists
-    file: path=/home/pi/dev/ state=directory mode=0755
+    - name: Provision Pi-hole
+      ansible.builtin.import_role:
+        # name: drew1kun.pihole
+        name: ansible-role-pihole
+      vars:
+        pihole_setupVars_conf_WEBPASSWD: "{{ pihole_web_password }}"
 
-  - name: Ensure Home Assistant home directory exists
-    file: path=/home/pi/dev/hass-home/ state=directory mode=0755
-
-  - name: Ensure hass-home repo is cloned
-    ansible.builtin.git:
-      repo: 'git@github.com:pakkunbot/hass-home'
-      dest: /home/pi/dev/hass-home/
-      clone: yes
-      update: no
-
-  - name: Ensure requirement packages are installed
-    apt:
-      name:
-        - apt-transport-https
-        - ca-certificates
-        - curl
-        - gnupg
-        - lsb-release
-        - python3-pip
-      state: present
-      update_cache:  yes
-    become: yes
-
-  - name: Install Python packages
-    pip:
-      name:
-        - docker
-      executable: pip3
-
-  # - name: Add Docker’s official GPG key
-  #   ansible.builtin.shell: curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-
-  - name: Set up Docker stable repository
-    ansible.builtin.shell: echo "deb [arch=armhf signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-  - name: Update apt package index
-    become: yes
-    ansible.builtin.shell: apt-get update
-
-  - name: Ensure Docker Engine and containerd packages are installed
-    apt:
-      name:
-        - docker-ce
-        - docker-ce-cli
-        - containerd.io
-      state: present
-      update_cache: yes
-    become: yes
-
-  - name: Pull Home Assistant Docker image (temporary until issue with Python interpreter not seeing docker module is solved)
-    become: yes
-    ansible.builtin.shell: docker pull homeassistant/raspberrypi2-homeassistant:2022.3.1
-
-  # # Commented out due to an issue with Python interpreter not seeing docker module even though pip3 list shows docker 5.0.2 is already installed
-  # # Note: python3 is confirmed to definitely be used as Ansible's Python interpreter on the host
-  # - name: Pull Home Assistant Docker image
-  #   become: yes
-  #   community.docker.docker_image:
-  #     name: homeassistant/raspberrypi2-homeassistant
-  #     source: pull
-
-  - name: Set aliases for Home Assistant
-    lineinfile: dest={{ home }}/.profile line="{{ item }}" state=present backup=no
-    with_items:
-      - alias hass-start='sudo docker run -d --name="home-assistant" --net=host --privileged -e "TZ=Australia/Melbourne" -v /home/pi/dev/hass-home:/config -p 8123:8123 homeassistant/raspberrypi2-homeassistant:2022.10.4'
-      - alias hass-login='sudo docker exec -it home-assistant /bin/bash'
-      - alias hass-stop='sudo docker stop home-assistant'
-
-  - name: Set host name
-    lineinfile: dest=/etc/hosts line="{{ item }}" state=present backup=no
-    with_items:
-      - 127.0.0.1               pakkun
-    become: yes
