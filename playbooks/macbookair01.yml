@@ -65,6 +65,7 @@
           - oapicf
           - packer
           - python
+          - terraform
         sdev_sshkey_name: konoha_id_rsa
         sdev_vscode_workspaces:
           - ansible
@@ -77,6 +78,7 @@
           - oapicf
           - packer
           - python
+          - terraform
         sdev_workspaces:
           - aoc
           - contrib
