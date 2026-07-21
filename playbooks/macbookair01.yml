@@ -42,6 +42,7 @@
           - { id: 'control', image: 'cliffano/studio', env_file: "{{ home }}/.env-docker-control", home_dir: 'root', entrypoint: '/bin/bash' }
           - { id: 'studio', image: 'cliffano/studio', env_file: "{{ home }}/.env-docker-studio", home_dir: 'root', entrypoint: '/bin/bash' }
           - { id: 'kon-tiki', image: 'cliffano/kon-tiki', env_file: "{{ home }}/.env-docker-kon-tiki", home_dir: 'root', entrypoint: '/bin/bash' }
+          - { id: 'aembuildenv', image: 'shinesolutions/aem-platform-buildenv', env_file: "{{ home }}/.env-docker-aembuildenv", home_dir: 'root', entrypoint: '/bin/bash' }
         sdev_gitconfig_link_src: "{{ home }}/dev/workspace-control/config/system-config/git/.gitconfig-{{ inventory_hostname }}"
         sdev_repoman_link_src: "{{ home }}/dev/workspace-control/config/workspace-config/repoman"
         sdev_ssh_configd_link_src: "{{ home }}/dev/workspace-control/config/system-config/ssh/{{ inventory_hostname }}.ssh_config"
@@ -91,8 +92,11 @@
         sdev_homebrew_packages_extra:
           - fdupes
           - figlet
+          - hf
           - ripgrep
           - 1password-cli
+        sdev_homebrew_cask_apps_extra:
+          - claude-code
 
     - name: Provision Caesar III game
       ansible.builtin.import_role:
