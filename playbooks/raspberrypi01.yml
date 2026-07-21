@@ -1,25 +1,102 @@
 ---
 - hosts: raspberrypi01
 
-  vars:
-    nvm_node_version: "16.17.0"
-    nvm_user_name: cliffano
-    nvm_install_globally: ['nestor-buildlight']
-
   roles:
-  #   - { role: grzegorznowak.nvm_node, become: yes }
-    - role: Comcast.sdkman
-      sdkman_install_packages:
-        - { candidate: java, version: 21.0.8-librca }
-    - role: geerlingguy.jenkins
+
+    - role: geerlingguy.docker
       become: yes
-      jenkins_version: "2.463"
 
   tasks:
 
-    - name: Create symlink for using SDKMAN Java as local Java
-      ansible.builtin.file:
-        src: /home/cliffano/.sdkman/candidates/java/current/bin/java
-        dest: /usr/local/bin/java
-        state: link
+    - name: Pull Home Assistant Docker image
       become: yes
+      community.docker.docker_image:
+        name: homeassistant/raspberrypi4-homeassistant:stable
+        source: pull
+
+    - name: Create aliases for Home Assistant Docker image
+      ansible.builtin.include_role:
+        name: ansible-roles.bash_aliases
+      vars:
+        bash_aliases:
+          - alias: "hass-start"
+            command: |
+              docker run -d \
+                --name homeassistant \
+                -e TZ=Australia/Melbourne \
+                -v /home/cliffano/data/hass-home:/config \
+                -v /run/dbus:/run/dbus:ro \
+                --network=host \
+                homeassistant/raspberrypi4-homeassistant:stable
+      
+    - name: Pull Jenkins Docker image
+      become: yes
+      community.docker.docker_image:
+        name: jenkins/jenkins:lts
+        source: pull
+
+    - name: Create aliases for Jenkins Docker image
+      ansible.builtin.include_role:
+        name: ansible-roles.bash_aliases
+      vars:
+        bash_aliases:
+          - alias: "jenkins-start"
+            command: |
+              docker run -d \
+                --name jenkins \
+                -e TZ=Australia/Melbourne \
+                -v /home/cliffano/data/ci2-backup-jenkins:/var/jenkins_home \
+                -v /run/dbus:/run/dbus:ro \
+                --network=host \
+                jenkins/jenkins:lts
+
+    - name: Pull ArchiveBox Docker image
+      become: yes
+      community.docker.docker_image:
+        name: archivebox/archivebox:stable
+        source: pull
+
+    - name: Create aliases for ArchiveBox Docker image
+      ansible.builtin.include_role:
+        name: ansible-roles.bash_aliases
+      vars:
+        bash_aliases:
+          - alias: "archivebox-init"
+            command: |
+              docker run \
+                --name archivebox-data \
+                -e TZ=Australia/Melbourne \
+                -v /home/cliffano/data/archivebox-data:/data \
+                -v /run/dbus:/run/dbus:ro \
+                --network=host \
+                -it archivebox/archivebox:stable init
+          - alias: "archivebox-start"
+            command: |
+              docker run -d \
+                --name archivebox-server \
+                -e TZ=Australia/Melbourne \
+                -v /home/cliffano/data/archivebox-data:/data \
+                -v /run/dbus:/run/dbus:ro \
+                --network=host \
+                -it archivebox/archivebox:stable server
+
+    - name: Pull Uptime Kuma Docker image
+      become: yes
+      community.docker.docker_image:
+        name: louislam/uptime-kuma:2
+        source: pull
+
+    - name: Create aliases for Uptime Kuma Docker image
+      ansible.builtin.include_role:
+        name: ansible-roles.bash_aliases
+      vars:
+        bash_aliases:
+          - alias: "kuma-start"
+            command: |
+              docker run -d \
+                --name uptime-kuma \
+                -e TZ=Australia/Melbourne \
+                -v /home/cliffano/data/uptime-kuma-data:/app/data \
+                -v /run/dbus:/run/dbus:ro \
+                --network=host \
+                louislam/uptime-kuma:2
