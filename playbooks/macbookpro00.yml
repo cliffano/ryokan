@@ -69,6 +69,7 @@
           - packer
           - pinentry-mac
           - telnet
+          - wget
           - yq
 
     # # TODO: Disabled MAS for now due to authentication confusion with newer version of MacOS
