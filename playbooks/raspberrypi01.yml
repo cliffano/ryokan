@@ -20,15 +20,15 @@
       vars:
         bash_aliases:
           - alias: "hass-start"
-            command: |
-              docker run -d \
-                --name homeassistant \
-                -e TZ=Australia/Melbourne \
-                -v /home/cliffano/data/hass-home:/config \
-                -v /run/dbus:/run/dbus:ro \
-                --network=host \
-                homeassistant/raspberrypi4-homeassistant:stable
-      
+            command: >-
+              sudo docker run -d
+              --name homeassistant
+              -e TZ=Australia/Melbourne
+              -v /home/cliffano/data/hass-home:/config
+              -v /run/dbus:/run/dbus:ro
+              --network=host
+              homeassistant/raspberrypi4-homeassistant:stable
+
     - name: Pull Jenkins Docker image
       become: yes
       community.docker.docker_image:
@@ -41,14 +41,14 @@
       vars:
         bash_aliases:
           - alias: "jenkins-start"
-            command: |
-              docker run -d \
-                --name jenkins \
-                -e TZ=Australia/Melbourne \
-                -v /home/cliffano/data/ci2-backup-jenkins:/var/jenkins_home \
-                -v /run/dbus:/run/dbus:ro \
-                --network=host \
-                jenkins/jenkins:lts
+            command: >-
+              sudo docker run -d
+              --name jenkins
+              -e TZ=Australia/Melbourne
+              -v /home/cliffano/data/ci2-backup-jenkins:/var/jenkins_home
+              -v /run/dbus:/run/dbus:ro
+              --network=host
+              jenkins/jenkins:lts
 
     - name: Pull ArchiveBox Docker image
       become: yes
@@ -62,23 +62,23 @@
       vars:
         bash_aliases:
           - alias: "archivebox-init"
-            command: |
-              docker run \
-                --name archivebox-data \
-                -e TZ=Australia/Melbourne \
-                -v /home/cliffano/data/archivebox-data:/data \
-                -v /run/dbus:/run/dbus:ro \
-                --network=host \
-                -it archivebox/archivebox:stable init
+            command: >-
+              sudo docker run
+              --name archivebox-data
+              -e TZ=Australia/Melbourne
+              -v /home/cliffano/data/archivebox-data:/data
+              -v /run/dbus:/run/dbus:ro
+              --network=host
+              -it archivebox/archivebox:stable init
           - alias: "archivebox-start"
-            command: |
-              docker run -d \
-                --name archivebox-server \
-                -e TZ=Australia/Melbourne \
-                -v /home/cliffano/data/archivebox-data:/data \
-                -v /run/dbus:/run/dbus:ro \
-                --network=host \
-                -it archivebox/archivebox:stable server
+            command: >-
+              sudo docker run -d
+              --name archivebox-server
+              -e TZ=Australia/Melbourne
+              -v /home/cliffano/data/archivebox-data:/data
+              -v /run/dbus:/run/dbus:ro
+              --network=host
+              -it archivebox/archivebox:stable server
 
     - name: Pull Uptime Kuma Docker image
       become: yes
@@ -92,11 +92,11 @@
       vars:
         bash_aliases:
           - alias: "kuma-start"
-            command: |
-              docker run -d \
-                --name uptime-kuma \
-                -e TZ=Australia/Melbourne \
-                -v /home/cliffano/data/uptime-kuma-data:/app/data \
-                -v /run/dbus:/run/dbus:ro \
-                --network=host \
-                louislam/uptime-kuma:2
+            command: >-
+              sudo docker run -d
+              --name uptime-kuma
+              -e TZ=Australia/Melbourne
+              -v /home/cliffano/data/uptime-kuma-data:/app/data
+              -v /run/dbus:/run/dbus:ro
+              --network=host
+              louislam/uptime-kuma:2
