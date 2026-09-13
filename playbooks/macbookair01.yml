@@ -93,9 +93,11 @@
           - pakkun
         sdev_homebrew_packages_extra:
           - fdupes
+          - ffmpeg
           - figlet
           - hf
           - ripgrep
+          - yt-dlp
           - 1password-cli
         sdev_homebrew_cask_apps_extra:
           - claude-code
