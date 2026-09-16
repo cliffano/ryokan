@@ -2,6 +2,10 @@
 - hosts: raspberrypi00
   gather_facts: yes
 
+  vars:
+    usbled_standalone_version: "1.1.0"
+    usbled_standalone_deb: "usbled-standalone-dkms_{{ usbled_standalone_version }}-1_all.deb"
+
   tasks:
 
     - name: Provision Pi-hole
@@ -10,4 +14,26 @@
         name: ansible-role-pihole
       vars:
         pihole_setupVars_conf_WEBPASSWD: "{{ pihole_web_password }}"
+
+    - name: Ensure kernel headers are installed for DKMS build
+      ansible.builtin.apt:
+        # NOTE: matches the running kernel exactly (e.g. linux-headers-6.12.75+rpt-rpi-v7).
+        # The floating meta-package (e.g. linux-headers-rpi-v7) can resolve to a newer
+        # kernel than the one actually running, which breaks the DKMS build.
+        name: "linux-headers-{{ ansible_kernel }}"
+        state: present
+        update_cache: yes
+      become: yes
+
+    - name: Download usbled-standalone-dkms deb package
+      ansible.builtin.get_url:
+        url: "https://github.com/cliffano/usbled-standalone/releases/download/{{ usbled_standalone_version }}/{{ usbled_standalone_deb }}"
+        dest: "/tmp/{{ usbled_standalone_deb }}"
+        mode: '0644'
+
+    - name: Install usbled-standalone-dkms deb package
+      ansible.builtin.apt:
+        deb: "/tmp/{{ usbled_standalone_deb }}"
+        state: present
+      become: yes
 
