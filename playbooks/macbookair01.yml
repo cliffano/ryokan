@@ -95,6 +95,7 @@
           - oapicf
           - pakkun
         sdev_homebrew_packages_extra:
+          - btop
           - fdupes
           - ffmpeg
           - figlet
