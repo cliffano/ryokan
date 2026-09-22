@@ -95,10 +95,10 @@
           - oapicf
           - pakkun
         sdev_homebrew_packages_extra:
-          - btop
           - fdupes
           - ffmpeg
           - figlet
+          - glances
           - hf
           - ripgrep
           - yt-dlp
