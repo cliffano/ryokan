@@ -97,9 +97,11 @@
           - oapicf
           - pakkun
         sdev_homebrew_packages_extra:
+          - docker-compose
           - fdupes
           - ffmpeg
           - figlet
+          - gh
           - glances
           - hf
           - ripgrep
