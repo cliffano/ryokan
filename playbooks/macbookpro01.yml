@@ -1,87 +1,16 @@
 ---
 - hosts: macbookpro01
 
-  vars:
-    sdev_home_dir: "{{ home }}"
-    sdev_profile_file: .zprofile
-    sdev_gitconfig_src: "{{ home }}/dev/workspace-control/config/tools/git/.gitconfig-{{ inventory_hostname }}"
-    sdev_ohmyzsh_dir: "{{ home }}/.oh-my-zsh"
-    sdev_gnupg_dir: "{{ home }}/.gnupg"
-    homebrew_installed_packages:
-      - mas
-      - node
-      - packer
-      - cloc
-      - telnet
-      - gpg
-      - pinentry-mac
-      - gh
-      - youtube-dl
-      - jq
-      - docker
-      - colima
-      - python
-      - pipx
-    #homebrew_taps:
-      #- iann0036/iamlive
-      #- ssh://github.com/1password/1password-cli
-    mas_email: { macappstore.user }
-    mas_password: { macappstore.pass }
-    mas_apps:
-      - { name: Owly, id: 882812218 }
-      - { name: WhatsApp Desktop, id: 1147396723 }
-      - { name: Magnet, id: 441258766 }
-      # - { name: 'iStat Menus', id: 1319778037 }
-    docker_images:
-      - { id: kontiki, image: 'cliffano/kon-tiki', env_file: '{{ home }}/.env-docker-kontiki' }
-      - { id: kontiki-cred, image: 'cliffano/kon-tiki-cred', env_file: '{{ home }}/.env-docker-kontiki' }
-      - { id: studio, image: 'cliffano/studio', env_file: '{{ home }}/.env-docker-studio' }
-      - { id: swaggyc, image: 'cliffano/swaggy-c', env_file: '{{ home }}/.env-docker-studio' }
-      - { id: centos7, image: 'centos:centos7', env_file: '{{ home }}/.env-docker-studio' }
-      - { id: ubuntu, image: 'ubuntu', env_file: '{{ home }}/.env-docker-studio' }
-    main_workspaces:
-      - control
-    project_workspaces:
-      - pakkun
-      - studio
-      - g10
-    pinterest_config:
-      pinterest_app_id: "{{ pinterest_app_id }}"
-      pinterest_app_secret: "{{ pinterest_app_secret }}"
-
   roles:
-    - role: gantsign.oh-my-zsh
-      users:
-        - username: cliffano
-          oh_my_zsh:
-            theme: bullet-train
-    - role: ansible-role-studio-dev
-    - role: geerlingguy.mac.homebrew
-  #   # - role: geerlingguy.mac.mas
+
+    - role: geerlingguy.mac.mas
+      mas_email: lookup('community.general.onepassword', 'MAS', section='username')
+      mas_password: lookup('community.general.onepassword', 'MAS', section='password')
+      mas_installed_apps:
+        - { name: Google Chrome, id: 535886823 }
+        - { name: iStat Menus, id: 1319778037 }
+        - { name: Lungo, id: 1263070803 }
+      mas_upgrade_all_apps: false
 
   tasks:
-
-  # - name: Set Pinterest config
-  #   copy:
-  #     dest: "{{ home }}/pinterest.json"
-  #     content: "{{ pinterest_config | to_json }}"
-
-
-
-  # - name: Set Docker alias for mcnpc
-  #   lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-mcnpc=.*$" line="alias drno-mcnpc='docker run --rm -p 3000-3050:3000-3050 --workdir /opt/workspace -v /var/run/docker.sock:/var/run/docker.sock -v {{ home }}/.aws:/root/.aws -v {{ home }}/.gitconfig:/root/.gitconfig -v {{ home }}/.ssh:/root/.ssh -v `pwd`:/opt/workspace -i -t cliffano/studio'" state=present backup=no
-
-  # - name: Set Docker alias for localai
-  #   lineinfile: dest={{ home }}/.zprofile regexp="^alias drno-localai=.*$" line="alias drno-localai='docker run --rm -p 8080:8080 --workdir /opt/workspace -v {{ home }}/dev/localai-models:/build/models -i -t localai/localai:latest-aio-cpu'" state=present backup=no
-
-  # - name: Set Makefile .PHONY creator alias
-  #   lineinfile: dest={{ home }}/.zprofile line="alias makephony='grep \'^[^#[:space:]].*:\' Makefile | sed -e \"s/:.*$//\" | paste -s -d\" \" - | sed -e \"s/\.PHONY$//\"'" state=present backup=no
-
-  # - name: Ensure Python packages are installed
-  #   pip:
-  #     name: "{{item}}"
-  #   with_items:
-  #     - requests
-  #     - docker
-
 
